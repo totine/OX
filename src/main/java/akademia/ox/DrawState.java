@@ -5,4 +5,9 @@ public class DrawState implements GameState {
     public GameState moveToNextState() {
         return new FinalState();
     }
+
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
 }

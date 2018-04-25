@@ -19,6 +19,11 @@ public class GameInProgress implements GameState {
         }
     }
 
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
     private boolean checkVictory() {
         return isVictory && ! isDraw;
     }

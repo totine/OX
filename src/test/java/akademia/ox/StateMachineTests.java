@@ -90,4 +90,12 @@ public class StateMachineTests {
         //then
         Assert.assertEquals(nextState.getClass(), TerminateState.class);
     }
+
+    @Test
+    public void TerminateState_informsThatGameIsOver() {
+        //given
+        TerminateState finalState = new TerminateState();
+        //then
+        Assert.assertTrue(finalState.isGameOver());
+    }
 }

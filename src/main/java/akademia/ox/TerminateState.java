@@ -5,4 +5,9 @@ public class TerminateState implements GameState {
     public GameState moveToNextState() {
         return null;
     }
+
+    @Override
+    public boolean isGameOver() {
+        return true;
+    }
 }

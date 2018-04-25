@@ -5,4 +5,9 @@ public class InitialState implements GameState {
     public GameState moveToNextState() {
         return new GameInProgress();
     }
+
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
 }

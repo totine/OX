@@ -14,6 +14,11 @@ public class FinalState implements GameState {
         return null;
     }
 
+    @Override
+    public boolean isGameOver() {
+        return false;
+    }
+
     void setIsContinued() {
         isContinued = true;
     }
