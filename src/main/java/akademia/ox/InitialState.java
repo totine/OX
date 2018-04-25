@@ -10,4 +10,9 @@ public class InitialState implements GameState {
     public boolean isGameOver() {
         return false;
     }
+
+    @Override
+    public String showStateInfo() {
+        return StateInfo.INITIAL_STATE.get();
+    }
 }

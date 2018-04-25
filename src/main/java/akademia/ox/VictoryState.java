@@ -10,4 +10,9 @@ public class VictoryState implements GameState {
     public boolean isGameOver() {
         return false;
     }
+
+    @Override
+    public String showStateInfo() {
+        return null;
+    }
 }

@@ -98,4 +98,16 @@ public class StateMachineTests {
         //then
         Assert.assertTrue(finalState.isGameOver());
     }
+
+    @Test
+    public void InitialState_afterCallingShowState_returnsInformationAboutItsState() {
+        //given
+        InitialState initialState = new InitialState();
+        //when
+        String stateInfo = initialState.showStateInfo();
+        String initialStateInfo = StateInfo.INITIAL_STATE.get();
+        //then
+        Assert.assertEquals(stateInfo, initialStateInfo);
+
+    }
 }

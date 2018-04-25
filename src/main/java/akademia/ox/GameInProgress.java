@@ -24,6 +24,11 @@ public class GameInProgress implements GameState {
         return false;
     }
 
+    @Override
+    public String showStateInfo() {
+        return null;
+    }
+
     private boolean checkVictory() {
         return isVictory && ! isDraw;
     }

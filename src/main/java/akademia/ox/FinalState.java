@@ -19,6 +19,11 @@ public class FinalState implements GameState {
         return false;
     }
 
+    @Override
+    public String showStateInfo() {
+        return null;
+    }
+
     void setIsContinued() {
         isContinued = true;
     }

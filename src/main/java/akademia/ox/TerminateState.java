@@ -10,4 +10,9 @@ public class TerminateState implements GameState {
     public boolean isGameOver() {
         return true;
     }
+
+    @Override
+    public String showStateInfo() {
+        return null;
+    }
 }
