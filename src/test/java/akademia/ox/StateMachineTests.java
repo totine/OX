@@ -3,6 +3,7 @@ package akademia.ox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+
 public class StateMachineTests {
 
     @Test
@@ -119,6 +120,17 @@ public class StateMachineTests {
         TerminateState finalState = new TerminateState();
         //then
         Assert.assertTrue(finalState.isGameOver());
+    }
+
+    @Test
+    public void StatesWithoutTerminateState_informsThatGameIsNotOver() {
+        //given
+        GameState[] states = {new FinalState(), new DrawState(), new GameInProgress(), new InitialState(), new VictoryState()};
+        //when // then
+        for (GameState state : states) {
+            Assert.assertFalse(state.isGameOver());
+        }
+
     }
 
     @Test
