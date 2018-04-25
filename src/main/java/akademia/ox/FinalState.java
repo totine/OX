@@ -8,10 +8,17 @@ public class FinalState implements GameState {
         if (isContinued) {
             return new InitialState();
         }
+        if (!isContinued) {
+            return new TerminateState();
+        }
         return null;
     }
 
     void setIsContinued() {
         isContinued = true;
+    }
+
+    void setIsNotContinued() {
+        isContinued = false;
     }
 }

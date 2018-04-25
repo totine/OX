@@ -79,4 +79,15 @@ public class StateMachineTests {
         //then
         Assert.assertEquals(nextState.getClass(), InitialState.class);
     }
+
+    @Test
+    public void FinalState_afterCallingMoveToNextStateIfGameIsNotContinued_moveTerminateState() {
+        //given
+        FinalState finalState = new FinalState();
+        //when
+        finalState.setIsNotContinued();
+        GameState nextState = finalState.moveToNextState();
+        //then
+        Assert.assertEquals(nextState.getClass(), TerminateState.class);
+    }
 }
