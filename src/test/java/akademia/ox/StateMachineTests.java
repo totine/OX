@@ -103,6 +103,17 @@ public class StateMachineTests {
     }
 
     @Test
+    public void FinalState_afterCallingMoveToNextStateIfInputIsIncorrect_stayInFinalState() {
+        //given
+        FinalState finalState = new FinalState();
+        //when
+        finalState.consumeInput("incorrectInput");
+        GameState nextState = finalState.moveToNextState();
+        //then
+        Assert.assertEquals(nextState.getClass(), FinalState.class);
+    }
+
+    @Test
     public void TerminateState_informsThatGameIsOver() {
         //given
         TerminateState finalState = new TerminateState();
