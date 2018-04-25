@@ -14,4 +14,15 @@ public class StateMachineTests {
         //then
         Assert.assertEquals(nextState.getClass(), GameInProgress.class);
     }
+
+    @Test
+    public void GameInProgressState_afterCallingMoveToNextStateIfThereIsNoDrawOrVictory_moveAgainToGameInProgressState() {
+        //given
+        GameInProgress gameInProgress = new GameInProgress();
+        gameInProgress.setNoDrawNoVictory();
+        //when
+        GameState nextState = gameInProgress.moveToNextState();
+        //then
+        Assert.assertEquals(nextState.getClass(), GameInProgress.class);
+    }
 }
