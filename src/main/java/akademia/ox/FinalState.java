@@ -21,7 +21,7 @@ public class FinalState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return null;
+        return StateInfo.FINAL_STATE.get();
     }
 
     void setIsContinued() {

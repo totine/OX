@@ -102,12 +102,62 @@ public class StateMachineTests {
     @Test
     public void InitialState_afterCallingShowState_returnsInformationAboutItsState() {
         //given
-        InitialState initialState = new InitialState();
+        GameState stateToTest = new InitialState();
         //when
-        String stateInfo = initialState.showStateInfo();
-        String initialStateInfo = StateInfo.INITIAL_STATE.get();
+        String stateInfo = stateToTest.showStateInfo();
+        String expectedStateInfo = StateInfo.INITIAL_STATE.get();
         //then
-        Assert.assertEquals(stateInfo, initialStateInfo);
+        Assert.assertEquals(stateInfo, expectedStateInfo);
 
     }
+
+    @Test
+    public void DrawState_afterCallingShowState_returnsInformationAboutItsState() {
+        //given
+        GameState stateToTest = new DrawState();
+        //when
+        String stateInfo = stateToTest.showStateInfo();
+        String expectedStateInfo = StateInfo.DRAW_STATE.get();
+        //then
+        Assert.assertEquals(stateInfo, expectedStateInfo);
+
+    }
+
+    @Test
+    public void VictoryState_afterCallingShowState_returnsInformationAboutItsState() {
+        //given
+        GameState stateToTest = new VictoryState();
+        //when
+        String stateInfo = stateToTest.showStateInfo();
+        String expectedStateInfo = StateInfo.VICTORY_STATE.get();
+        //then
+        Assert.assertEquals(stateInfo, expectedStateInfo);
+
+    }
+
+    @Test
+    public void FinalState_afterCallingShowState_returnsInformationAboutItsState() {
+        //given
+        GameState stateToTest = new FinalState();
+        //when
+        String stateInfo = stateToTest.showStateInfo();
+        String expectedStateInfo = StateInfo.FINAL_STATE.get();
+        //then
+        Assert.assertEquals(stateInfo, expectedStateInfo);
+
+    }
+
+    @Test
+    public void TerminateState_afterCallingShowState_returnsInformationAboutItsState() {
+        //given
+        GameState stateToTest = new TerminateState();
+        //when
+        String stateInfo = stateToTest.showStateInfo();
+        String expectedStateInfo = StateInfo.TERMINATE_STATE.get();
+        //then
+        Assert.assertEquals(stateInfo, expectedStateInfo);
+
+    }
+
+
 }

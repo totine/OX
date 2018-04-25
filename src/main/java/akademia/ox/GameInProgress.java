@@ -26,7 +26,7 @@ public class GameInProgress implements GameState {
 
     @Override
     public String showStateInfo() {
-        return null;
+        return StateInfo.GAME_IN_PROGRESS_STATE.get();
     }
 
     private boolean checkVictory() {

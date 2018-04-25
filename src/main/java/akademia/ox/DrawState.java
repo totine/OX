@@ -13,6 +13,6 @@ public class DrawState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return null;
+        return StateInfo.DRAW_STATE.get();
     }
 }

@@ -13,6 +13,6 @@ public class VictoryState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return null;
+        return StateInfo.VICTORY_STATE.get();
     }
 }

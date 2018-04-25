@@ -13,6 +13,6 @@ public class TerminateState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return null;
+        return StateInfo.TERMINATE_STATE.get();
     }
 }
