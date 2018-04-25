@@ -11,6 +11,9 @@ public class GameInProgress implements GameState {
         }
         if (checkVictory()) {
             return new VictoryState();
+        }
+        if (checkDraw()) {
+            return new DrawState();
         } else {
             return null;
         }
@@ -18,6 +21,10 @@ public class GameInProgress implements GameState {
 
     private boolean checkVictory() {
         return isVictory && ! isDraw;
+    }
+
+    private boolean checkDraw() {
+        return ! isVictory && isDraw;
     }
 
     private boolean isNoEnd() {
@@ -32,5 +39,10 @@ public class GameInProgress implements GameState {
     void setVictory() {
         isVictory = true;
         isDraw = false;
+    }
+
+    void setDraw() {
+        isDraw = true;
+        isVictory = false;
     }
 }
