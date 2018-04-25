@@ -14,7 +14,20 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
     <build>
+<plugins>
+<plugin>
+    <artifactId>maven-jar-plugin</artifactId>
+    <configuration>
+    <archive>
+    <manifest>
+    <addClasspath>true</addClasspath>
+    <mainClass>akademia.ox.Main</mainClass>
+    </manifest>
+    </archive>
+    </configuration>
+    </plugin>
 
+</plugins>
     </build>
 
     <dependencies>

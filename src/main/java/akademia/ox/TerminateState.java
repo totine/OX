@@ -15,4 +15,14 @@ public class TerminateState implements GameState {
     public String showStateInfo() {
         return StateInfo.TERMINATE_STATE.get();
     }
+
+    @Override
+    public void consumeInput(String query) {
+
+    }
+
+    @Override
+    public String showQuestion() {
+        return StateQuestions.TERMINATE_STATE.get();
+    }
 }

@@ -1,36 +1,36 @@
 package akademia.ox;
 
-public enum StateInfo  {
+public enum StateQuestions  {
 
     INITIAL_STATE {
         @Override
         public String get() {
-            return "To jest początek rundy";
+            return "Wpisz cokolwiek";
         }
     }, GAME_IN_PROGRESS_STATE {
         @Override
         public String get() {
-            return "Runda jest w trakcie";
+            return "Wpisz victory, jeśli ma być zwycięstwo; Wpisz draw jeśli ma być remis, wpisz exit, aby zakończyć grę, wpisz cokolwiek, aby kontynuować rozgrywkę";
         }
     }, VICTORY_STATE {
         @Override
         public String get() {
-            return "Ktoś wygrał";
+            return "Wpisz cokolwiek";
         }
     }, FINAL_STATE {
         @Override
         public String get() {
-            return "Runda zakończona";
+            return "Wpisz end, aby zakończyć grę, wpisz continue, aby kontynować";
         }
     }, TERMINATE_STATE {
         @Override
         public String get() {
-            return "Gra zakończona";
+            return "";
         }
     }, DRAW_STATE {
         @Override
         public String get() {
-            return "Jest remis";
+            return "Wpisz cokolwiek";
         }
     };
 

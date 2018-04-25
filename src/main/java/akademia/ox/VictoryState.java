@@ -15,4 +15,14 @@ public class VictoryState implements GameState {
     public String showStateInfo() {
         return StateInfo.VICTORY_STATE.get();
     }
+
+    @Override
+    public void consumeInput(String query) {
+
+    }
+
+    @Override
+    public String showQuestion() {
+        return StateQuestions.VICTORY_STATE.get();
+    }
 }

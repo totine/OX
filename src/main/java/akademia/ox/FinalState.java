@@ -1,17 +1,11 @@
 package akademia.ox;
 
 public class FinalState implements GameState {
-    private boolean isContinued;
+    private GameState nextState;
 
     @Override
     public GameState moveToNextState() {
-        if (isContinued) {
-            return new InitialState();
-        }
-        if (!isContinued) {
-            return new TerminateState();
-        }
-        return null;
+        return nextState;
     }
 
     @Override
@@ -24,11 +18,24 @@ public class FinalState implements GameState {
         return StateInfo.FINAL_STATE.get();
     }
 
-    void setIsContinued() {
-        isContinued = true;
+    @Override
+    public void consumeInput(String query) {
+        switch (query) {
+            case "continue":
+                nextState = new InitialState();
+                break;
+            case "end":
+                nextState = new TerminateState();
+                break;
+            default:
+                nextState = this;
+
+        }
     }
 
-    void setIsNotContinued() {
-        isContinued = false;
+    @Override
+    public String showQuestion() {
+        return StateQuestions.FINAL_STATE.get();
     }
+
 }

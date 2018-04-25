@@ -19,7 +19,7 @@ public class StateMachineTests {
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsNoDrawOrVictory_moveAgainToTheSameGameInProgressState() {
         //given
         GameInProgress gameInProgress = new GameInProgress();
-        gameInProgress.setNoDrawNoVictory();
+        gameInProgress.consumeInput("asdf");
         //when
         GameState nextState = gameInProgress.moveToNextState();
         //then
@@ -31,8 +31,8 @@ public class StateMachineTests {
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsVictory_moveToVictoryState() {
         //given
         GameInProgress gameInProgress = new GameInProgress();
-        gameInProgress.setVictory();
         //when
+        gameInProgress.consumeInput("victory");
         GameState nextState = gameInProgress.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), VictoryState.class);
@@ -42,11 +42,22 @@ public class StateMachineTests {
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsDraw_moveToDrawState() {
         //given
         GameInProgress gameInProgress = new GameInProgress();
-        gameInProgress.setDraw();
+        gameInProgress.consumeInput("draw");
         //when
         GameState nextState = gameInProgress.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), DrawState.class);
+    }
+
+    @Test
+    public void GameInProgressState_afterCallingMoveToNextStateIfWantingToExit_moveToFinalState() {
+        //given
+        GameInProgress gameInProgress = new GameInProgress();
+        gameInProgress.consumeInput("exit");
+        //when
+        GameState nextState = gameInProgress.moveToNextState();
+        //then
+        Assert.assertEquals(nextState.getClass(), FinalState.class);
     }
 
     @Test
@@ -74,7 +85,7 @@ public class StateMachineTests {
         //given
         FinalState finalState = new FinalState();
         //when
-        finalState.setIsContinued();
+        finalState.consumeInput("continue");
         GameState nextState = finalState.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), InitialState.class);
@@ -85,7 +96,7 @@ public class StateMachineTests {
         //given
         FinalState finalState = new FinalState();
         //when
-        finalState.setIsNotContinued();
+        finalState.consumeInput("end");
         GameState nextState = finalState.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), TerminateState.class);
@@ -159,5 +170,65 @@ public class StateMachineTests {
 
     }
 
+
+    @Test
+    public void InitialState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
+        //given
+        GameState stateToTest = new InitialState();
+        //when
+        String question = stateToTest.showQuestion();
+        String expectedQuestion = StateQuestions.INITIAL_STATE.get();
+        //then
+        Assert.assertEquals(question, expectedQuestion);
+
+    }
+
+    @Test
+    public void DrawState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
+        //given
+        GameState stateToTest = new DrawState();
+        //when
+        String question = stateToTest.showQuestion();
+        String expectedQuestion = StateQuestions.DRAW_STATE.get();
+        //then
+        Assert.assertEquals(question, expectedQuestion);
+
+    }
+
+    @Test
+    public void VictoryState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
+        //given
+        GameState stateToTest = new VictoryState();
+        //when
+        String question = stateToTest.showQuestion();
+        String expectedQuestion = StateQuestions.VICTORY_STATE.get();
+        //then
+        Assert.assertEquals(question, expectedQuestion);
+
+    }
+
+    @Test
+    public void FinalState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
+        //given
+        GameState stateToTest = new FinalState();
+        //when
+        String question = stateToTest.showQuestion();
+        String expectedQuestion = StateQuestions.FINAL_STATE.get();
+        //then
+        Assert.assertEquals(question, expectedQuestion);
+
+    }
+
+    @Test
+    public void TerminateState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
+        //given
+        GameState stateToTest = new TerminateState();
+        //when
+        String question = stateToTest.showQuestion();
+        String expectedQuestion = StateQuestions.TERMINATE_STATE.get();
+        //then
+        Assert.assertEquals(question, expectedQuestion);
+
+    }
 
 }

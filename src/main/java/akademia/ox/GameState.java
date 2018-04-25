@@ -6,4 +6,8 @@ public interface GameState {
     boolean isGameOver();
 
     String showStateInfo();
+
+    void consumeInput(String query);
+
+    String showQuestion();
 }
