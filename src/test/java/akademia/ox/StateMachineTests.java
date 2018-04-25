@@ -48,4 +48,14 @@ public class StateMachineTests {
         //then
         Assert.assertEquals(nextState.getClass(), DrawState.class);
     }
+
+    @Test
+    public void VictoryState_afterCallingMoveToNextState_moveFinalState() {
+        //given
+        VictoryState victoryState = new VictoryState();
+        //when
+        GameState nextState = victoryState.moveToNextState();
+        //then
+        Assert.assertEquals(nextState.getClass(), FinalState.class);
+    }
 }

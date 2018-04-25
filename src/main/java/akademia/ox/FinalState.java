@@ -1,8 +1,8 @@
 package akademia.ox;
 
-public class VictoryState implements GameState {
+public class FinalState implements GameState {
     @Override
     public GameState moveToNextState() {
-        return new FinalState();
+        return null;
     }
 }
