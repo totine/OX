@@ -7,10 +7,19 @@ import org.testng.annotations.Test;
 
 public class StateMachineTests {
 
+    Players players;
+
+    private void setPlayers() throws IncorrectPlayerException, TooManyPlayersException {
+        players = new Players();
+        players.addNewPlayer(new Player("p1", "X"));
+        players.addNewPlayer(new Player("p2", "O"));
+    }
+
     @Test
-    public void InitialState_afterCallingMoveToNextState_moveToGameInProgressState() {
+    public void InitialState_afterCallingMoveToNextState_moveToGameInProgressState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
-        GameState initialState = new InitialState();
+        setPlayers();
+        GameState initialState = new InitialState(players);
         //when
         GameState nextState = initialState.moveToNextState();
         //then
@@ -18,10 +27,12 @@ public class StateMachineTests {
     }
 
     @Test
-    public void GameInProgressState_afterCallingMoveToNextStateIfThereIsNoDrawOrVictory_moveAgainToTheSameGameInProgressState() {
+    public void GameInProgressState_afterCallingMoveToNextStateIfThereIsNoDrawOrVictory_moveAgainToTheSameGameInProgressState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
-        InProgressState inProgressState = new InProgressState();
+        setPlayers();
+        InProgressState inProgressState = new InProgressState(players);
         inProgressState.consumeInput("asdf");
+
         //when
         GameState nextState = inProgressState.moveToNextState();
         //then
@@ -30,34 +41,37 @@ public class StateMachineTests {
     }
 
     @Test
-    public void GameInProgressState_afterCallingMoveToNextStateIfThereIsVictory_moveToVictoryState() {
+    public void GameInProgressState_afterCallingMoveToNextStateIfThereIsVictory_moveToVictoryState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
-        InProgressState inProgressState = new InProgressState();
+        setPlayers();
+        InProgressState gameInProgress = new InProgressState(players);
         //when
-        inProgressState.consumeInput("victory");
-        GameState nextState = inProgressState.moveToNextState();
+        gameInProgress.consumeInput("victory");
+        GameState nextState = gameInProgress.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), VictoryState.class);
     }
 
     @Test
-    public void GameInProgressState_afterCallingMoveToNextStateIfThereIsDraw_moveToDrawState() {
+    public void GameInProgressState_afterCallingMoveToNextStateIfThereIsDraw_moveToDrawState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
-        InProgressState inProgressState = new InProgressState();
-        inProgressState.consumeInput("draw");
+        setPlayers();
+        InProgressState gameInProgress = new InProgressState(players);
+        gameInProgress.consumeInput("draw");
         //when
-        GameState nextState = inProgressState.moveToNextState();
+        GameState nextState = gameInProgress.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), DrawState.class);
     }
 
     @Test
-    public void GameInProgressState_afterCallingMoveToNextStateIfWantingToExit_moveToFinalState() {
+    public void GameInProgressState_afterCallingMoveToNextStateIfWantingToExit_moveToFinalState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
-        InProgressState inProgressState = new InProgressState();
-        inProgressState.consumeInput("exit");
+        setPlayers();
+        InProgressState gameInProgress = new InProgressState(players);
+        gameInProgress.consumeInput("exit");
         //when
-        GameState nextState = inProgressState.moveToNextState();
+        GameState nextState = gameInProgress.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), FinalState.class);
     }
@@ -124,9 +138,10 @@ public class StateMachineTests {
     }
 
     @Test
-    public void StatesWithoutTerminateState_informsThatGameIsNotOver() {
+    public void StatesWithoutTerminateState_informsThatGameIsNotOver() throws TooManyPlayersException, IncorrectPlayerException {
         //given
-        GameState[] states = {new FinalState(), new DrawState(), new InProgressState(), new InitialState(), new VictoryState()};
+        setPlayers();
+        GameState[] states = {new FinalState(), new DrawState(), new InProgressState(players), new InitialState(players), new VictoryState()};
         //when // then
         for (GameState state : states) {
             Assert.assertFalse(state.isGameOver());
@@ -135,9 +150,10 @@ public class StateMachineTests {
     }
 
     @Test
-    public void InitialState_afterCallingShowState_returnsInformationAboutItsState() {
+    public void InitialState_afterCallingShowState_returnsInformationAboutItsState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
-        GameState stateToTest = new InitialState();
+        setPlayers();
+        GameState stateToTest = new InitialState(players);
         //when
         String stateInfo = stateToTest.showStateInfo();
         String expectedStateInfo = StateInfo.INITIAL_STATE.get();
@@ -198,7 +214,7 @@ public class StateMachineTests {
     @Test
     public void InitialState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
         //given
-        GameState stateToTest = new InitialState();
+        GameState stateToTest = new InitialState(players);
         //when
         String question = stateToTest.showQuestion();
         String expectedQuestion = StateQuestions.INITIAL_STATE.get();

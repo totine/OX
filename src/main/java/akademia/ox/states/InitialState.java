@@ -1,9 +1,16 @@
 package akademia.ox.states;
 
+import akademia.ox.Players;
 import akademia.ox.StateInfo;
 import akademia.ox.StateQuestions;
 
 public class InitialState implements GameState {
+    private Players players;
+
+    public InitialState(Players players) {
+        this.players = players;
+    }
+
     @Override
     public GameState moveToNextState() {
         return new InProgressState();

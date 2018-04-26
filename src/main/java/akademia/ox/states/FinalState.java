@@ -5,6 +5,7 @@ import akademia.ox.StateQuestions;
 
 public class FinalState implements GameState {
     private GameState nextState;
+    private Players players;
 
     @Override
     public GameState moveToNextState() {
@@ -25,7 +26,7 @@ public class FinalState implements GameState {
     public void consumeInput(String query) {
         switch (query) {
             case "continue":
-                nextState = new InitialState();
+                nextState = new InitialState(players);
                 break;
             case "end":
                 nextState = new TerminateState();
