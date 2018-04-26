@@ -49,4 +49,9 @@ public class FinalState implements GameState {
         return null;
     }
 
+    @Override
+    public String showBoard() {
+        return null;
+    }
+
 }

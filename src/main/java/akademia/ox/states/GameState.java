@@ -14,4 +14,6 @@ public interface GameState {
     String showQuestion();
 
     Player showCurrentPlayer();
+
+    String showBoard();
 }

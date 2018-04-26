@@ -1,14 +1,12 @@
 package akademia.ox.states;
 
-import akademia.ox.Player;
-import akademia.ox.Players;
-import akademia.ox.StateInfo;
-import akademia.ox.StateQuestions;
+import akademia.ox.*;
 import akademia.ox.states.GameState;
 
 public class InProgressState implements GameState {
     private Players players;
     private GameState nextState;
+    private Board board;
 
     public InProgressState(Players players) {
         this.players = players;
@@ -26,7 +24,7 @@ public class InProgressState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return StateInfo.GAME_IN_PROGRESS_STATE.get(showCurrentPlayer());
+        return showBoard() + StateInfo.GAME_IN_PROGRESS_STATE.get(showCurrentPlayer());
     }
 
     @Override
@@ -54,5 +52,10 @@ public class InProgressState implements GameState {
 
     public Player showCurrentPlayer() {
         return players.currentPlayer();
+    }
+
+    @Override
+    public String showBoard() {
+        return BoardVisualizer.drawBoard(board);
     }
 }

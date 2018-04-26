@@ -41,4 +41,9 @@ public class VictoryState implements GameState {
     public Player showCurrentPlayer() {
         return players.currentPlayer();
     }
+
+    @Override
+    public String showBoard() {
+        return null;
+    }
 }

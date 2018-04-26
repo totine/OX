@@ -7,12 +7,15 @@ import org.testng.annotations.Test;
 
 public class StateMachineTests {
 
-    Players players;
+    private Players players;
+    private Player p1 = new Player("p1", "X");
+    private Player p2 = new Player("p2", "O");
 
     private void setPlayers() throws IncorrectPlayerException, TooManyPlayersException {
         players = new Players();
-        players.addNewPlayer(new Player("p1", "X"));
-        players.addNewPlayer(new Player("p2", "O"));
+
+        players.addNewPlayer(p1);
+        players.addNewPlayer(p2);
     }
 
     @Test
@@ -181,7 +184,7 @@ public class StateMachineTests {
         GameState stateToTest = new VictoryState(players);
         //when
         String stateInfo = stateToTest.showStateInfo();
-        String expectedStateInfo = StateInfo.VICTORY_STATE.get();
+        String expectedStateInfo = StateInfo.VICTORY_STATE.get(p1);
         //then
         Assert.assertEquals(stateInfo, expectedStateInfo);
 

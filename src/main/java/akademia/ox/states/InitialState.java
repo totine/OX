@@ -1,12 +1,10 @@
 package akademia.ox.states;
 
-import akademia.ox.Player;
-import akademia.ox.Players;
-import akademia.ox.StateInfo;
-import akademia.ox.StateQuestions;
+import akademia.ox.*;
 
 public class InitialState implements GameState {
     private Players players;
+    private Board board;
 
     public InitialState(Players players) {
         this.players = players;
@@ -29,6 +27,7 @@ public class InitialState implements GameState {
 
     @Override
     public void consumeInput(String query) {
+        this.board = Board.createBoard(query);
 
     }
 
@@ -40,5 +39,10 @@ public class InitialState implements GameState {
     @Override
     public Player showCurrentPlayer() {
         return null;
+    }
+
+    @Override
+    public String showBoard() {
+        return board == null ? "" : BoardVisualizer.drawBoard(board);
     }
 }

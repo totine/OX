@@ -34,4 +34,9 @@ public class TerminateState implements GameState {
     public Player showCurrentPlayer() {
         return null;
     }
+
+    @Override
+    public String showBoard() {
+        return null;
+    }
 }

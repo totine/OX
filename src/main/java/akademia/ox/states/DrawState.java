@@ -36,4 +36,9 @@ public class DrawState implements GameState {
     public Player showCurrentPlayer() {
         return null;
     }
+
+    @Override
+    public String showBoard() {
+        return null;
+    }
 }
