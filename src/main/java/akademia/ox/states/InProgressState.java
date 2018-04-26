@@ -26,14 +26,14 @@ public class InProgressState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return StateInfo.GAME_IN_PROGRESS_STATE.get();
+        return StateInfo.GAME_IN_PROGRESS_STATE.get(showCurrentPlayer());
     }
 
     @Override
     public void consumeInput(String query) {
         switch (query) {
             case "victory":
-                nextState = new VictoryState();
+                nextState = new VictoryState(players);
                 break;
             case "draw":
                 nextState = new DrawState();

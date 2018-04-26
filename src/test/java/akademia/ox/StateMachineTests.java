@@ -77,9 +77,10 @@ public class StateMachineTests {
     }
 
     @Test
-    public void VictoryState_afterCallingMoveToNextState_moveFinalState() {
+    public void VictoryState_afterCallingMoveToNextState_moveFinalState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
-        VictoryState victoryState = new VictoryState();
+        setPlayers();
+        VictoryState victoryState = new VictoryState(players);
         //when
         GameState nextState = victoryState.moveToNextState();
         //then
@@ -141,7 +142,7 @@ public class StateMachineTests {
     public void StatesWithoutTerminateState_informsThatGameIsNotOver() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        GameState[] states = {new FinalState(), new DrawState(), new InProgressState(players), new InitialState(players), new VictoryState()};
+        GameState[] states = {new FinalState(), new DrawState(), new InProgressState(players), new InitialState(players), new VictoryState(players)};
         //when // then
         for (GameState state : states) {
             Assert.assertFalse(state.isGameOver());
@@ -177,7 +178,7 @@ public class StateMachineTests {
     @Test
     public void VictoryState_afterCallingShowState_returnsInformationAboutItsState() {
         //given
-        GameState stateToTest = new VictoryState();
+        GameState stateToTest = new VictoryState(players);
         //when
         String stateInfo = stateToTest.showStateInfo();
         String expectedStateInfo = StateInfo.VICTORY_STATE.get();
@@ -238,7 +239,7 @@ public class StateMachineTests {
     @Test
     public void VictoryState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
         //given
-        GameState stateToTest = new VictoryState();
+        GameState stateToTest = new VictoryState(players);
         //when
         String question = stateToTest.showQuestion();
         String expectedQuestion = StateQuestions.VICTORY_STATE.get();

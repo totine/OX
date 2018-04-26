@@ -1,5 +1,7 @@
 package akademia.ox.states;
 
+import akademia.ox.Player;
+
 public interface GameState {
     GameState moveToNextState();
 
@@ -10,4 +12,6 @@ public interface GameState {
     void consumeInput(String query);
 
     String showQuestion();
+
+    Player showCurrentPlayer();
 }

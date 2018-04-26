@@ -1,5 +1,6 @@
 package akademia.ox.states;
 
+import akademia.ox.Player;
 import akademia.ox.Players;
 import akademia.ox.StateInfo;
 import akademia.ox.StateQuestions;
@@ -34,5 +35,10 @@ public class InitialState implements GameState {
     @Override
     public String showQuestion() {
         return StateQuestions.INITIAL_STATE.get();
+    }
+
+    @Override
+    public Player showCurrentPlayer() {
+        return null;
     }
 }
