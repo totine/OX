@@ -88,4 +88,54 @@ public class PlayersTest {
         players.addNewPlayer(playerOne);
         players.addNewPlayer(playerOne);
     }
+
+    @Test
+    public void players_afterCreateNewPlayersAndAddPlayers_showCurrentPlayerShouldReturnTheFirstOne() {
+        //given
+        Players players = new Players();
+        //when
+        players.addNewPlayer(playerOne);
+        players.addNewPlayer(playerTwo);
+        //then
+        Assert.assertEquals(players.currentPlayer(), playerOne);
+    }
+
+    @Test
+    public void players_afterSwap_showCurrentPlayerShouldReturnTheSecondOne() {
+        //given
+        Players players = new Players();
+        //when
+        players.addNewPlayer(playerOne);
+        players.addNewPlayer(playerTwo);
+        players.swapPlayers();
+        //then
+        Assert.assertEquals(players.currentPlayer(), playerTwo);
+    }
+
+    @Test
+    public void players_afterTwoSwaps_showCurrentPlayerShouldReturnTheFirstOne() {
+        //given
+        Players players = new Players();
+        //when
+        players.addNewPlayer(playerOne);
+        players.addNewPlayer(playerTwo);
+        players.swapPlayers();
+        players.swapPlayers();
+        //then
+        Assert.assertEquals(players.currentPlayer(), playerOne);
+    }
+
+    @Test
+    public void players_afterThreeSwaps_showCurrentPlayerShouldReturnTheSecondOne() {
+        //given
+        Players players = new Players();
+        //when
+        players.addNewPlayer(playerOne);
+        players.addNewPlayer(playerTwo);
+        players.swapPlayers();
+        players.swapPlayers();
+        players.swapPlayers();
+        //then
+        Assert.assertEquals(players.currentPlayer(), playerTwo);
+    }
 }

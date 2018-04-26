@@ -6,10 +6,12 @@ import java.util.Objects;
 public class Players {
     private Player[] players;
     private int numberOfAddedPlayers;
+    private int currentIndex;
 
     public Players() {
         players = new Player[2];
         numberOfAddedPlayers = 0;
+        currentIndex = 0;
     }
 
     public int numberOfAllPlayers() {
@@ -47,5 +49,13 @@ public class Players {
 
     public boolean isFull() {
         return numberOfAddedPlayers == players.length;
+    }
+
+    public Player currentPlayer() {
+        return players[currentIndex];
+    }
+
+    public void swapPlayers() {
+        currentIndex = (++currentIndex)%players.length;
     }
 }
