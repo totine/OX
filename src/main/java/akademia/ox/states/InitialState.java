@@ -13,7 +13,7 @@ public class InitialState implements GameState {
 
     @Override
     public GameState moveToNextState() {
-        return new InProgressState();
+        return new InProgressState(players);
     }
 
     @Override

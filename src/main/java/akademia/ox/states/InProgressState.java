@@ -42,6 +42,7 @@ public class InProgressState implements GameState {
                 nextState = new FinalState();
                 break;
             default:
+                players.swapPlayers();
                 nextState = this;
         }
     }

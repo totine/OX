@@ -9,8 +9,13 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         Players players = new Players();
-        players.addNewPlayer(new Player("p1", "X"));
-        players.addNewPlayer(new Player("p2", "O"));
+
+        try {
+            players.addNewPlayer(new Player("p1", "X"));
+            players.addNewPlayer(new Player("p2", "O"));
+        } catch (TooManyPlayersException | IncorrectPlayerException e) {
+            e.printStackTrace();
+        }
         GameState state = new InitialState(players);
         while (!state.isGameOver()) {
             System.out.println(state.showStateInfo());
