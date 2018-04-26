@@ -17,6 +17,36 @@ public class PlayerTests {
     }
 
     @Test
+    public void player_duringCreatePlayer_itIsPossibleToSetNameAndCharacterX() {
+        //given
+        Player player = new Player(name, "X");
+        //when
+        String playerName = player.showName();
+        //then
+        Assert.assertEquals(playerName, name);
+        Assert.assertEquals(player.whichCharacter(), GameCharacter.X);
+    }
+
+    @Test(expectedExceptions = IncorrectCharacterException.class)
+    public void player_duringCreatePlayerWithIncorrectCharacter_illegalArgumentExceptionIsThrown() {
+        //given
+        Player player = new Player(name, "incorrect");
+        //when then
+
+    }
+
+    @Test
+    public void player_duringCreatePlayer_itIsPossibleToSetNameAndCharacterO() {
+        //given
+        Player player = new Player(name, "O");
+        //when
+        String playerName = player.showName();
+        //then
+        Assert.assertEquals(playerName, name);
+        Assert.assertEquals(player.whichCharacter(), GameCharacter.O);
+    }
+
+    @Test
     public void player_afterCreate_hasZeroPoints() {
         //given
         Player player = new Player(name);

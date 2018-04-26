@@ -11,6 +11,17 @@ public class Player {
         this.points = 0;
     }
 
+    public Player(String name, String character) {
+        this.name = name;
+        this.points = 0;
+        try {
+            this.character = GameCharacter.valueOf(character);
+        }
+        catch (IllegalArgumentException e) {
+            throw new IncorrectCharacterException();
+        }
+    }
+
     public String showName() {
         return name;
     }
@@ -39,5 +50,9 @@ public class Player {
 
     public void swapCharacter() {
         character = character.getOpposite();
+    }
+
+    public boolean hasUnassignedCharacter() {
+        return character == null;
     }
 }
