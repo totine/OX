@@ -10,6 +10,7 @@ public class StateMachineWithPlayersTests {
     private Players players;
     private Player playerOne = new Player("p1", "X");
     private Player playerTwo = new Player("p2", "O");
+    private Board board = new Board();
 
     private void setPlayers() throws IncorrectPlayerException, TooManyPlayersException {
         players = new Players();
@@ -21,7 +22,7 @@ public class StateMachineWithPlayersTests {
     public void GameInProgress_onBeginningOnShowCurrentPlayer_returnPlayerOne() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        InProgressState gameInProgress = new InProgressState(players);
+        InProgressState gameInProgress = new InProgressState(players, board);
         //when
         Player currentPlayer = gameInProgress.showCurrentPlayer();
         //
@@ -32,7 +33,7 @@ public class StateMachineWithPlayersTests {
     public void GameInProgress_inSecondTurnOnShowCurrentPlayer_returnPlayerTwo() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        InProgressState gameInProgress = new InProgressState(players);
+        InProgressState gameInProgress = new InProgressState(players, board);
         //when
         gameInProgress.consumeInput("here will be correct input");
         gameInProgress.moveToNextState();
@@ -46,7 +47,7 @@ public class StateMachineWithPlayersTests {
     public void VictoryState_afterMoveFromInProgressStateWithoutPlayerMove_hasTheSamePlayerLikeInGameInProgress() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        InProgressState inProgressState = new InProgressState(players);
+        InProgressState inProgressState = new InProgressState(players, board);
         //when
         inProgressState.consumeInput("victory");
         GameState nextState = inProgressState.moveToNextState();
@@ -60,7 +61,7 @@ public class StateMachineWithPlayersTests {
     public void VictoryState_afterMoveFromInProgressStateWithPlayerMove_hasTheSamePlayerLikeInGameInProgress() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        InProgressState inProgressState = new InProgressState(players);
+        InProgressState inProgressState = new InProgressState(players, board);
         //when
         inProgressState.consumeInput("here will be correct input");
         inProgressState.consumeInput("victory");

@@ -1,9 +1,6 @@
 package akademia.ox.states;
 
-import akademia.ox.Player;
-import akademia.ox.Players;
-import akademia.ox.StateInfo;
-import akademia.ox.StateQuestions;
+import akademia.ox.*;
 
 public class VictoryState implements GameState {
     private Players players;
@@ -43,7 +40,7 @@ public class VictoryState implements GameState {
     }
 
     @Override
-    public String showBoard() {
+    public Board showBoard() {
         return null;
     }
 }

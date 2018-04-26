@@ -1,15 +1,15 @@
 package akademia.ox.states;
 
 import akademia.ox.*;
-import akademia.ox.states.GameState;
 
 public class InProgressState implements GameState {
     private Players players;
     private GameState nextState;
     private Board board;
 
-    public InProgressState(Players players) {
+    public InProgressState(Players players, Board board) {
         this.players = players;
+        this.board = board;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class InProgressState implements GameState {
     }
 
     @Override
-    public String showBoard() {
-        return BoardVisualizer.drawBoard(board);
+    public Board showBoard() {
+        return board;
     }
 }

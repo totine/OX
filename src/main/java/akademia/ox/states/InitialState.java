@@ -12,7 +12,7 @@ public class InitialState implements GameState {
 
     @Override
     public GameState moveToNextState() {
-        return new InProgressState(players);
+        return new InProgressState(players, board);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class InitialState implements GameState {
     }
 
     @Override
-    public String showBoard() {
-        return board == null ? "" : BoardVisualizer.drawBoard(board);
+    public Board showBoard() {
+        return board;
     }
 }

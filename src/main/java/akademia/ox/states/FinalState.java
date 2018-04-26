@@ -1,9 +1,6 @@
 package akademia.ox.states;
 
-import akademia.ox.Player;
-import akademia.ox.Players;
-import akademia.ox.StateInfo;
-import akademia.ox.StateQuestions;
+import akademia.ox.*;
 
 public class FinalState implements GameState {
     private GameState nextState;
@@ -50,7 +47,7 @@ public class FinalState implements GameState {
     }
 
     @Override
-    public String showBoard() {
+    public Board showBoard() {
         return null;
     }
 

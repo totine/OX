@@ -1,5 +1,6 @@
 package akademia.ox;
 
+import akademia.ox.states.GameState;
 import akademia.ox.states.InitialState;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,9 +13,9 @@ public class StateMachineWithBoardTests {
         //given
         InitialState initialState = new InitialState(players);
         //when
-        String board = initialState.showBoard();
+        Board board = initialState.showBoard();
         //then
-        Assert.assertEquals(board, "");
+        Assert.assertNull(board);
     }
 
     @Test
@@ -23,8 +24,23 @@ public class StateMachineWithBoardTests {
         InitialState initialState = new InitialState(players);
         //when
         initialState.consumeInput("temporary input");
-        String board = initialState.showBoard();
+        Board board = initialState.showBoard();
         //then
         Assert.assertNotNull(board);
     }
+
+    @Test
+    public void InProgressState_hasBoardFromInitialState() {
+        //given
+        InitialState initialState = new InitialState(players);
+        //when
+        initialState.consumeInput("temporary input");
+        Board initialBoard = initialState.showBoard();
+        GameState gameState = initialState.moveToNextState();
+        Board nextBoard = gameState.showBoard();
+        //then
+        Assert.assertEquals(nextBoard, initialBoard);
+    }
+
+
 }
