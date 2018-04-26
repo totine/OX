@@ -1,4 +1,4 @@
-package akademia.ox;
+package akademia.ox.states;
 
 public interface GameState {
     GameState moveToNextState();

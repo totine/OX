@@ -1,4 +1,7 @@
-package akademia.ox;
+package akademia.ox.states;
+
+import akademia.ox.StateInfo;
+import akademia.ox.StateQuestions;
 
 public class DrawState implements GameState {
 

@@ -1,19 +1,22 @@
-package akademia.ox;
+package akademia.ox.states;
 
-public class TerminateState implements GameState {
+import akademia.ox.StateInfo;
+import akademia.ox.StateQuestions;
+
+public class VictoryState implements GameState {
     @Override
     public GameState moveToNextState() {
-        return null;
+        return new FinalState();
     }
 
     @Override
     public boolean isGameOver() {
-        return true;
+        return false;
     }
 
     @Override
     public String showStateInfo() {
-        return StateInfo.TERMINATE_STATE.get();
+        return StateInfo.VICTORY_STATE.get();
     }
 
     @Override
@@ -23,6 +26,6 @@ public class TerminateState implements GameState {
 
     @Override
     public String showQuestion() {
-        return StateQuestions.TERMINATE_STATE.get();
+        return StateQuestions.VICTORY_STATE.get();
     }
 }

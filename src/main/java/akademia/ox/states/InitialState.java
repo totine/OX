@@ -1,9 +1,12 @@
-package akademia.ox;
+package akademia.ox.states;
 
-public class VictoryState implements GameState {
+import akademia.ox.StateInfo;
+import akademia.ox.StateQuestions;
+
+public class InitialState implements GameState {
     @Override
     public GameState moveToNextState() {
-        return new FinalState();
+        return new InProgressState();
     }
 
     @Override
@@ -13,7 +16,7 @@ public class VictoryState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return StateInfo.VICTORY_STATE.get();
+        return StateInfo.INITIAL_STATE.get();
     }
 
     @Override
@@ -23,6 +26,6 @@ public class VictoryState implements GameState {
 
     @Override
     public String showQuestion() {
-        return StateQuestions.VICTORY_STATE.get();
+        return StateQuestions.INITIAL_STATE.get();
     }
 }
