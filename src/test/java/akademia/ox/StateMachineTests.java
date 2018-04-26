@@ -1,5 +1,6 @@
 package akademia.ox;
 
+import akademia.ox.states.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,28 +14,28 @@ public class StateMachineTests {
         //when
         GameState nextState = initialState.moveToNextState();
         //then
-        Assert.assertEquals(nextState.getClass(), GameInProgress.class);
+        Assert.assertEquals(nextState.getClass(), InProgressState.class);
     }
 
     @Test
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsNoDrawOrVictory_moveAgainToTheSameGameInProgressState() {
         //given
-        GameInProgress gameInProgress = new GameInProgress();
-        gameInProgress.consumeInput("asdf");
+        InProgressState inProgressState = new InProgressState();
+        inProgressState.consumeInput("asdf");
         //when
-        GameState nextState = gameInProgress.moveToNextState();
+        GameState nextState = inProgressState.moveToNextState();
         //then
-        Assert.assertEquals(nextState.getClass(), GameInProgress.class);
-        Assert.assertEquals(nextState, gameInProgress);
+        Assert.assertEquals(nextState.getClass(), InProgressState.class);
+        Assert.assertEquals(nextState, inProgressState);
     }
 
     @Test
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsVictory_moveToVictoryState() {
         //given
-        GameInProgress gameInProgress = new GameInProgress();
+        InProgressState inProgressState = new InProgressState();
         //when
-        gameInProgress.consumeInput("victory");
-        GameState nextState = gameInProgress.moveToNextState();
+        inProgressState.consumeInput("victory");
+        GameState nextState = inProgressState.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), VictoryState.class);
     }
@@ -42,10 +43,10 @@ public class StateMachineTests {
     @Test
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsDraw_moveToDrawState() {
         //given
-        GameInProgress gameInProgress = new GameInProgress();
-        gameInProgress.consumeInput("draw");
+        InProgressState inProgressState = new InProgressState();
+        inProgressState.consumeInput("draw");
         //when
-        GameState nextState = gameInProgress.moveToNextState();
+        GameState nextState = inProgressState.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), DrawState.class);
     }
@@ -53,10 +54,10 @@ public class StateMachineTests {
     @Test
     public void GameInProgressState_afterCallingMoveToNextStateIfWantingToExit_moveToFinalState() {
         //given
-        GameInProgress gameInProgress = new GameInProgress();
-        gameInProgress.consumeInput("exit");
+        InProgressState inProgressState = new InProgressState();
+        inProgressState.consumeInput("exit");
         //when
-        GameState nextState = gameInProgress.moveToNextState();
+        GameState nextState = inProgressState.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), FinalState.class);
     }
@@ -125,7 +126,7 @@ public class StateMachineTests {
     @Test
     public void StatesWithoutTerminateState_informsThatGameIsNotOver() {
         //given
-        GameState[] states = {new FinalState(), new DrawState(), new GameInProgress(), new InitialState(), new VictoryState()};
+        GameState[] states = {new FinalState(), new DrawState(), new InProgressState(), new InitialState(), new VictoryState()};
         //when // then
         for (GameState state : states) {
             Assert.assertFalse(state.isGameOver());

@@ -1,5 +1,8 @@
 package akademia.ox;
 
+import akademia.ox.states.GameState;
+import akademia.ox.states.InitialState;
+
 import java.util.Scanner;
 
 public class Main {

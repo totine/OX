@@ -1,6 +1,9 @@
-package akademia.ox;
+package akademia.ox.states;
 
-public class GameInProgress implements GameState {
+import akademia.ox.StateInfo;
+import akademia.ox.StateQuestions;
+
+public class FinalState implements GameState {
     private GameState nextState;
 
     @Override
@@ -15,29 +18,27 @@ public class GameInProgress implements GameState {
 
     @Override
     public String showStateInfo() {
-        return StateInfo.GAME_IN_PROGRESS_STATE.get();
+        return StateInfo.FINAL_STATE.get();
     }
 
     @Override
     public void consumeInput(String query) {
         switch (query) {
-            case "victory":
-                nextState = new VictoryState();
+            case "continue":
+                nextState = new InitialState();
                 break;
-            case "draw":
-                nextState = new DrawState();
-                break;
-            case "exit":
-                nextState = new FinalState();
+            case "end":
+                nextState = new TerminateState();
                 break;
             default:
                 nextState = this;
+
         }
     }
 
     @Override
     public String showQuestion() {
-        return StateQuestions.GAME_IN_PROGRESS_STATE.get();
+        return StateQuestions.FINAL_STATE.get();
     }
 
 }
