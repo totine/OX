@@ -1,7 +1,12 @@
 package akademia.ox;
 
 public class GameInProgress implements GameState {
+    private Players players;
     private GameState nextState;
+
+    public GameInProgress(Players players) {
+        this.players = players;
+    }
 
     @Override
     public GameState moveToNextState() {
@@ -40,4 +45,7 @@ public class GameInProgress implements GameState {
         return StateQuestions.GAME_IN_PROGRESS_STATE.get();
     }
 
+    public Player showCurrentPlayer() {
+        return players.currentPlayer();
+    }
 }

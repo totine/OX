@@ -6,10 +6,19 @@ import org.testng.annotations.Test;
 
 public class StateMachineTests {
 
+    Players players;
+
+    private void setPlayers() {
+        players = new Players();
+        players.addNewPlayer(new Player("p1", "X"));
+        players.addNewPlayer(new Player("p2", "O"));
+    }
+
     @Test
     public void InitialState_afterCallingMoveToNextState_moveToGameInProgressState() {
         //given
-        GameState initialState = new InitialState();
+        setPlayers();
+        GameState initialState = new InitialState(players);
         //when
         GameState nextState = initialState.moveToNextState();
         //then
@@ -19,7 +28,8 @@ public class StateMachineTests {
     @Test
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsNoDrawOrVictory_moveAgainToTheSameGameInProgressState() {
         //given
-        GameInProgress gameInProgress = new GameInProgress();
+        setPlayers();
+        GameInProgress gameInProgress = new GameInProgress(players);
         gameInProgress.consumeInput("asdf");
         //when
         GameState nextState = gameInProgress.moveToNextState();
@@ -31,7 +41,8 @@ public class StateMachineTests {
     @Test
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsVictory_moveToVictoryState() {
         //given
-        GameInProgress gameInProgress = new GameInProgress();
+        setPlayers();
+        GameInProgress gameInProgress = new GameInProgress(players);
         //when
         gameInProgress.consumeInput("victory");
         GameState nextState = gameInProgress.moveToNextState();
@@ -42,7 +53,8 @@ public class StateMachineTests {
     @Test
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsDraw_moveToDrawState() {
         //given
-        GameInProgress gameInProgress = new GameInProgress();
+        setPlayers();
+        GameInProgress gameInProgress = new GameInProgress(players);
         gameInProgress.consumeInput("draw");
         //when
         GameState nextState = gameInProgress.moveToNextState();
@@ -53,7 +65,8 @@ public class StateMachineTests {
     @Test
     public void GameInProgressState_afterCallingMoveToNextStateIfWantingToExit_moveToFinalState() {
         //given
-        GameInProgress gameInProgress = new GameInProgress();
+        setPlayers();
+        GameInProgress gameInProgress = new GameInProgress(players);
         gameInProgress.consumeInput("exit");
         //when
         GameState nextState = gameInProgress.moveToNextState();
@@ -125,7 +138,8 @@ public class StateMachineTests {
     @Test
     public void StatesWithoutTerminateState_informsThatGameIsNotOver() {
         //given
-        GameState[] states = {new FinalState(), new DrawState(), new GameInProgress(), new InitialState(), new VictoryState()};
+        setPlayers();
+        GameState[] states = {new FinalState(), new DrawState(), new GameInProgress(players), new InitialState(players), new VictoryState()};
         //when // then
         for (GameState state : states) {
             Assert.assertFalse(state.isGameOver());
@@ -136,7 +150,8 @@ public class StateMachineTests {
     @Test
     public void InitialState_afterCallingShowState_returnsInformationAboutItsState() {
         //given
-        GameState stateToTest = new InitialState();
+        setPlayers();
+        GameState stateToTest = new InitialState(players);
         //when
         String stateInfo = stateToTest.showStateInfo();
         String expectedStateInfo = StateInfo.INITIAL_STATE.get();
@@ -197,7 +212,7 @@ public class StateMachineTests {
     @Test
     public void InitialState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
         //given
-        GameState stateToTest = new InitialState();
+        GameState stateToTest = new InitialState(players);
         //when
         String question = stateToTest.showQuestion();
         String expectedQuestion = StateQuestions.INITIAL_STATE.get();

@@ -1,9 +1,15 @@
 package akademia.ox;
 
 public class InitialState implements GameState {
+    private Players players;
+
+    public InitialState(Players players) {
+        this.players = players;
+    }
+
     @Override
     public GameState moveToNextState() {
-        return new GameInProgress();
+        return new GameInProgress(players);
     }
 
     @Override
