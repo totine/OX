@@ -1,4 +1,4 @@
 package akademia.ox;
 
-public class TooManyPlayersException extends RuntimeException {
+public class TooManyPlayersException extends Exception {
 }

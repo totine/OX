@@ -23,7 +23,7 @@ public class Players {
     }
 
 
-    public void addNewPlayer(Player player) {
+    public void addNewPlayer(Player player) throws TooManyPlayersException, IncorrectPlayerException {
         if (isFull()) {
             throw new TooManyPlayersException();
         }

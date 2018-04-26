@@ -27,7 +27,7 @@ public class PlayerTests {
         Assert.assertEquals(player.whichCharacter(), GameCharacter.X);
     }
 
-    @Test(expectedExceptions = IncorrectCharacterException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void player_duringCreatePlayerWithIncorrectCharacter_illegalArgumentExceptionIsThrown() {
         //given
         Player player = new Player(name, "incorrect");

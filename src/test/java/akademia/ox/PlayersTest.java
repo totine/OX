@@ -33,24 +33,29 @@ public class PlayersTest {
         //given
         Players players = new Players();
         //when
-        players.addNewPlayer(playerOne);
+        try {
+            players.addNewPlayer(playerOne);
+        } catch (TooManyPlayersException | IncorrectPlayerException e) {
+            e.printStackTrace();
+        }
         //then
         Assert.assertFalse(players.isEmpty());
     }
 
     @Test
-    public void playersInDefaultVersion_afterAddTwoPlayers_notAllSlotsForPlayerAreEmpty() {
+    public void playersInDefaultVersion_afterAddTwoPlayers_notAllSlotsForPlayerAreEmpty() throws IncorrectPlayerException, TooManyPlayersException {
         //given
         Players players = new Players();
         //when
         players.addNewPlayer(playerOne);
         players.addNewPlayer(playerTwo);
+
         //then
         Assert.assertFalse(players.isEmpty());
     }
 
     @Test(expectedExceptions = TooManyPlayersException.class)
-    public void playersInDefaultVersion_afterAddThreePlayers_TooManyPlayersExceptionIsThrown() {
+    public void playersInDefaultVersion_afterAddThreePlayers_TooManyPlayersExceptionIsThrown() throws IncorrectPlayerException, TooManyPlayersException {
         //given
         Players players = new Players();
         //when
@@ -62,7 +67,7 @@ public class PlayersTest {
     }
 
     @Test(expectedExceptions = IncorrectPlayerException.class)
-    public void players_duringAddingPlayer_playerShouldHasAssignedCharacter() {
+    public void players_duringAddingPlayer_playerShouldHasAssignedCharacter() throws IncorrectPlayerException, TooManyPlayersException {
         //given
         Players players = new Players();
         Player playerWithoutCharacter = new Player("name");
@@ -71,7 +76,7 @@ public class PlayersTest {
 
     }
     @Test(expectedExceptions = IncorrectPlayerException.class)
-    public void players_duringAddingSecondPlayer_itsCharacterShouldDifferentFromFirstPlayer() {
+    public void players_duringAddingSecondPlayer_itsCharacterShouldDifferentFromFirstPlayer() throws IncorrectPlayerException, TooManyPlayersException {
         //given
         Players players = new Players();
         //when
@@ -81,7 +86,7 @@ public class PlayersTest {
     }
 
     @Test(expectedExceptions = IncorrectPlayerException.class)
-    public void players_shouldBeUnique() {
+    public void players_shouldBeUnique() throws IncorrectPlayerException, TooManyPlayersException {
         //given
         Players players = new Players();
         //when
@@ -90,7 +95,7 @@ public class PlayersTest {
     }
 
     @Test
-    public void players_afterCreateNewPlayersAndAddPlayers_showCurrentPlayerShouldReturnTheFirstOne() {
+    public void players_afterCreateNewPlayersAndAddPlayers_showCurrentPlayerShouldReturnTheFirstOne() throws IncorrectPlayerException, TooManyPlayersException {
         //given
         Players players = new Players();
         //when
@@ -101,7 +106,7 @@ public class PlayersTest {
     }
 
     @Test
-    public void players_afterSwap_showCurrentPlayerShouldReturnTheSecondOne() {
+    public void players_afterSwap_showCurrentPlayerShouldReturnTheSecondOne() throws IncorrectPlayerException, TooManyPlayersException {
         //given
         Players players = new Players();
         //when
@@ -113,7 +118,7 @@ public class PlayersTest {
     }
 
     @Test
-    public void players_afterTwoSwaps_showCurrentPlayerShouldReturnTheFirstOne() {
+    public void players_afterTwoSwaps_showCurrentPlayerShouldReturnTheFirstOne() throws IncorrectPlayerException, TooManyPlayersException {
         //given
         Players players = new Players();
         //when
@@ -126,7 +131,7 @@ public class PlayersTest {
     }
 
     @Test
-    public void players_afterThreeSwaps_showCurrentPlayerShouldReturnTheSecondOne() {
+    public void players_afterThreeSwaps_showCurrentPlayerShouldReturnTheSecondOne() throws IncorrectPlayerException, TooManyPlayersException {
         //given
         Players players = new Players();
         //when
