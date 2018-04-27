@@ -58,8 +58,49 @@ public class BoardTests {
         Assert.assertEquals(character, GameCharacter.EMPTY);
     }
 
+    @Test
+    public void emptyBoard_afterPutFirstCharacterByIndexes_currentCoverageIsEqualToOne() {
+        int x = Math.abs(random.nextInt()+1);
+        int y = Math.abs(random.nextInt() + 1);
+        Board board = new Board(x,y);
+
+        int row = random.nextInt(x)+1;
+        int col = random.nextInt(y)+1;
+
+        board.put(row, col, GameCharacter.X);
+
+        int currentCoverate = board.coverage();
+        Assert.assertEquals(currentCoverate, 1);
+    }
 
 
+    @Test
+    public void emptyBoard_afterPutFirstCharacterByNumber_currentCoverageIsEqualToOne() {
+        int x = Math.abs(random.nextInt((int)Math.sqrt(Integer.MAX_VALUE)))+1;
+        int y = Math.abs(random.nextInt((int)Math.sqrt(Integer.MAX_VALUE)))+1;
+        Board board = new Board(x,y);
+        int fieldNumber = random.nextInt(x*y)+1;
+        board.put(fieldNumber, GameCharacter.X);
+
+        int currentCoverate = board.coverage();
+        Assert.assertEquals(currentCoverate, 1);
+    }
+
+    @Test(invocationCount = 10)
+    public void Board_afterPutSecondCharacterInCorrectPlace_currentCoverageIsEqualToTwo() {
+        int x = Math.abs(random.nextInt()+1);
+        int y = Math.abs(random.nextInt() + 1);
+        Board board = new Board(x,y);
+
+        int row = random.nextInt(x)+1;
+        int col = random.nextInt(y)+1;
+
+        board.put(row, col, GameCharacter.X);
+        board.put(row+1, col+1, GameCharacter.O);
+
+        int currentCoverate = board.coverage();
+        Assert.assertEquals(currentCoverate, 2);
+    }
 
 
 }

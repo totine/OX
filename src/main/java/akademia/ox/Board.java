@@ -7,6 +7,7 @@ public class Board {
     private int rows;
     private int columns;
     private Map<Integer, GameCharacter> board;
+    private int coverage;
 
     public Board(int rows, int columns) {
         if (rows <= 0 || columns <= 0) {
@@ -15,6 +16,7 @@ public class Board {
         this.rows = rows;
         this.columns = columns;
         this.board = new HashMap<>();
+        this.coverage = 0;
     }
 
     public static Board createBoard(String query) {
@@ -39,10 +41,25 @@ public class Board {
     }
 
     private Integer getFieldNumberFromRowAndCol(int row, int col) {
-        return rows*(row-1) + col;
+        return columns*(row-1) + col;
     }
 
     public GameCharacter getCharacter(int fieldNumber) {
         return board.getOrDefault(fieldNumber, GameCharacter.EMPTY);
+    }
+
+    public void put(int row, int col, GameCharacter character) {
+        Integer fieldNumber = getFieldNumberFromRowAndCol(row, col);
+        put(fieldNumber, character);
+
+    }
+
+    public int coverage() {
+        return coverage;
+    }
+
+    public void put(int fieldNumber, GameCharacter character) {
+        board.put(fieldNumber, character);
+        coverage++;
     }
 }
