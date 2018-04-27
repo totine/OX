@@ -26,7 +26,7 @@ public class BoardVisualizer {
         return length;
     }
 
-    public String drawBoard(Board board) {
+    public String drawBoard() {
         StringBuilder visualisation = new StringBuilder();
         visualisation.append(drawLineWithColumnIndexes()).append(drawLine())
                 .append(drawBoardBody())
@@ -47,7 +47,7 @@ public class BoardVisualizer {
                     sb.append(center((row-1)*columns + column, maxColumnWidth) + "|");
                 }
                 else {
-                    sb.append(current);
+                    sb.append(center(current, maxColumnWidth) + "|");
                 }
 
                 column++;

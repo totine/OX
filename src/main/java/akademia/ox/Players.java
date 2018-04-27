@@ -54,6 +54,9 @@ public class Players {
     public Player currentPlayer() {
         return players[currentIndex];
     }
+    public GameCharacter currentPlayerCharacter() {
+        return players[currentIndex].whichCharacter();
+    }
 
     public void swapPlayers() {
         currentIndex = (++currentIndex)%players.length;
