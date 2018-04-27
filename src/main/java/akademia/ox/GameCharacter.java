@@ -12,6 +12,11 @@ public enum GameCharacter {
         public GameCharacter getOpposite() {
             return O;
         }
+    }, EMPTY {
+        @Override
+        public GameCharacter getOpposite() {
+            return EMPTY;
+        }
     };
 
     public abstract GameCharacter getOpposite();

@@ -10,7 +10,7 @@ public class StateMachineWithPlayersTests {
     private Players players;
     private Player playerOne = new Player("p1", "X");
     private Player playerTwo = new Player("p2", "O");
-    private Board board = new Board();
+    private Board board = new Board(3,3);
 
     private void setPlayers() throws IncorrectPlayerException, TooManyPlayersException {
         players = new Players();
