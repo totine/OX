@@ -7,11 +7,13 @@ public class InProgressState implements GameState {
     private Players players;
     private GameState nextState;
     private Board board;
+    private DrawChecker drawChecker;
 
     public InProgressState(Players players, Board board) {
         this.players = players;
         this.board = board;
         this.boardVisualizer = new BoardVisualizer(board);
+        this.drawChecker = new DrawChecker(board);
     }
 
     @Override
@@ -46,6 +48,7 @@ public class InProgressState implements GameState {
                 board.put(Integer.parseInt(query), players.currentPlayerCharacter());
                 players.swapPlayers();
                 nextState = this;
+                if (drawChecker.isDraw()) nextState = new DrawState();
         }
     }
 
