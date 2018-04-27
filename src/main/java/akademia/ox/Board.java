@@ -25,6 +25,14 @@ public class Board {
         return rows * columns;
     }
 
+    public int rows() {
+        return rows;
+    }
+
+    public int colums() {
+        return columns;
+    }
+
     public GameCharacter getCharacter(int row, int col) {
         Integer fieldNumber = getFieldNumberFromRowAndCol(row, col);
         return board.getOrDefault(fieldNumber, GameCharacter.EMPTY);
