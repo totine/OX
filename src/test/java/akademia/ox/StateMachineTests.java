@@ -25,6 +25,7 @@ public class StateMachineTests {
         setPlayers();
         GameState initialState = new InitialState(players);
         //when
+        initialState.consumeInput("asdf");
         GameState nextState = initialState.moveToNextState();
         //then
         Assert.assertEquals(nextState.getClass(), InProgressState.class);
@@ -35,7 +36,7 @@ public class StateMachineTests {
         //given
         setPlayers();
         InProgressState inProgressState = new InProgressState(players, board);
-        inProgressState.consumeInput("asdf");
+        inProgressState.consumeInput("11");
 
         //when
         GameState nextState = inProgressState.moveToNextState();

@@ -35,7 +35,7 @@ public class StateMachineWithPlayersTests {
         setPlayers();
         InProgressState gameInProgress = new InProgressState(players, board);
         //when
-        gameInProgress.consumeInput("here will be correct input");
+        gameInProgress.consumeInput("1");
         gameInProgress.moveToNextState();
 
         Player currentPlayer = gameInProgress.showCurrentPlayer();
@@ -63,7 +63,7 @@ public class StateMachineWithPlayersTests {
         setPlayers();
         InProgressState inProgressState = new InProgressState(players, board);
         //when
-        inProgressState.consumeInput("here will be correct input");
+        inProgressState.consumeInput("1");
         inProgressState.consumeInput("victory");
         GameState nextState = inProgressState.moveToNextState();
         //then
