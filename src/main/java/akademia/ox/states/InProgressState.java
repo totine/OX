@@ -4,6 +4,7 @@ import akademia.ox.*;
 
 public class InProgressState implements GameState {
     private final BoardVisualizer boardVisualizer;
+    private final VictoryChecker victoryChecker;
     private Players players;
     private GameState nextState;
     private Board board;
@@ -14,6 +15,7 @@ public class InProgressState implements GameState {
         this.board = board;
         this.boardVisualizer = new BoardVisualizer(board);
         this.drawChecker = new DrawChecker(board);
+        this.victoryChecker = new VictoryChecker(board, 4);
     }
 
     @Override
@@ -33,23 +35,17 @@ public class InProgressState implements GameState {
 
     @Override
     public void consumeInput(String query) {
-        switch (query) {
-            case "victory":
-                nextState = new VictoryState(players);
-                break;
-            case "draw":
-                nextState = new DrawState();
-                break;
-            case "exit":
-                nextState = new FinalState();
-                break;
-            default:
+        Integer move = Integer.parseInt(query);
+                board.put(move, players.currentPlayerCharacter());
+                if (victoryChecker.checkVictory(move, players.currentPlayerCharacter())) {
+                    nextState = new VictoryState(players);
+                }
 
-                board.put(Integer.parseInt(query), players.currentPlayerCharacter());
-                players.swapPlayers();
-                nextState = this;
-                if (drawChecker.isDraw()) nextState = new DrawState();
-        }
+                else if (drawChecker.isDraw()) { nextState = new DrawState(); }
+                else {
+                    players.swapPlayers();
+                    nextState = this;
+                }
     }
 
     @Override

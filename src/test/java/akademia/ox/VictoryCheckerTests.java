@@ -94,16 +94,34 @@ public class VictoryCheckerTests {
         Assert.assertTrue(victoryChecker.checkVictory(7, GameCharacter.X));
     }
 
+
+
     @Test
     public void VictoryChecker_board7by4UpDiagVictoryLastMoveOn1ToWin3_returnsTrue() {
-        Board board = new Board(7, 5);
+        Board board = new Board(4, 5);
         board.put(1, GameCharacter.X);
-        board.put(2, GameCharacter.X);
-        board.put(3, GameCharacter.X);
-        board.put(4, GameCharacter.X);
+        board.put(7, GameCharacter.X);
+        board.put(5, GameCharacter.X);
+        board.put(9, GameCharacter.X);
+        board.put(13, GameCharacter.X);
         VictoryChecker victoryChecker = new VictoryChecker(board, 4);
 
-        Assert.assertTrue(victoryChecker.checkVictory(1, GameCharacter.X));
+        Assert.assertFalse(victoryChecker.checkVictory(13, GameCharacter.X));
+    }
+    @Test
+    public void asdf() {
+        Board board = new Board(4, 5);
+        board.put(1, GameCharacter.X);
+        board.put(3, GameCharacter.X);
+        board.put(5, GameCharacter.X);
+        board.put(7, GameCharacter.X);
+        board.put(9, GameCharacter.X);
+        board.put(11, GameCharacter.X);
+        board.put(13, GameCharacter.X);
+        board.put(15, GameCharacter.X);
+        VictoryChecker victoryChecker = new VictoryChecker(board, 4);
+
+        Assert.assertFalse(victoryChecker.checkVictory(15, GameCharacter.X));
     }
 
 }

@@ -27,7 +27,7 @@ public class InitialState implements GameState {
 
     @Override
     public void consumeInput(String query) {
-        this.board = new Board(3, 3);
+        this.board = new Board(4, 5);
 
     }
 
