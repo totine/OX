@@ -1,5 +1,7 @@
 package akademia.ox.states;
 
+import akademia.ox.Board;
+import akademia.ox.Player;
 import akademia.ox.StateInfo;
 import akademia.ox.StateQuestions;
 
@@ -29,5 +31,15 @@ public class DrawState implements GameState {
     @Override
     public String showQuestion() {
         return StateQuestions.DRAW_STATE.get();
+    }
+
+    @Override
+    public Player showCurrentPlayer() {
+        return null;
+    }
+
+    @Override
+    public Board showBoard() {
+        return null;
     }
 }

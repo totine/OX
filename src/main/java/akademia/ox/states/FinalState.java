@@ -1,10 +1,10 @@
 package akademia.ox.states;
 
-import akademia.ox.StateInfo;
-import akademia.ox.StateQuestions;
+import akademia.ox.*;
 
 public class FinalState implements GameState {
     private GameState nextState;
+    private Players players;
 
     @Override
     public GameState moveToNextState() {
@@ -25,7 +25,7 @@ public class FinalState implements GameState {
     public void consumeInput(String query) {
         switch (query) {
             case "continue":
-                nextState = new InitialState();
+                nextState = new InitialState(players);
                 break;
             case "end":
                 nextState = new TerminateState();
@@ -39,6 +39,16 @@ public class FinalState implements GameState {
     @Override
     public String showQuestion() {
         return StateQuestions.FINAL_STATE.get();
+    }
+
+    @Override
+    public Player showCurrentPlayer() {
+        return null;
+    }
+
+    @Override
+    public Board showBoard() {
+        return null;
     }
 
 }
