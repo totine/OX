@@ -10,7 +10,7 @@ public class Board {
     private int coverage;
 
     public Board(int rows, int columns) {
-        if (rows <= 0 || columns <= 0) {
+        if (rows < 3 || columns < 3) {
             throw new IllegalArgumentException("");
         }
         this.rows = rows;
