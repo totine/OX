@@ -1,9 +1,6 @@
 package akademia.ox.states;
 
-import akademia.ox.Board;
-import akademia.ox.Player;
-import akademia.ox.StateInfo;
-import akademia.ox.StateQuestions;
+import akademia.ox.*;
 
 public class TerminateState implements GameState {
     @Override
@@ -37,7 +34,7 @@ public class TerminateState implements GameState {
     }
 
     @Override
-    public Board showBoard() {
+    public OxGame showGame() {
         return null;
     }
 }

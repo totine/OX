@@ -6,6 +6,10 @@ public class FinalState implements GameState {
     private GameState nextState;
     private Players players;
 
+    public FinalState(Players players) {
+        this.players = players;
+    }
+
     @Override
     public GameState moveToNextState() {
         return nextState;
@@ -47,7 +51,7 @@ public class FinalState implements GameState {
     }
 
     @Override
-    public Board showBoard() {
+    public OxGame showGame() {
         return null;
     }
 

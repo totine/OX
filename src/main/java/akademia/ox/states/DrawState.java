@@ -1,16 +1,19 @@
 package akademia.ox.states;
 
-import akademia.ox.Board;
-import akademia.ox.Player;
-import akademia.ox.StateInfo;
-import akademia.ox.StateQuestions;
+import akademia.ox.*;
 
 public class DrawState implements GameState {
 
 
+    private final Players players;
+
+    public DrawState(Players players) {
+        this.players = players;
+    }
+
     @Override
     public GameState moveToNextState() {
-        return new FinalState();
+        return new FinalState(players);
     }
 
     @Override
@@ -39,7 +42,7 @@ public class DrawState implements GameState {
     }
 
     @Override
-    public Board showBoard() {
+    public OxGame showGame() {
         return null;
     }
 }
