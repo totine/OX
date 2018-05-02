@@ -1,6 +1,7 @@
 package akademia.ox.states;
 
 import akademia.ox.Board;
+import akademia.ox.OxGame;
 import akademia.ox.Player;
 
 public interface GameState {
@@ -16,5 +17,5 @@ public interface GameState {
 
     Player showCurrentPlayer();
 
-    Board showBoard();
+    OxGame showGame();
 }
