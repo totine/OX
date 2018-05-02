@@ -13,7 +13,7 @@ public class StateMachineWithBoardTests {
         //given
         InitialState initialState = new InitialState(players);
         //when
-        Board board = initialState.showBoard();
+        Board board = initialState.showGame().showBoard();
         //then
         Assert.assertNull(board);
     }
@@ -24,7 +24,7 @@ public class StateMachineWithBoardTests {
         InitialState initialState = new InitialState(players);
         //when
         initialState.consumeInput("temporary input");
-        Board board = initialState.showBoard();
+        Board board = initialState.showGame().showBoard();
         //then
         Assert.assertNotNull(board);
     }
@@ -35,9 +35,9 @@ public class StateMachineWithBoardTests {
         InitialState initialState = new InitialState(players);
         //when
         initialState.consumeInput("temporary input");
-        Board initialBoard = initialState.showBoard();
+        Board initialBoard = initialState.showGame().showBoard();
         GameState gameState = initialState.moveToNextState();
-        Board nextBoard = gameState.showBoard();
+        Board nextBoard = gameState.showGame().showBoard();
         //then
         Assert.assertEquals(nextBoard, initialBoard);
     }

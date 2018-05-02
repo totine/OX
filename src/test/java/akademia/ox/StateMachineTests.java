@@ -10,7 +10,7 @@ public class StateMachineTests {
     private Players players;
     private Player p1 = new Player("p1", "X");
     private Player p2 = new Player("p2", "O");
-    private Board board = new Board();
+    private OxGame game = OxGame.createStandardGame();
 
     private void setPlayers() throws IncorrectPlayerException, TooManyPlayersException {
         players = new Players();
@@ -34,7 +34,7 @@ public class StateMachineTests {
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsNoDrawOrVictory_moveAgainToTheSameGameInProgressState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        InProgressState inProgressState = new InProgressState(players, board);
+        InProgressState inProgressState = new InProgressState(players, game);
         inProgressState.consumeInput("asdf");
 
         //when
@@ -48,7 +48,7 @@ public class StateMachineTests {
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsVictory_moveToVictoryState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        InProgressState gameInProgress = new InProgressState(players, board);
+        InProgressState gameInProgress = new InProgressState(players, game);
         //when
         gameInProgress.consumeInput("victory");
         GameState nextState = gameInProgress.moveToNextState();
@@ -60,7 +60,7 @@ public class StateMachineTests {
     public void GameInProgressState_afterCallingMoveToNextStateIfThereIsDraw_moveToDrawState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        InProgressState gameInProgress = new InProgressState(players, board);
+        InProgressState gameInProgress = new InProgressState(players, game);
         gameInProgress.consumeInput("draw");
         //when
         GameState nextState = gameInProgress.moveToNextState();
@@ -72,7 +72,7 @@ public class StateMachineTests {
     public void GameInProgressState_afterCallingMoveToNextStateIfWantingToExit_moveToFinalState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        InProgressState gameInProgress = new InProgressState(players, board);
+        InProgressState gameInProgress = new InProgressState(players, game);
         gameInProgress.consumeInput("exit");
         //when
         GameState nextState = gameInProgress.moveToNextState();
@@ -94,7 +94,7 @@ public class StateMachineTests {
     @Test
     public void DrawState_afterCallingMoveToNextState_moveFinalState() {
         //given
-        DrawState drawState = new DrawState();
+        DrawState drawState = new DrawState(players);
         //when
         GameState nextState = drawState.moveToNextState();
         //then
@@ -104,7 +104,7 @@ public class StateMachineTests {
     @Test
     public void FinalState_afterCallingMoveToNextStateIfGameIsContinued_moveInitialState() {
         //given
-        FinalState finalState = new FinalState();
+        FinalState finalState = new FinalState(players);
         //when
         finalState.consumeInput("continue");
         GameState nextState = finalState.moveToNextState();
@@ -115,7 +115,7 @@ public class StateMachineTests {
     @Test
     public void FinalState_afterCallingMoveToNextStateIfGameIsNotContinued_moveTerminateState() {
         //given
-        FinalState finalState = new FinalState();
+        FinalState finalState = new FinalState(players);
         //when
         finalState.consumeInput("end");
         GameState nextState = finalState.moveToNextState();
@@ -126,7 +126,7 @@ public class StateMachineTests {
     @Test
     public void FinalState_afterCallingMoveToNextStateIfInputIsIncorrect_stayInFinalState() {
         //given
-        FinalState finalState = new FinalState();
+        FinalState finalState = new FinalState(players);
         //when
         finalState.consumeInput("incorrectInput");
         GameState nextState = finalState.moveToNextState();
@@ -146,7 +146,7 @@ public class StateMachineTests {
     public void StatesWithoutTerminateState_informsThatGameIsNotOver() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        GameState[] states = {new FinalState(), new DrawState(), new InProgressState(players, board), new InitialState(players), new VictoryState(players)};
+        GameState[] states = {new FinalState(players), new DrawState(players), new InProgressState(players, game), new InitialState(players), new VictoryState(players)};
         //when // then
         for (GameState state : states) {
             Assert.assertFalse(state.isGameOver());
@@ -170,7 +170,7 @@ public class StateMachineTests {
     @Test
     public void DrawState_afterCallingShowState_returnsInformationAboutItsState() {
         //given
-        GameState stateToTest = new DrawState();
+        GameState stateToTest = new DrawState(players);
         //when
         String stateInfo = stateToTest.showStateInfo();
         String expectedStateInfo = StateInfo.DRAW_STATE.get();
@@ -194,7 +194,7 @@ public class StateMachineTests {
     @Test
     public void FinalState_afterCallingShowState_returnsInformationAboutItsState() {
         //given
-        GameState stateToTest = new FinalState();
+        GameState stateToTest = new FinalState(players);
         //when
         String stateInfo = stateToTest.showStateInfo();
         String expectedStateInfo = StateInfo.FINAL_STATE.get();
@@ -231,7 +231,7 @@ public class StateMachineTests {
     @Test
     public void DrawState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
         //given
-        GameState stateToTest = new DrawState();
+        GameState stateToTest = new DrawState(players);
         //when
         String question = stateToTest.showQuestion();
         String expectedQuestion = StateQuestions.DRAW_STATE.get();
@@ -255,7 +255,7 @@ public class StateMachineTests {
     @Test
     public void FinalState_afterCallingShowQuestion_returnsInformationAboutInputRequirements() {
         //given
-        GameState stateToTest = new FinalState();
+        GameState stateToTest = new FinalState(players);
         //when
         String question = stateToTest.showQuestion();
         String expectedQuestion = StateQuestions.FINAL_STATE.get();

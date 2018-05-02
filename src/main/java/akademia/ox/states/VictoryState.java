@@ -11,7 +11,7 @@ public class VictoryState implements GameState {
 
     @Override
     public GameState moveToNextState() {
-        return new FinalState();
+        return new FinalState(players);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class VictoryState implements GameState {
     }
 
     @Override
-    public Board showBoard() {
+    public OxGame showGame() {
         return null;
     }
 }

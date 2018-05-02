@@ -5,11 +5,11 @@ import akademia.ox.*;
 public class InProgressState implements GameState {
     private Players players;
     private GameState nextState;
-    private Board board;
+    private OxGame game;
 
-    public InProgressState(Players players, Board board) {
+    public InProgressState(Players players, OxGame game) {
         this.players = players;
-        this.board = board;
+        this.game = game;
     }
 
     @Override
@@ -24,20 +24,21 @@ public class InProgressState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return showBoard() + StateInfo.GAME_IN_PROGRESS_STATE.get(showCurrentPlayer());
+        return showGame() + StateInfo.GAME_IN_PROGRESS_STATE.get(showCurrentPlayer());
     }
 
     @Override
     public void consumeInput(String query) {
         switch (query) {
+            //Todo it is to refactor
             case "victory":
                 nextState = new VictoryState(players);
                 break;
             case "draw":
-                nextState = new DrawState();
+                nextState = new DrawState(players);
                 break;
             case "exit":
-                nextState = new FinalState();
+                nextState = new FinalState(players);
                 break;
             default:
                 players.swapPlayers();
@@ -55,7 +56,7 @@ public class InProgressState implements GameState {
     }
 
     @Override
-    public Board showBoard() {
-        return board;
+    public OxGame showGame() {
+        return game;
     }
 }
