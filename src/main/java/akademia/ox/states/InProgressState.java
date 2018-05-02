@@ -30,6 +30,7 @@ public class InProgressState implements GameState {
     @Override
     public void consumeInput(String query) {
         switch (query) {
+            //Todo it is to refactor
             case "victory":
                 nextState = new VictoryState(players);
                 break;
