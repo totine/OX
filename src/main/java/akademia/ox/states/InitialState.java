@@ -30,24 +30,24 @@ public class InitialState implements GameState {
 
     @Override
     public void consumeInput(String query) {
+        setNextStateBasedOnInputQuery(query);
+    }
+
+    private void setNextStateBasedOnInputQuery(String query) {
         if (query.equals("")) {
             game = OxGame.createStandardGame();
             nextState = new InProgressState(players, game);
-        }
-        else if (isCorrectQuery(query)) {
+        } else if (isCorrectQuery(query)) {
             game = OxGame.createGameFromQuery(query);
             nextState = new InProgressState(players, game);
-        }
-        else {
+        } else {
             nextState = this;
         }
-
-
     }
 
     private boolean isCorrectQuery(String query) {
         query = cleanUpQuery(query);
-        if (! query.matches("\\d+ \\d+ \\d+"))
+        if (!query.matches("\\d+ \\d+ \\d+"))
             return false;
         int[] numbers = Arrays.stream(query.split(" ")).mapToInt(Integer::parseInt).toArray();
         return Math.min(numbers[0], numbers[1]) >= numbers[2];
