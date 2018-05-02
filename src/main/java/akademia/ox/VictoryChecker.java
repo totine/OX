@@ -23,11 +23,11 @@ public class VictoryChecker {
 
     private int countUpDiagRight(int lastMove, GameCharacter character) {
         if (! board.getCharacter(lastMove).equals(character)) return 0;
-        if (lastMove % board.colums() == 0) {
+        if (lastMove % board.columns() == 0) {
             return board.getCharacter(lastMove).equals(character) ? 1 : 0;
         }
-        int nextIndex = lastMove - board.colums() + 1;
-        if (nextIndex % board.colums() == 0) {
+        int nextIndex = lastMove - board.columns() + 1;
+        if (nextIndex % board.columns() == 0) {
             return board.getCharacter(nextIndex).equals(character) ? 1 : 0;
         }
         return 1 + countUpDiagRight(nextIndex, character);
@@ -35,11 +35,11 @@ public class VictoryChecker {
 
     private int countUpDiagLeft(int lastMove, GameCharacter character) {
         if (! board.getCharacter(lastMove).equals(character)) return 0;
-        if (lastMove%board.colums() == 1) {
+        if (lastMove%board.columns() == 1) {
             return board.getCharacter(lastMove).equals(character) ? 1 : 0;
         }
-        int nextIndex = lastMove + board.colums() - 1;
-        if (nextIndex % board.colums() == 1) {
+        int nextIndex = lastMove + board.columns() - 1;
+        if (nextIndex % board.columns() == 1) {
             return board.getCharacter(nextIndex).equals(character) ? 1 : 0;
         }
         return 1 + countUpDiagLeft(nextIndex, character);
@@ -52,11 +52,11 @@ public class VictoryChecker {
 
     private int countDownDiagRight(int lastMove, GameCharacter character) {
 
-        if (lastMove%board.colums() == 0) {
+        if (lastMove%board.columns() == 0) {
             return board.getCharacter(lastMove).equals(character) ? 1 : 0;
         }
-        int nextIndex = lastMove + board.colums() + 1;
-        if (nextIndex%board.colums() == 0) {
+        int nextIndex = lastMove + board.columns() + 1;
+        if (nextIndex%board.columns() == 0) {
             return board.getCharacter(nextIndex).equals(character) ? 1 : 0;
         }
         return 1 + countDownDiagRight(nextIndex, character);
@@ -65,11 +65,11 @@ public class VictoryChecker {
     private int countDownDiagLeft(int lastMove, GameCharacter character) {
         System.out.println(lastMove);
         if (! board.getCharacter(lastMove).equals(character)) return 0;
-        if (lastMove%board.colums() == 1) {
+        if (lastMove%board.columns() == 1) {
             return board.getCharacter(lastMove).equals(character) ? 1 : 0;
         }
-        int nextIndex = lastMove - board.colums() - 1;
-        if (nextIndex%board.colums() == 1) {
+        int nextIndex = lastMove - board.columns() - 1;
+        if (nextIndex%board.columns() == 1) {
             return board.getCharacter(nextIndex).equals(character) ? 1 : 0;
         }
         return 1 + countDownDiagLeft(nextIndex, character);
@@ -92,12 +92,12 @@ public class VictoryChecker {
     }
 
     private int countUp(int lastMove, GameCharacter character) {
-        int nextIndex = lastMove - board.colums();
+        int nextIndex = lastMove - board.columns();
         return board.getCharacter(nextIndex).equals(character) ? 1 + countUp(nextIndex, character) : 0;
     }
 
     private int countDown(int lastMove, GameCharacter character) {
-        int nextIndex = lastMove + board.colums();
+        int nextIndex = lastMove + board.columns();
         return board.getCharacter(nextIndex).equals(character) ? 1 + countDown(nextIndex, character) : 0;
     }
 }

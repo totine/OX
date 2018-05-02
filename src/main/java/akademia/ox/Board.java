@@ -31,7 +31,7 @@ public class Board {
         return rows;
     }
 
-    public int colums() {
+    public int columns() {
         return columns;
     }
 
