@@ -9,9 +9,9 @@ public class DrawCheckerTests {
         Board board = new Board(3, 3);
         board.put(1, 2, GameCharacter.X);
 
-        DrawChecker drawChecker = new DrawChecker(board);
+        DrawChecker drawChecker = new DrawChecker();
 
-        Assert.assertFalse(drawChecker.isDraw());
+        Assert.assertFalse(drawChecker.isDraw(board));
     }
 
     @Test
@@ -27,9 +27,9 @@ public class DrawCheckerTests {
         board.put(3, 2, GameCharacter.X);
         board.put(3, 3, GameCharacter.X);
 
-        DrawChecker drawChecker = new DrawChecker(board);
+        DrawChecker drawChecker = new DrawChecker();
 
-        Assert.assertTrue(drawChecker.isDraw());
+        Assert.assertTrue(drawChecker.isDraw(board));
     }
 
     @Test
@@ -45,9 +45,9 @@ public class DrawCheckerTests {
         board.put(3, 2, GameCharacter.X);
 
 
-        DrawChecker drawChecker = new DrawChecker(board);
+        DrawChecker drawChecker = new DrawChecker();
 
-        Assert.assertFalse(drawChecker.isDraw());
+        Assert.assertFalse(drawChecker.isDraw(board));
     }
 
 }

@@ -3,19 +3,14 @@ package akademia.ox.states;
 import akademia.ox.*;
 
 public class InProgressState implements GameState {
-    private final BoardVisualizer boardVisualizer;
-    private final VictoryChecker victoryChecker;
+
     private Players players;
     private GameState nextState;
-    private DrawChecker drawChecker;
     private OxGame game;
 
 
     public InProgressState(Players players, OxGame game) {
         this.players = players;
-        this.boardVisualizer = new BoardVisualizer(game.showBoard());
-        this.drawChecker = new DrawChecker(game.showBoard());
-        this.victoryChecker = new VictoryChecker(game.showBoard(), game.toWin());
         this.game = game;
     }
 
@@ -39,19 +34,35 @@ public class InProgressState implements GameState {
     @Override
     public void consumeInput(String query) {
 
-        Integer move = Integer.parseInt(query);
-                game.showBoard().put(move, players.currentPlayerCharacter());
-                if (victoryChecker.checkVictory(move, players.currentPlayerCharacter())) {
+        if (query.equals("exit")) {
+            nextState = new FinalState(players);
+        } else if (query.matches("\\d+")) {
+
+
+            Integer move = Integer.parseInt(query);
+            if (isCorrectMove(move)) {
+                game.put(move, players.currentPlayerCharacter());
+                if (game.checkVictory(move, players.currentPlayerCharacter())) {
                     nextState = new VictoryState(players);
                 }
+            else if (game.isDraw()) {
+                nextState = new DrawState(players);
+            } else {
+                players.swapPlayers();
+                nextState = this;
+            }
+            }
 
-                else if (drawChecker.isDraw()) { nextState = new DrawState(players); }
-                else {
-                    players.swapPlayers();
-                    nextState = this;
-                }
-
+            else {
+                nextState = this;
+            }
+        }
     }
+
+    private boolean isCorrectMove(Integer move) {
+        return game.isCorrectMove(move);
+    }
+
 
     @Override
     public String showQuestion() {
@@ -65,5 +76,9 @@ public class InProgressState implements GameState {
     @Override
     public OxGame showGame() {
         return game;
+    }
+
+    public String showBoard() {
+        return game.showBoard();
     }
 }

@@ -1,13 +1,12 @@
 package akademia.ox;
 
 public class DrawChecker {
-    private final Board board;
 
-    public DrawChecker(Board board) {
-        this.board = board;
+
+    public DrawChecker()  {
     }
 
-    public boolean isDraw() {
+    public boolean isDraw(Board board) {
         return board.coverage() == board.boardSize();
     }
 }

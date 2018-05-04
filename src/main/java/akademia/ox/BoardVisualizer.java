@@ -7,6 +7,11 @@ public class BoardVisualizer {
     private int maxColumnWidth;
     private int maxIndexesWidth;
 
+
+    public BoardVisualizer() {
+
+    }
+
     public BoardVisualizer(Board board) {
         this.board = board;
         rows = board.rows();
@@ -14,7 +19,6 @@ public class BoardVisualizer {
         int maxColumnTemp = countNumberLength(board.boardSize());
         maxColumnWidth = maxColumnTemp + (maxColumnTemp%2 == 0 ? 1 : 0);
         maxIndexesWidth = countNumberLength(board.rows());
-
     }
 
     private int countNumberLength(int num) {
@@ -108,4 +112,13 @@ public class BoardVisualizer {
 
     }
 
+    public void setBoard(Board board) {
+
+        this.board = board;
+        rows = board.rows();
+        columns = board.columns();
+        int maxColumnTemp = countNumberLength(board.boardSize());
+        maxColumnWidth = maxColumnTemp + (maxColumnTemp%2 == 0 ? 1 : 0);
+        maxIndexesWidth = countNumberLength(board.rows());
+    }
 }

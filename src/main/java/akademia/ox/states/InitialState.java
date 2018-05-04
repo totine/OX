@@ -34,11 +34,14 @@ public class InitialState implements GameState {
     }
 
     private void setNextStateBasedOnInputQuery(String query) {
+        BoardVisualizer bv = new BoardVisualizer();
+        VictoryChecker vc = new VictoryChecker();
+        DrawChecker dc = new DrawChecker();
         if (query.equals("")) {
-            game = OxGame.createStandardGame();
+            game = OxGame.createStandardGame(bv, vc, dc);
             nextState = new InProgressState(players, game);
         } else if (isCorrectQuery(query)) {
-            game = OxGame.createGameFromQuery(query);
+            game = OxGame.createGameFromQuery(query, bv, vc, dc);
             nextState = new InProgressState(players, game);
         } else {
             nextState = this;

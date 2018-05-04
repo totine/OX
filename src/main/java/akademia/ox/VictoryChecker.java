@@ -7,9 +7,12 @@ public class VictoryChecker {
     private Board board;
     private int toWin;
 
-    public VictoryChecker(Board board, int toWin) {
+    public VictoryChecker() {
+    }
+
+    public VictoryChecker(Board board, int i) {
+        toWin = i;
         this.board = board;
-        this.toWin = toWin;
     }
 
     public boolean checkVictory(int lastMove, GameCharacter character) {
@@ -17,11 +20,11 @@ public class VictoryChecker {
         int inCol = countInCol(lastMove, character);
         int inDownDiag = countInDownDiag(lastMove, character);
         int inUpDiag = countInUpDiag(lastMove, character);
-        return inRow >= toWin || inCol >= toWin || inDownDiag >= toWin || inUpDiag >= toWin;
+        return inRow >= this.toWin || inCol >= this.toWin || inDownDiag >= this.toWin || inUpDiag >= this.toWin;
     }
 
     private int countInRow(int lastMove, GameCharacter character) {
-        int leftLimit = ((lastMove-1)/board.columns())*board.columns() + 1;
+        int leftLimit = ((lastMove - 1)/board.columns())*board.columns() + 1;
         int rightLimit = leftLimit + board.columns() - 1;
 
         IntFunction<Integer> nextRightIndexCounter = index -> index + 1;
@@ -92,5 +95,8 @@ public class VictoryChecker {
     }
 
 
-
+    public void setParameters(Board board, int toWin) {
+        this.board = board;
+        this.toWin = toWin;
+    }
 }

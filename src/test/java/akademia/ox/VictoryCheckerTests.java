@@ -12,6 +12,7 @@ public class VictoryCheckerTests {
         board.put(1, GameCharacter.X);
         board.put(2, GameCharacter.X);
         board.put(3, GameCharacter.X);
+
         VictoryChecker victoryChecker = new VictoryChecker(board, 3);
 
         Assert.assertTrue(victoryChecker.checkVictory(1, GameCharacter.X));

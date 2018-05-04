@@ -65,4 +65,8 @@ public class Board {
         board.put(fieldNumber, character);
         coverage++;
     }
+
+    public boolean contains(Integer move) {
+        return board.containsKey(move);
+    }
 }
