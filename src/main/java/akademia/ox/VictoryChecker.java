@@ -1,5 +1,7 @@
 package akademia.ox;
 
+import java.util.function.IntFunction;
+
 public class VictoryChecker {
     private Board board;
     private int toWin;
@@ -18,74 +20,67 @@ public class VictoryChecker {
     }
 
     private int countInUpDiag(int lastMove, GameCharacter character) {
-        return countUpDiagLeft(lastMove, character) + countUpDiagRight(lastMove, character);
-    }
+        int i = lastMove;
+        while (i%board.colums() != 1 && i<board.boardSize()-board.colums()) {
+            i+=(board.colums()-1);
+        }
+        int leftLimit = i;
+        int j = lastMove;
+        while (j%board.colums() != 0 && j>board.colums()) {
+            j-=(board.colums()-1);
+        }
+        int rightLimit = j;
+        IntFunction<Integer> nextRightIndexCounter = index -> index - board.colums() + 1;
+        IntFunction<Integer> nextLeftIndexCounter = index -> index + board.colums() - 1;
+        return countRightLine(lastMove, character, leftLimit, nextLeftIndexCounter) + countSmaller(lastMove, character, rightLimit, nextRightIndexCounter) + 1;
 
-    private int countUpDiagRight(int lastMove, GameCharacter character) {
-        if (! board.getCharacter(lastMove).equals(character)) return 0;
-        if (lastMove % board.colums() == 0) {
-            return board.getCharacter(lastMove).equals(character) ? 1 : 0;
-        }
-        int nextIndex = lastMove - board.colums() + 1;
-        if (nextIndex % board.colums() == 0) {
-            return board.getCharacter(nextIndex).equals(character) ? 1 : 0;
-        }
-        return 1 + countUpDiagRight(nextIndex, character);
-    }
-
-    private int countUpDiagLeft(int lastMove, GameCharacter character) {
-        if (! board.getCharacter(lastMove).equals(character)) return 0;
-        if (lastMove%board.colums() == 1) {
-            return board.getCharacter(lastMove).equals(character) ? 1 : 0;
-        }
-        int nextIndex = lastMove + board.colums() - 1;
-        if (nextIndex % board.colums() == 1) {
-            return board.getCharacter(nextIndex).equals(character) ? 1 : 0;
-        }
-        return 1 + countUpDiagLeft(nextIndex, character);
     }
 
     private int countInDownDiag(int lastMove, GameCharacter character) {
+        int i = lastMove;
+        while (i%board.colums() != 0) {
+            i+=(board.colums()+1);
+        }
+        int rightLimit = i;
+        int j = lastMove;
+        while (j%board.colums() != 1 &&  j>board.colums()) {
+            j-=(board.colums());
+        }
+        int leftLimit = j;
 
-        return countDownDiagLeft(lastMove, character) + countDownDiagRight(lastMove, character);
+        IntFunction<Integer> nextRightIndexCounter = index -> index + board.colums() + 1;
+        IntFunction<Integer> nextLeftIndexCounter = index -> index - board.colums() - 1;
+        return countSmaller(lastMove, character, leftLimit, nextLeftIndexCounter) + countRightLine(lastMove, character, rightLimit, nextRightIndexCounter) + 1;
     }
 
-    private int countDownDiagRight(int lastMove, GameCharacter character) {
+    private int countRightLine(int lastMove, GameCharacter character, int limit, IntFunction<Integer> nextIndexCounter) {
+        int nextIndex = nextIndexCounter.apply(lastMove);
 
-        if (lastMove%board.colums() == 0) {
-            return board.getCharacter(lastMove).equals(character) ? 1 : 0;
+        if (nextIndex > limit || ! board.getCharacter(nextIndex).equals(character)) {
+            return 0;
         }
-        int nextIndex = lastMove + board.colums() + 1;
-        if (nextIndex%board.colums() == 0) {
-            return board.getCharacter(nextIndex).equals(character) ? 1 : 0;
+        return 1 + countRightLine(nextIndex, character, limit, nextIndexCounter);
+    }
+    private int countSmaller(int lastMove, GameCharacter character, int limit, IntFunction<Integer> nextIndexCounter) {
+        int nextIndex = nextIndexCounter.apply(lastMove);
+
+        if (nextIndex < limit || ! board.getCharacter(nextIndex).equals(character)) {
+            return 0;
         }
-        return 1 + countDownDiagRight(nextIndex, character);
+        return 1 + countSmaller(nextIndex, character, limit, nextIndexCounter);
     }
 
-    private int countDownDiagLeft(int lastMove, GameCharacter character) {
-        System.out.println(lastMove);
-        if (! board.getCharacter(lastMove).equals(character)) return 0;
-        if (lastMove%board.colums() == 1) {
-            return board.getCharacter(lastMove).equals(character) ? 1 : 0;
-        }
-        int nextIndex = lastMove - board.colums() - 1;
-        if (nextIndex%board.colums() == 1) {
-            return board.getCharacter(nextIndex).equals(character) ? 1 : 0;
-        }
-        return 1 + countDownDiagLeft(nextIndex, character);
-    }
 
     private int countInRow(int lastMove, GameCharacter character) {
-        return 1 + countLeft(lastMove, character) + countRight(lastMove, character);
+        int leftLimit = ((lastMove-1)/board.colums())*board.colums() + 1;
+        int rightLimit = leftLimit + board.colums() - 1;
+
+        IntFunction<Integer> nextRightIndexCounter = index -> index + 1;
+        IntFunction<Integer> nextLeftIndexCounter = index -> index - 1;
+        return countSmaller(lastMove, character, leftLimit, nextLeftIndexCounter) + countRightLine (lastMove, character, rightLimit, nextRightIndexCounter) + 1;
     }
 
-    private int countLeft(int lastMove, GameCharacter character) {
-        return board.getCharacter(lastMove - 1).equals(character) ? 1 + countLeft(lastMove - 1, character) : 0;
-    }
 
-    private int countRight(int lastMove, GameCharacter character) {
-        return board.getCharacter(lastMove + 1).equals(character) ? 1 + countRight(lastMove + 1, character) : 0;
-    }
 
     private int countInCol(int lastMove, GameCharacter character) {
         return 1 + countUp(lastMove, character) + countDown(lastMove, character);
@@ -100,4 +95,5 @@ public class VictoryChecker {
         int nextIndex = lastMove + board.colums();
         return board.getCharacter(nextIndex).equals(character) ? 1 + countDown(nextIndex, character) : 0;
     }
+
 }
