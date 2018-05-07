@@ -18,6 +18,13 @@ public class Player {
 
     }
 
+    public Player(String name, GameCharacter character)  {
+        this.name = name;
+        this.points = 0;
+        this.character = character;
+
+    }
+
     public String showName() {
         return name;
     }
@@ -50,5 +57,9 @@ public class Player {
 
     public boolean hasUnassignedCharacter() {
         return character == null;
+    }
+
+    public GameCharacter oppositeCharacter() {
+        return character.getOpposite();
     }
 }
