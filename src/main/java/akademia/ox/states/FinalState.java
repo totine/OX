@@ -51,7 +51,7 @@ public class FinalState implements GameState {
     }
 
     @Override
-    public OxGame showGame() {
+    public OxRound showGame() {
         return null;
     }
 

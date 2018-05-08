@@ -5,7 +5,7 @@ import akademia.ox.*;
 import java.util.Arrays;
 
 public class InitialState implements GameState {
-    private OxGame game;
+    private OxRound game;
     private Players players;
     private GameState nextState;
 
@@ -37,10 +37,10 @@ public class InitialState implements GameState {
         BoardVisualizer bv = new BoardVisualizer();
         VictoryChecker vc = new VictoryChecker();
         if (query.equals("")) {
-            game = OxGame.createStandardGame(bv, vc);
+            game = OxRound.createStandardGame(bv, vc);
             nextState = new InProgressState(players, game);
         } else if (isCorrectQuery(query)) {
-            game = OxGame.createGameFromQuery(query, bv, vc);
+            game = OxRound.createGameFromQuery(query, bv, vc);
             nextState = new InProgressState(players, game);
         } else {
             nextState = this;
@@ -71,7 +71,7 @@ public class InitialState implements GameState {
     }
 
     @Override
-    public OxGame showGame() {
+    public OxRound showGame() {
         return game;
     }
 }

@@ -13,7 +13,7 @@ public class StateMachineTests {
     private Player p2 = new Player("p2", "O");
     private BoardVisualizer bv = new BoardVisualizer();
     private VictoryChecker vc = new VictoryChecker();
-    private OxGame game;
+    private OxRound game;
 
 
     private void setPlayers() throws IncorrectPlayerException, TooManyPlayersException {
@@ -24,7 +24,7 @@ public class StateMachineTests {
     }
 
     private void setGame() {
-        game =  OxGame.createStandardGame(bv, vc);
+        game =  OxRound.createStandardGame(bv, vc);
     }
 
     @Test

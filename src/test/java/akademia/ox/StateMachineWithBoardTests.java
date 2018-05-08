@@ -13,7 +13,7 @@ public class StateMachineWithBoardTests {
         //given
         InitialState initialState = new InitialState(players);
         //when
-        OxGame game = initialState.showGame();
+        OxRound game = initialState.showGame();
         //then
         Assert.assertNull(game);
     }

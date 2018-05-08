@@ -6,10 +6,10 @@ public class InProgressState implements GameState {
 
     private Players players;
     private GameState nextState;
-    private OxGame game;
+    private OxRound game;
 
 
-    public InProgressState(Players players, OxGame game) {
+    public InProgressState(Players players, OxRound game) {
         this.players = players;
         this.game = game;
     }
@@ -74,7 +74,7 @@ public class InProgressState implements GameState {
     }
 
     @Override
-    public OxGame showGame() {
+    public OxRound showGame() {
         return game;
     }
 

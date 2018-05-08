@@ -16,5 +16,5 @@ public interface GameState {
 
     Player showCurrentPlayer();
 
-    OxGame showGame();
+    OxRound showGame();
 }
