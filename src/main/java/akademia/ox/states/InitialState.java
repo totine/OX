@@ -34,11 +34,13 @@ public class InitialState implements GameState {
     }
 
     private void setNextStateBasedOnInputQuery(String query) {
+        BoardVisualizer bv = new BoardVisualizer();
+        VictoryChecker vc = new VictoryChecker();
         if (query.equals("")) {
-            game = OxGame.createStandardGame();
+            game = OxGame.createStandardGame(bv, vc);
             nextState = new InProgressState(players, game);
         } else if (isCorrectQuery(query)) {
-            game = OxGame.createGameFromQuery(query);
+            game = OxGame.createGameFromQuery(query, bv, vc);
             nextState = new InProgressState(players, game);
         } else {
             nextState = this;
@@ -52,6 +54,7 @@ public class InitialState implements GameState {
         int[] numbers = Arrays.stream(query.split(" ")).mapToInt(Integer::parseInt).toArray();
         return Math.min(numbers[0], numbers[1]) >= numbers[2];
     }
+
 
     private String cleanUpQuery(String query) {
         return query.trim().replaceAll(" +", " ");

@@ -10,13 +10,19 @@ public class StateMachineWithPlayersTests {
     private Players players;
     private Player playerOne = new Player("p1", "X");
     private Player playerTwo = new Player("p2", "O");
-    private Board board = new Board(3,3);
-    private OxGame game = OxGame.createStandardGame();
+    private BoardVisualizer bv = new BoardVisualizer();
+    private VictoryChecker vc = new VictoryChecker();
+    private OxGame game;
+
 
     private void setPlayers() throws IncorrectPlayerException, TooManyPlayersException {
         players = new Players();
         players.addNewPlayer(playerOne);
         players.addNewPlayer(playerTwo);
+    }
+
+    private void setGame() {
+        game = OxGame.createStandardGame(bv, vc);
     }
 
     @Test
@@ -34,9 +40,10 @@ public class StateMachineWithPlayersTests {
     public void GameInProgress_inSecondTurnOnShowCurrentPlayer_returnPlayerTwo() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
+        setGame();
         InProgressState gameInProgress = new InProgressState(players, game);
         //when
-        gameInProgress.consumeInput("here will be correct input");
+        gameInProgress.consumeInput("1");
         gameInProgress.moveToNextState();
 
         Player currentPlayer = gameInProgress.showCurrentPlayer();
@@ -48,10 +55,21 @@ public class StateMachineWithPlayersTests {
     public void VictoryState_afterMoveFromInProgressStateWithoutPlayerMove_hasTheSamePlayerLikeInGameInProgress() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
+        setGame();
         InProgressState inProgressState = new InProgressState(players, game);
         //when
-        inProgressState.consumeInput("victory");
+        inProgressState.consumeInput("1");
+        System.out.println(inProgressState.showCurrentPlayer());
         GameState nextState = inProgressState.moveToNextState();
+        System.out.println(nextState.showCurrentPlayer());
+        inProgressState.consumeInput("5");
+         nextState = inProgressState.moveToNextState();
+        inProgressState.consumeInput("2");
+         nextState = inProgressState.moveToNextState();
+        inProgressState.consumeInput("6");
+         nextState = inProgressState.moveToNextState();
+        inProgressState.consumeInput("3");
+         nextState = inProgressState.moveToNextState();
         //then
         Assert.assertEquals(nextState.showCurrentPlayer(), playerOne);
 
@@ -62,10 +80,10 @@ public class StateMachineWithPlayersTests {
     public void VictoryState_afterMoveFromInProgressStateWithPlayerMove_hasTheSamePlayerLikeInGameInProgress() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
+        setGame();
         InProgressState inProgressState = new InProgressState(players, game);
         //when
-        inProgressState.consumeInput("here will be correct input");
-        inProgressState.consumeInput("victory");
+        inProgressState.consumeInput("1");
         GameState nextState = inProgressState.moveToNextState();
         //then
         Assert.assertEquals(nextState.showCurrentPlayer(), playerTwo);

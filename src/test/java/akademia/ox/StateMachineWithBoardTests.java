@@ -9,13 +9,13 @@ public class StateMachineWithBoardTests {
     Players players = new Players();
 
     @Test
-    public void InitialState_afterCreate_shouldNotHaveBoard() {
+    public void InitialState_afterCreate_shouldNotHaveGame() {
         //given
         InitialState initialState = new InitialState(players);
         //when
-        Board board = initialState.showGame().showBoard();
+        OxGame game = initialState.showGame();
         //then
-        Assert.assertNull(board);
+        Assert.assertNull(game);
     }
 
     @Test
@@ -23,8 +23,8 @@ public class StateMachineWithBoardTests {
         //given
         InitialState initialState = new InitialState(players);
         //when
-        initialState.consumeInput("temporary input");
-        Board board = initialState.showGame().showBoard();
+        initialState.consumeInput("");
+        String board = initialState.showGame().showBoard();
         //then
         Assert.assertNotNull(board);
     }
@@ -34,10 +34,10 @@ public class StateMachineWithBoardTests {
         //given
         InitialState initialState = new InitialState(players);
         //when
-        initialState.consumeInput("temporary input");
-        Board initialBoard = initialState.showGame().showBoard();
+        initialState.consumeInput("");
+        String initialBoard = initialState.showGame().showBoard();
         GameState gameState = initialState.moveToNextState();
-        Board nextBoard = gameState.showGame().showBoard();
+        String nextBoard = gameState.showGame().showBoard();
         //then
         Assert.assertEquals(nextBoard, initialBoard);
     }
