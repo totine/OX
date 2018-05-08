@@ -3,11 +3,16 @@ package akademia.ox;
 import akademia.ox.states.GameState;
 import akademia.ox.states.InitialState;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Locale locale = GameSettings.chooseLocalisation();
+
+
         Scanner in = new Scanner(System.in);
+
         System.out.println("Witaj w grze Kółko-Krzyżyk");
         System.out.println("Gra jest przeznaczona dla dwóch graczy. Każdy gracz ma przydzielony znak - X lub O. \n" +
                 "Gra odbywa się na planszy o wymiarach 3 pola na 3 pola lub większej (do wyboru). \n" +
