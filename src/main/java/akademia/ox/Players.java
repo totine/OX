@@ -47,7 +47,7 @@ public class Players {
     }
 
 
-    public boolean isFull() {
+    private boolean isFull() {
         return numberOfAddedPlayers == players.length;
     }
 
@@ -60,5 +60,17 @@ public class Players {
 
     public void swapPlayers() {
         currentIndex = (++currentIndex)%players.length;
+    }
+
+    public String showPlayersWithNumbers() {
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<players.length; i++) {
+            sb.append(String.format("[%d]. Imię: %s, Znak: %s, Punkty: %d\n", i + 1, players[i].showName(), players[i].whichCharacter(), players[i].showPoints()));
+        }
+        return sb.toString().trim();
+    }
+
+    public void setCurrentPlayer(int choose) {
+        currentIndex = choose - 1;
     }
 }
