@@ -30,7 +30,8 @@ public class Main {
         catch (Exception e) {
             System.out.println(e.getClass());
         }
-        GameState state = new InitialState(players);
+        int currentRound = 1;
+        GameState state = new InitialState(players, currentRound);
         while (!state.isGameOver()) {
             System.out.println(state.showStateInfo());
             System.out.println(state.showQuestion());

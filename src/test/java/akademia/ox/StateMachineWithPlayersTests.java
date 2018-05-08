@@ -29,7 +29,7 @@ public class StateMachineWithPlayersTests {
     public void GameInProgress_onBeginningOnShowCurrentPlayer_returnPlayerOne() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        InProgressState gameInProgress = new InProgressState(players, game);
+        InProgressState gameInProgress = new InProgressState(players, game, 1);
         //when
         Player currentPlayer = gameInProgress.showCurrentPlayer();
         //
@@ -41,7 +41,7 @@ public class StateMachineWithPlayersTests {
         //given
         setPlayers();
         setGame();
-        InProgressState gameInProgress = new InProgressState(players, game);
+        InProgressState gameInProgress = new InProgressState(players, game, 1);
         //when
         gameInProgress.consumeInput("1");
         gameInProgress.moveToNextState();
@@ -56,7 +56,7 @@ public class StateMachineWithPlayersTests {
         //given
         setPlayers();
         setGame();
-        InProgressState inProgressState = new InProgressState(players, game);
+        InProgressState inProgressState = new InProgressState(players, game, 1);
         //when
         inProgressState.consumeInput("1");
         System.out.println(inProgressState.showCurrentPlayer());
@@ -81,7 +81,7 @@ public class StateMachineWithPlayersTests {
         //given
         setPlayers();
         setGame();
-        InProgressState inProgressState = new InProgressState(players, game);
+        InProgressState inProgressState = new InProgressState(players, game, 1);
         //when
         inProgressState.consumeInput("1");
         GameState nextState = inProgressState.moveToNextState();

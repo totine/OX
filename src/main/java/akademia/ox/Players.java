@@ -73,4 +73,9 @@ public class Players {
     public void setCurrentPlayer(int choose) {
         currentIndex = choose - 1;
     }
+
+    public void addPointsForAllPlayers(int points) {
+        Arrays.stream(players).forEach(player -> player.incrementPoints(points));
+
+    }
 }

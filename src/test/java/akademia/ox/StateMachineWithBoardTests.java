@@ -11,7 +11,7 @@ public class StateMachineWithBoardTests {
     @Test
     public void InitialState_afterCreate_shouldNotHaveGame() {
         //given
-        InitialState initialState = new InitialState(players);
+        InitialState initialState = new InitialState(players, 1);
         //when
         OxGame game = initialState.showGame();
         //then
@@ -21,7 +21,7 @@ public class StateMachineWithBoardTests {
     @Test
     public void InitialState_afterConsumeInput_newBoardIsCreated() {
         //given
-        InitialState initialState = new InitialState(players);
+        InitialState initialState = new InitialState(players, 1);
         //when
         initialState.consumeInput("");
         String board = initialState.showGame().showBoard();
@@ -32,7 +32,7 @@ public class StateMachineWithBoardTests {
     @Test
     public void InProgressState_hasBoardFromInitialState() {
         //given
-        InitialState initialState = new InitialState(players);
+        InitialState initialState = new InitialState(players,1);
         //when
         initialState.consumeInput("");
         String initialBoard = initialState.showGame().showBoard();

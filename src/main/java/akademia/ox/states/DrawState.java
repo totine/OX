@@ -4,16 +4,18 @@ import akademia.ox.*;
 
 public class DrawState implements GameState {
 
-
+    int currentRound;
     private final Players players;
+    GameState nextState;
 
-    public DrawState(Players players) {
+    public DrawState(Players players, int currentRound) {
         this.players = players;
+        this.currentRound = currentRound;
     }
 
     @Override
     public GameState moveToNextState() {
-        return new FinalState(players);
+        return nextState;
     }
 
     @Override
@@ -23,12 +25,20 @@ public class DrawState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return StateInfo.DRAW_STATE.get();
+        return StateInfo.DRAW_STATE.get() + players.showPlayersWithNumbers();
     }
 
     @Override
     public void consumeInput(String query) {
+        players.addPointsForAllPlayers(1);
 
+        if (query.equals("koniec") || currentRound == 3) {
+            nextState = new TerminateState(players);
+        }
+        else {
+            players.swapPlayers();
+            nextState = new InitialState(players, ++currentRound);
+        }
     }
 
     @Override

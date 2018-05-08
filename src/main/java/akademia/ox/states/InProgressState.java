@@ -4,14 +4,16 @@ import akademia.ox.*;
 
 public class InProgressState implements GameState {
 
+    private int currentRound;
     private Players players;
     private GameState nextState;
     private OxGame game;
 
 
-    public InProgressState(Players players, OxGame game) {
+    public InProgressState(Players players, OxGame game, int currentRound) {
         this.players = players;
         this.game = game;
+        this.currentRound = currentRound;
     }
 
     @Override
@@ -27,15 +29,15 @@ public class InProgressState implements GameState {
     @Override
     public String showStateInfo() {
 
-        return showGame() + StateInfo.GAME_IN_PROGRESS_STATE.get(showCurrentPlayer());
+        return showGame().showBoard() + StateInfo.GAME_IN_PROGRESS_STATE.get(showCurrentPlayer());
 
     }
 
     @Override
     public void consumeInput(String query) {
 
-        if (query.equals("exit")) {
-            nextState = new FinalState(players);
+        if (query.equals("koniec")) {
+            nextState = new TerminateState(players);
         } else if (query.matches("\\d+")) {
             Integer move = Integer.parseInt(query);
             if (isCorrectMove(move)) {
@@ -43,10 +45,10 @@ public class InProgressState implements GameState {
                 GameResult result = game.checkMoveResult(move, players.currentPlayerCharacter());
                 switch (result) {
                     case DRAW:
-                        nextState = new DrawState(players);
+                        nextState = new DrawState(players, currentRound);
                         break;
                     case VICTORY:
-                        nextState = new VictoryState(players);
+                        nextState = new VictoryState(players, currentRound);
                         break;
                     case IN_PROGRESS:
                         players.swapPlayers();
@@ -78,7 +80,4 @@ public class InProgressState implements GameState {
         return game;
     }
 
-    public String showBoard() {
-        return game.showBoard();
-    }
 }

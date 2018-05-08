@@ -4,14 +4,17 @@ import akademia.ox.*;
 
 public class VictoryState implements GameState {
     private Players players;
+    private int currentRound;
+    private GameState nextState;
 
-    public VictoryState(Players players) {
+    public VictoryState(Players players, int currentRound) {
         this.players = players;
+        this.currentRound = currentRound;
     }
 
     @Override
     public GameState moveToNextState() {
-        return new FinalState(players);
+        return nextState;
     }
 
     @Override
@@ -21,12 +24,20 @@ public class VictoryState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return StateInfo.VICTORY_STATE.get(players.currentPlayer());
+        players.currentPlayer().incrementPoints(3);
+        return "Rundę " + currentRound + " wygrał " + players.currentPlayer().showName() + " aktualny stan gry: " + players.showPlayersWithNumbers();
     }
 
     @Override
     public void consumeInput(String query) {
 
+        if (query.equals("koniec") || currentRound == 3) {
+            nextState = new TerminateState(players);
+        }
+        else {
+            players.swapPlayers();
+            nextState = new InitialState(players, ++currentRound);
+        }
     }
 
     @Override

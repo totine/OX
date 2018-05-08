@@ -1,4 +1,4 @@
 package akademia.ox;
 
-public class IncorrectPlayerException extends Exception {
+public class IncorrectPlayerException extends RuntimeException {
 }

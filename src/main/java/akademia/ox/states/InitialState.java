@@ -5,12 +5,14 @@ import akademia.ox.*;
 import java.util.Arrays;
 
 public class InitialState implements GameState {
+    private int currentRound;
     private OxGame game;
     private Players players;
     private GameState nextState;
 
-    public InitialState(Players players) {
+    public InitialState(Players players, int currentRound) {
         this.players = players;
+        this.currentRound = currentRound;
     }
 
     @Override
@@ -38,10 +40,10 @@ public class InitialState implements GameState {
         VictoryChecker vc = new VictoryChecker();
         if (query.equals("")) {
             game = OxGame.createStandardGame(bv, vc);
-            nextState = new InProgressState(players, game);
+            nextState = new InProgressState(players, game, currentRound);
         } else if (isCorrectQuery(query)) {
             game = OxGame.createGameFromQuery(query, bv, vc);
-            nextState = new InProgressState(players, game);
+            nextState = new InProgressState(players, game, currentRound);
         } else {
             nextState = this;
         }

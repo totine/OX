@@ -3,24 +3,43 @@ package akademia.ox.states;
 import akademia.ox.*;
 
 public class TerminateState implements GameState {
+    Players players;
+    boolean isOver;
+
+    public TerminateState(Players players) {
+        this.players = players;
+        isOver = false;
+    }
+
     @Override
     public GameState moveToNextState() {
-        return null;
+        return this;
     }
 
     @Override
     public boolean isGameOver() {
-        return true;
+        return isOver;
     }
 
     @Override
     public String showStateInfo() {
-        return StateInfo.TERMINATE_STATE.get();
+        return gameSummary();
+    }
+
+    private String gameSummary() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(winnerInfo()).append("\n");
+        stringBuilder.append(players.showPlayersWithNumbers());
+        return stringBuilder.toString();
+    }
+
+    private String winnerInfo() {
+        return "Zwyciężył " + players.currentPlayer().showName();
     }
 
     @Override
     public void consumeInput(String query) {
-
+        isOver = true;
     }
 
     @Override

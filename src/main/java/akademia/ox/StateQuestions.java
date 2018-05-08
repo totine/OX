@@ -12,7 +12,7 @@ public enum StateQuestions  {
     }, GAME_IN_PROGRESS_STATE {
         @Override
         public String get() {
-            return "Wpisz victory, jeśli ma być zwycięstwo; Wpisz draw jeśli ma być remis, wpisz exit, aby zakończyć rundę 'walkowerem', wpisz cokolwiek, aby kontynuować rozgrywkę";
+            return "Podaj numer pola, na którym chcesz postawić swój znak:";
         }
     }, VICTORY_STATE {
         @Override
@@ -22,12 +22,12 @@ public enum StateQuestions  {
     }, FINAL_STATE {
         @Override
         public String get() {
-            return "Wpisz end, aby zakończyć grę, wpisz continue, aby kontynować";
+            return "";
         }
     }, TERMINATE_STATE {
         @Override
         public String get() {
-            return "";
+            return "asdf";
         }
     }, DRAW_STATE {
         @Override
