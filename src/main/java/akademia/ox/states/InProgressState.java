@@ -37,23 +37,23 @@ public class InProgressState implements GameState {
         if (query.equals("exit")) {
             nextState = new FinalState(players);
         } else if (query.matches("\\d+")) {
-
-
             Integer move = Integer.parseInt(query);
             if (isCorrectMove(move)) {
                 game.put(move, players.currentPlayerCharacter());
-                if (game.checkVictory(move, players.currentPlayerCharacter())) {
-                    nextState = new VictoryState(players);
+                GameResult result = game.checkMoveResult(move, players.currentPlayerCharacter());
+                switch (result) {
+                    case DRAW:
+                        nextState = new DrawState(players);
+                        break;
+                    case VICTORY:
+                        nextState = new VictoryState(players);
+                        break;
+                    case IN_PROGRESS:
+                        players.swapPlayers();
+                        nextState = this;
+                        break;
                 }
-            else if (game.isDraw()) {
-                nextState = new DrawState(players);
             } else {
-                players.swapPlayers();
-                nextState = this;
-            }
-            }
-
-            else {
                 nextState = this;
             }
         }

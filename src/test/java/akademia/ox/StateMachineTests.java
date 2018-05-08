@@ -13,7 +13,6 @@ public class StateMachineTests {
     private Player p2 = new Player("p2", "O");
     private BoardVisualizer bv = new BoardVisualizer();
     private VictoryChecker vc = new VictoryChecker();
-    private DrawChecker dc = new DrawChecker();
     private OxGame game;
 
 
@@ -25,7 +24,7 @@ public class StateMachineTests {
     }
 
     private void setGame() {
-        game =  OxGame.createStandardGame(bv, vc, dc);
+        game =  OxGame.createStandardGame(bv, vc);
     }
 
     @Test

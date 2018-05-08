@@ -3,13 +3,16 @@ package akademia.ox;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Board {
+class Board {
     private int rows;
     private int columns;
     private Map<Integer, GameCharacter> board;
-    private int coverage;
 
-    public Board(int rows, int columns) {
+    private int coverage;
+    private BoardVisualizer visualizer;
+    private VictoryChecker victoryChecker;
+
+    Board(int rows, int columns, BoardVisualizer visualizer, VictoryChecker victoryChecker) {
         if (rows < 3 || columns < 3) {
             throw new IllegalArgumentException("");
         }
@@ -17,28 +20,27 @@ public class Board {
         this.columns = columns;
         this.board = new HashMap<>();
         this.coverage = 0;
+        this.visualizer = visualizer;
+        this.victoryChecker = victoryChecker;
+
     }
 
 
-    public static Board createBoard(String query) {
-        return new Board(3,3);
-    }
-
-    public int boardSize() {
+    int boardSize() {
         return rows * columns;
     }
 
-    public int rows() {
+    int rows() {
         return rows;
     }
 
 
-    public int columns() {
+    int columns() {
         return columns;
     }
 
 
-    public GameCharacter getCharacter(int row, int col) {
+    GameCharacter getCharacter(int row, int col) {
         Integer fieldNumber = getFieldNumberFromRowAndCol(row, col);
         return board.getOrDefault(fieldNumber, GameCharacter.EMPTY);
     }
@@ -47,26 +49,34 @@ public class Board {
         return columns*(row-1) + col;
     }
 
-    public GameCharacter getCharacter(int fieldNumber) {
+    GameCharacter getCharacter(int fieldNumber) {
         return board.getOrDefault(fieldNumber, GameCharacter.EMPTY);
     }
 
-    public void put(int row, int col, GameCharacter character) {
+    void put(int row, int col, GameCharacter character) {
         Integer fieldNumber = getFieldNumberFromRowAndCol(row, col);
         put(fieldNumber, character);
 
     }
 
-    public int coverage() {
+    int coverage() {
         return coverage;
     }
 
-    public void put(int fieldNumber, GameCharacter character) {
+    void put(int fieldNumber, GameCharacter character) {
         board.put(fieldNumber, character);
         coverage++;
     }
 
-    public boolean contains(Integer move) {
+    boolean contains(Integer move) {
         return board.containsKey(move);
+    }
+
+    String drawBoard() {
+        return visualizer.drawBoard(this);
+    }
+
+    GameResult checkVictory(Integer move, GameCharacter character, int toWin) {
+        return victoryChecker.checkVictory(move, character, this, toWin);
     }
 }

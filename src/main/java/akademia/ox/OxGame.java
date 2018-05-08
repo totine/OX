@@ -6,31 +6,24 @@ public class OxGame {
 
     private final Board board;
     private final int toWin;
-    private BoardVisualizer boardVisualizer;
-    private VictoryChecker victoryChecker;
-    private DrawChecker drawChecker;
 
-    private OxGame(int rows, int columns, int toWin, BoardVisualizer bv, VictoryChecker vc, DrawChecker dc) {
-        this.board = new Board(rows, columns);
+    private OxGame(int rows, int columns, int toWin, BoardVisualizer bv, VictoryChecker vc) {
+        this.board = new Board(rows, columns, bv, vc);
         this.toWin = toWin;
-        this.boardVisualizer = bv;
-        boardVisualizer.setBoard(board);
-        this.victoryChecker = vc;
-        victoryChecker.setParameters(board, toWin);
-        this.drawChecker = dc;
+
     }
 
-    public static OxGame createStandardGame(BoardVisualizer bv, VictoryChecker vc, DrawChecker dc) {
-        return new OxGame(3, 3, 3, bv, vc, dc);
+    public static OxGame createStandardGame(BoardVisualizer bv, VictoryChecker vc) {
+        return new OxGame(3, 3, 3, bv, vc);
     }
 
-    public static OxGame createGameFromQuery(String query, BoardVisualizer bv, VictoryChecker vc, DrawChecker dc) {
+    public static OxGame createGameFromQuery(String query, BoardVisualizer bv, VictoryChecker vc) {
         int[] numbers = Arrays.stream(query.split(" ")).mapToInt(Integer::parseInt).toArray();
-        return new OxGame(numbers[0], numbers[1], numbers[2], bv, vc, dc);
+        return new OxGame(numbers[0], numbers[1], numbers[2], bv, vc);
     }
 
     public String showBoard() {
-        return boardVisualizer.drawBoard();
+        return board.drawBoard();
     }
 
     public int columns() {
@@ -50,13 +43,10 @@ public class OxGame {
     }
 
 
-    public boolean checkVictory(Integer move, GameCharacter character) {
-        return victoryChecker.checkVictory(move, character);
+    public GameResult checkMoveResult(Integer move, GameCharacter character) {
+        return board.checkVictory(move, character, toWin);
     }
 
-    public boolean isDraw() {
-        return drawChecker.isDraw(board);
-    }
 
     public boolean isCorrectMove(Integer move) {
         return move <= board.boardSize() && ! board.contains(move);

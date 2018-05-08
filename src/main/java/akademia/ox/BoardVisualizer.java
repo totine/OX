@@ -8,29 +8,9 @@ public class BoardVisualizer {
     private int maxIndexesWidth;
 
 
-    public BoardVisualizer() {
 
-    }
-
-    public BoardVisualizer(Board board) {
-        this.board = board;
-        rows = board.rows();
-        columns = board.columns();
-        int maxColumnTemp = countNumberLength(board.boardSize());
-        maxColumnWidth = maxColumnTemp + (maxColumnTemp%2 == 0 ? 1 : 0);
-        maxIndexesWidth = countNumberLength(board.rows());
-    }
-
-    private int countNumberLength(int num) {
-        int length = 0;
-        while (num > 0) {
-            num = num/10;
-            length++;
-        }
-        return length;
-    }
-
-    public String drawBoard() {
+    String drawBoard(Board board) {
+        setBoard(board);
         StringBuilder visualisation = new StringBuilder();
         visualisation.append(drawLineWithColumnIndexes()).append(drawLine())
                 .append(drawBoardBody())
@@ -112,8 +92,16 @@ public class BoardVisualizer {
 
     }
 
-    public void setBoard(Board board) {
+    private int countNumberLength(int num) {
+        int length = 0;
+        while (num > 0) {
+            num = num/10;
+            length++;
+        }
+        return length;
+    }
 
+    private void setBoard(Board board) {
         this.board = board;
         rows = board.rows();
         columns = board.columns();
