@@ -1,25 +1,25 @@
-package akademia.ox;
+package akademia.ox.game;
 
 import java.util.Arrays;
 
-public class OxGame {
+public class OxRound {
 
     private final Board board;
     private final int toWin;
 
-    private OxGame(int rows, int columns, int toWin, BoardVisualizer bv, VictoryChecker vc) {
+    private OxRound(int rows, int columns, int toWin, BoardVisualizer bv, VictoryChecker vc) {
         this.board = new Board(rows, columns, bv, vc);
         this.toWin = toWin;
 
     }
 
-    public static OxGame createStandardGame(BoardVisualizer bv, VictoryChecker vc) {
-        return new OxGame(3, 3, 3, bv, vc);
+    public static OxRound createStandardGame(BoardVisualizer bv, VictoryChecker vc) {
+        return new OxRound(3, 3, 3, bv, vc);
     }
 
-    public static OxGame createGameFromQuery(String query, BoardVisualizer bv, VictoryChecker vc) {
+    public static OxRound createGameFromQuery(String query, BoardVisualizer bv, VictoryChecker vc) {
         int[] numbers = Arrays.stream(query.split(" ")).mapToInt(Integer::parseInt).toArray();
-        return new OxGame(numbers[0], numbers[1], numbers[2], bv, vc);
+        return new OxRound(numbers[0], numbers[1], numbers[2], bv, vc);
     }
 
     public String showBoard() {

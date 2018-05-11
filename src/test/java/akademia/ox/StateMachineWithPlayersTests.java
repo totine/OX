@@ -1,5 +1,8 @@
 package akademia.ox;
 
+import akademia.ox.exceptions.IncorrectPlayerException;
+import akademia.ox.exceptions.TooManyPlayersException;
+import akademia.ox.game.*;
 import akademia.ox.states.GameState;
 import akademia.ox.states.InProgressState;
 import org.testng.Assert;
@@ -12,7 +15,7 @@ public class StateMachineWithPlayersTests {
     private Player playerTwo = new Player("p2", "O");
     private BoardVisualizer bv = new BoardVisualizer();
     private VictoryChecker vc = new VictoryChecker();
-    private OxGame game;
+    private OxRound game;
 
 
     private void setPlayers() throws IncorrectPlayerException, TooManyPlayersException {
@@ -22,7 +25,7 @@ public class StateMachineWithPlayersTests {
     }
 
     private void setGame() {
-        game = OxGame.createStandardGame(bv, vc);
+        game = OxRound.createStandardGame(bv, vc);
     }
 
     @Test

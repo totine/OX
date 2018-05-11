@@ -1,6 +1,9 @@
 package akademia.ox.states;
 
 import akademia.ox.*;
+import akademia.ox.game.OxRound;
+import akademia.ox.game.Player;
+import akademia.ox.game.Players;
 
 public class VictoryState implements GameState {
     private Players players;
@@ -51,7 +54,7 @@ public class VictoryState implements GameState {
     }
 
     @Override
-    public OxGame showGame() {
+    public OxRound showGame() {
         return null;
     }
 }

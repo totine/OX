@@ -1,5 +1,9 @@
-package akademia.ox;
+package akademia.ox.game;
 
+import akademia.ox.exceptions.TooManyPlayersException;
+import akademia.ox.exceptions.IncorrectPlayerException;
+import akademia.ox.game.Players;
+import akademia.ox.game.PlayersInitializer;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

@@ -1,5 +1,9 @@
-package akademia.ox;
+package akademia.ox.game;
 
+import akademia.ox.game.Board;
+import akademia.ox.game.BoardVisualizer;
+import akademia.ox.game.GameCharacter;
+import akademia.ox.game.VictoryChecker;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

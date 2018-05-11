@@ -1,5 +1,6 @@
-package akademia.ox;
+package akademia.ox.game;
 
+import akademia.ox.game.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

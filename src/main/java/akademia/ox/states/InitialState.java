@@ -1,16 +1,19 @@
 package akademia.ox.states;
 
 import akademia.ox.*;
+import akademia.ox.game.*;
 
 import java.util.Arrays;
 
 public class InitialState implements GameState {
+
     private int currentRound;
-    private OxGame game;
+    private OxRound game;
     private Players players;
     private GameState nextState;
 
     public InitialState(Players players, int currentRound) {
+
         this.players = players;
         this.currentRound = currentRound;
     }
@@ -39,11 +42,12 @@ public class InitialState implements GameState {
         BoardVisualizer bv = new BoardVisualizer();
         VictoryChecker vc = new VictoryChecker();
         if (query.equals("")) {
-            game = OxGame.createStandardGame(bv, vc);
+            game = OxRound.createStandardGame(bv, vc);
             nextState = new InProgressState(players, game, currentRound);
         } else if (isCorrectQuery(query)) {
-            game = OxGame.createGameFromQuery(query, bv, vc);
+            game = OxRound.createGameFromQuery(query, bv, vc);
             nextState = new InProgressState(players, game, currentRound);
+
         } else {
             nextState = this;
         }
@@ -73,7 +77,7 @@ public class InitialState implements GameState {
     }
 
     @Override
-    public OxGame showGame() {
+    public OxRound showGame() {
         return game;
     }
 }

@@ -1,16 +1,22 @@
 package akademia.ox.states;
 
 import akademia.ox.*;
+import akademia.ox.game.GameResult;
+import akademia.ox.game.OxRound;
+import akademia.ox.game.Player;
+import akademia.ox.game.Players;
 
 public class InProgressState implements GameState {
 
     private int currentRound;
     private Players players;
     private GameState nextState;
-    private OxGame game;
+    private OxRound game;
 
 
-    public InProgressState(Players players, OxGame game, int currentRound) {
+
+    public InProgressState(Players players, OxRound game, int currentRound) {
+
         this.players = players;
         this.game = game;
         this.currentRound = currentRound;
@@ -76,7 +82,7 @@ public class InProgressState implements GameState {
     }
 
     @Override
-    public OxGame showGame() {
+    public OxRound showGame() {
         return game;
     }
 

@@ -1,4 +1,7 @@
-package akademia.ox;
+package akademia.ox.game;
+
+import akademia.ox.exceptions.IncorrectPlayerException;
+import akademia.ox.exceptions.TooManyPlayersException;
 
 import java.util.Scanner;
 

@@ -1,8 +1,15 @@
 package akademia.ox;
 
+import akademia.ox.game.Player;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public enum StateInfo  {
 
-    INITIAL_STATE {
+
+
+    INITIAL_STATE("pl") {
         @Override
         public String get() {
             return "To jest początek rundy";
@@ -56,7 +63,7 @@ public enum StateInfo  {
     }, DRAW_STATE {
         @Override
         public String get() {
-            return "Jest remis";
+            return messages.getString("draw_state_info");
         }
 
         @Override
@@ -66,6 +73,16 @@ public enum StateInfo  {
 
 
     };
+    ResourceBundle messages;
+    Locale locale;
+    StateInfo(String locale) {
+
+//        messages = ResourceBundle.getBundle("states", locale);
+    }
+
+    StateInfo() {
+
+    }
 
     public abstract String get();
 
