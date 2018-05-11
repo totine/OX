@@ -24,7 +24,7 @@ public class GameSettings {
 
     private static void makeLanguagesMap() {
         languages.put("1", new Locale("en", "US"));
-        languages.put("1", new Locale("pl", "PL"));
+        languages.put("2", new Locale("pl", "PL"));
 
     }
 
