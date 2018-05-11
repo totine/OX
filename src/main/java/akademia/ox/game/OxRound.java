@@ -1,5 +1,9 @@
 package akademia.ox.game;
 
+import akademia.ox.exceptions.BoardOutOfBondException;
+import akademia.ox.exceptions.IllegalMoveFormat;
+import akademia.ox.exceptions.NotEmptyFieldException;
+
 import java.util.Arrays;
 
 public class OxRound {
@@ -38,7 +42,16 @@ public class OxRound {
         return toWin;
     }
 
-    public void put(Integer move, GameCharacter character) {
+    public void put(String queryMove, GameCharacter character) throws IllegalMoveFormat, NotEmptyFieldException, BoardOutOfBondException {
+        if (! queryMove.matches("\\d+"))
+            throw new IllegalMoveFormat();
+
+        int move = Integer.valueOf(queryMove);
+
+        if (board.contains(move))
+            throw new NotEmptyFieldException();
+        if (move > board.boardSize())
+            throw new BoardOutOfBondException();
         board.put(move, character);
     }
 
@@ -50,5 +63,9 @@ public class OxRound {
 
     public boolean isCorrectMove(Integer move) {
         return move <= board.boardSize() && ! board.contains(move);
+    }
+
+    public int boardSize() {
+        return board.boardSize();
     }
 }

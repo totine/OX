@@ -1,6 +1,9 @@
 package akademia.ox.states;
 
 import akademia.ox.*;
+import akademia.ox.exceptions.BoardOutOfBondException;
+import akademia.ox.exceptions.IllegalMoveFormat;
+import akademia.ox.exceptions.NotEmptyFieldException;
 import akademia.ox.game.GameResult;
 import akademia.ox.game.OxRound;
 import akademia.ox.game.Player;
@@ -44,11 +47,10 @@ public class InProgressState implements GameState {
 
         if (query.equals("koniec")) {
             nextState = new TerminateState(players);
-        } else if (query.matches("\\d+")) {
-            Integer move = Integer.parseInt(query);
-            if (isCorrectMove(move)) {
-                game.put(move, players.currentPlayerCharacter());
-                GameResult result = game.checkMoveResult(move, players.currentPlayerCharacter());
+        } else {
+            try {
+                game.put(query, players.currentPlayerCharacter());
+                GameResult result = game.checkMoveResult(Integer.valueOf(query), players.currentPlayerCharacter());
                 switch (result) {
                     case DRAW:
                         nextState = new DrawState(players, currentRound);
@@ -61,16 +63,19 @@ public class InProgressState implements GameState {
                         nextState = this;
                         break;
                 }
+            } catch (NotEmptyFieldException e) {
+                nextState = new StateWithErrorMessage(this, "Pole " + query + " jest zajęte. Spróbuj jeszcze raz");
+            } catch (IllegalMoveFormat illegalMoveFormat) {
+                nextState = new StateWithErrorMessage(this, "Ruch " + query + " jest nieprawidłowy. podaj liczbę od 1 do " + this.game.boardSize());
+            } catch (BoardOutOfBondException e) {
+                nextState = new StateWithErrorMessage(this, "Pole " + query + " jest poza tablicą. podaj liczbę od 1 do " + this.game.boardSize());
             }
-        } else {
-            nextState = new StateWithErrorMessage(this, "Nieprawidłowy ruch");
         }
 
+
     }
 
-    private boolean isCorrectMove(Integer move) {
-        return game.isCorrectMove(move);
-    }
+
 
 
     @Override
