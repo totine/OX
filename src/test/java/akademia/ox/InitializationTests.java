@@ -1,5 +1,6 @@
 package akademia.ox;
 
+import akademia.ox.game.Players;
 import akademia.ox.states.InitialState;
 import org.testng.Assert;
 import org.testng.annotations.Test;

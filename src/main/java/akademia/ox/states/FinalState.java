@@ -1,6 +1,9 @@
 package akademia.ox.states;
 
 import akademia.ox.*;
+import akademia.ox.game.OxRound;
+import akademia.ox.game.Player;
+import akademia.ox.game.Players;
 
 public class FinalState implements GameState {
     private GameState nextState;

@@ -1,4 +1,4 @@
-package akademia.ox;
+package akademia.ox.game;
 
 public class Player {
     private int points;

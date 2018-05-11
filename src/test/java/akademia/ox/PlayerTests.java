@@ -1,5 +1,7 @@
 package akademia.ox;
 
+import akademia.ox.game.GameCharacter;
+import akademia.ox.game.Player;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

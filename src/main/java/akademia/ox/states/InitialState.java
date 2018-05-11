@@ -1,6 +1,7 @@
 package akademia.ox.states;
 
 import akademia.ox.*;
+import akademia.ox.game.*;
 
 import java.util.Arrays;
 
@@ -8,6 +9,7 @@ public class InitialState implements GameState {
     private OxRound game;
     private Players players;
     private GameState nextState;
+
 
     public InitialState(Players players) {
         this.players = players;

@@ -1,5 +1,7 @@
 package akademia.ox;
 
+import akademia.ox.game.OxRound;
+import akademia.ox.game.Players;
 import akademia.ox.states.GameState;
 import akademia.ox.states.InitialState;
 import org.testng.Assert;

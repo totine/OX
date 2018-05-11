@@ -1,5 +1,5 @@
 
-package akademia.ox;
+package akademia.ox.game;
 
 import java.util.function.IntFunction;
 

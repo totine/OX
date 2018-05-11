@@ -1,9 +1,9 @@
-package akademia.ox;
+package akademia.ox.game;
 
 import java.util.HashMap;
 import java.util.Map;
 
-class Board {
+public class Board {
     private int rows;
     private int columns;
     private Map<Integer, GameCharacter> board;
@@ -76,7 +76,7 @@ class Board {
         return visualizer.drawBoard(this);
     }
 
-    GameResult checkVictory(Integer move, GameCharacter character, int toWin) {
+    public GameResult checkVictory(Integer move, GameCharacter character, int toWin) {
         return victoryChecker.checkVictory(move, character, this, toWin);
     }
 }

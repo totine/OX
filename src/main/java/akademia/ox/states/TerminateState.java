@@ -1,6 +1,8 @@
 package akademia.ox.states;
 
 import akademia.ox.*;
+import akademia.ox.game.OxRound;
+import akademia.ox.game.Player;
 
 public class TerminateState implements GameState {
     @Override

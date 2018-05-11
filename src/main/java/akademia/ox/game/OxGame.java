@@ -1,5 +1,7 @@
-package akademia.ox;
+package akademia.ox.game;
 
+import akademia.ox.game.Players;
+import akademia.ox.game.PlayersInitializer;
 import akademia.ox.states.GameState;
 import akademia.ox.states.InitialState;
 
@@ -9,11 +11,12 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class OxGame {
-    Locale currentLocale;
-    ResourceBundle messages;
-    Consumer<String> out;
-    Supplier<String> in;
-    Players players;
+    private Locale currentLocale;
+    private ResourceBundle messages;
+    private Consumer<String> out;
+    private Supplier<String> in;
+    private Players players;
+    private GameState currentState;
 
 
     public OxGame(Locale locale, Consumer<String> out, Supplier<String> in) {
@@ -24,7 +27,7 @@ public class OxGame {
     }
 
 
-    public void init() {
+    void init() {
         out.accept(messages.getString("welcome"));
         out.accept(messages.getString("instruction"));
         PlayersInitializer pi = new PlayersInitializer();
@@ -38,21 +41,26 @@ public class OxGame {
         catch (Exception e) {
             System.out.println(e.getClass());
         }
+        currentState = new InitialState(players);
     }
 
-    public void loop() {
-        GameState state = new InitialState(players);
-        while (!state.isGameOver()) {
-            out.accept(state.showStateInfo());
-            out.accept(state.showQuestion());
+    private void loop() {
+        while (!currentState.isGameOver()) {
+            out.accept(currentState.showStateInfo());
+            out.accept(currentState.showQuestion());
             String answer = in.get();
-            state.consumeInput(answer);
-            state = state.moveToNextState();
-
+            currentState.consumeInput(answer);
+            currentState = currentState.moveToNextState();
         }
     }
 
-    public void end() {
+    private void end() {
 
+    }
+
+    public void start() {
+        init();
+        loop();
+        end();
     }
 }
