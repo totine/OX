@@ -61,10 +61,11 @@ public class InProgressState implements GameState {
                         nextState = this;
                         break;
                 }
-            } else {
-                nextState = this;
             }
+        } else {
+            nextState = new StateWithErrorMessage(this, "Nieprawidłowy ruch");
         }
+
     }
 
     private boolean isCorrectMove(Integer move) {

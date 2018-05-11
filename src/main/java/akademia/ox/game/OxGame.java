@@ -41,7 +41,7 @@ public class OxGame {
         catch (Exception e) {
             System.out.println(e.getClass());
         }
-        currentState = new InitialState(players);
+        currentState = new InitialState(players,1 );
     }
 
     private void loop() {
