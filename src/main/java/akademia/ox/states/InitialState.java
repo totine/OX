@@ -43,13 +43,13 @@ public class InitialState implements GameState {
         VictoryChecker vc = new VictoryChecker();
         if (query.equals("")) {
             game = OxRound.createStandardGame(bv, vc);
-            nextState = new InProgressState(players, game, currentRound);
+            nextState = new StateWithErrorMessage(new InProgressState(players, game, currentRound), "wybrano standardową grę 3x3");
         } else if (isCorrectQuery(query)) {
             game = OxRound.createGameFromQuery(query, bv, vc);
             nextState = new InProgressState(players, game, currentRound);
 
         } else {
-            nextState = this;
+            nextState = new StateWithErrorMessage(this, "Nieprawidłowy format");
         }
     }
 

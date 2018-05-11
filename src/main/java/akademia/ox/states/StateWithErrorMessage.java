@@ -7,7 +7,7 @@ public class StateWithErrorMessage implements GameState {
     GameState beforeState;
     String message;
 
-    public StateWithErrorMessage(InProgressState inProgressState, String nieprawidłowy_ruch) {
+    public StateWithErrorMessage(GameState inProgressState, String nieprawidłowy_ruch) {
         beforeState = inProgressState;
         message=nieprawidłowy_ruch;
 
@@ -25,7 +25,7 @@ public class StateWithErrorMessage implements GameState {
 
     @Override
     public String showStateInfo() {
-        return message;
+        return message + "\n" + beforeState.showStateInfo();
     }
 
     @Override
