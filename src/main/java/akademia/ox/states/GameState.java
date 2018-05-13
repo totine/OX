@@ -1,8 +1,5 @@
 package akademia.ox.states;
 
-import akademia.ox.game.OxRound;
-import akademia.ox.game.Player;
-
 
 public interface GameState {
     GameState moveToNextState();
@@ -11,11 +8,8 @@ public interface GameState {
 
     String showStateInfo();
 
-    void consumeInput(String query);
-
     String showQuestion();
 
-    Player showCurrentPlayer();
+    void consumeInput(String query);
 
-    OxRound showGame();
 }

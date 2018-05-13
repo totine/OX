@@ -4,12 +4,12 @@ import akademia.ox.game.OxRound;
 import akademia.ox.game.Player;
 
 public class StateWithErrorMessage implements GameState {
-    GameState beforeState;
-    String message;
+    private GameState beforeState;
+    private String message;
 
-    public StateWithErrorMessage(GameState inProgressState, String nieprawidłowy_ruch) {
+    public StateWithErrorMessage(GameState inProgressState, String message) {
         beforeState = inProgressState;
-        message=nieprawidłowy_ruch;
+        this.message = message;
 
     }
 
@@ -29,22 +29,13 @@ public class StateWithErrorMessage implements GameState {
     }
 
     @Override
-    public void consumeInput(String query) {
-        beforeState.consumeInput(query);
-    }
-
-    @Override
     public String showQuestion() {
         return beforeState.showQuestion();
     }
 
     @Override
-    public Player showCurrentPlayer() {
-        return null;
+    public void consumeInput(String query) {
+        beforeState.consumeInput(query);
     }
 
-    @Override
-    public OxRound showGame() {
-        return null;
-    }
 }

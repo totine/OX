@@ -36,9 +36,14 @@ public class InProgressState implements GameState {
     }
 
     @Override
+    public String showQuestion() {
+        return "Podaj numer pola, na którym chcesz postawić swój znak (numer pomiedzy 1 a " + game.boardSize() + ")" + "\n Pole musi być puste";
+    }
+
+    @Override
     public String showStateInfo() {
 
-        return showGame().showBoard() + StateInfo.GAME_IN_PROGRESS_STATE.get(showCurrentPlayer());
+        return game.showBoard() + "\n" + "Teraz ruch gracza " + players.currentPlayer().showName() + " (" + players.currentPlayer().showName() + ")";
 
     }
 
@@ -72,20 +77,5 @@ public class InProgressState implements GameState {
     }
 
 
-
-
-    @Override
-    public String showQuestion() {
-        return StateQuestions.GAME_IN_PROGRESS_STATE.get();
-    }
-
-    public Player showCurrentPlayer() {
-        return players.currentPlayer();
-    }
-
-    @Override
-    public OxRound showGame() {
-        return game;
-    }
 
 }

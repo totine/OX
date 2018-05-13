@@ -44,6 +44,12 @@ public class VictoryState implements GameState {
     }
 
     @Override
+    public String showQuestion() {
+        return currentRound < 3 ? "Co dalej \n1. Kontynuuj na takiej samej planszy\n[2] Wybierz nową planszę\n[3]Zakończ grę" :
+                "Naciśnij ENTER, aby przejść do podsumowania";
+    }
+
+    @Override
     public void consumeInput(String query) {
 
         if (query.equals("3") || currentRound == 3) {
@@ -60,19 +66,5 @@ public class VictoryState implements GameState {
         }
     }
 
-    @Override
-    public String showQuestion() {
-        return currentRound < 3 ? "Co dalej \n1. Kontynuuj na takiej samej planszy\n[2] Wybierz nową planszę\n[3]Zakończ grę" :
-                "Naciśnij ENTER, aby przejść do podsumowania";
-    }
 
-    @Override
-    public Player showCurrentPlayer() {
-        return players.currentPlayer();
-    }
-
-    @Override
-    public OxRound showGame() {
-        return null;
-    }
 }

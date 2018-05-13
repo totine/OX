@@ -47,16 +47,7 @@ public class TerminateState implements GameState {
 
     @Override
     public String showQuestion() {
-        return StateQuestions.TERMINATE_STATE.get();
+        return "Wciśnij ENTER, aby zakończyć grę";
     }
 
-    @Override
-    public Player showCurrentPlayer() {
-        return null;
-    }
-
-    @Override
-    public OxRound showGame() {
-        return null;
-    }
 }

@@ -32,12 +32,19 @@ public class InitialState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return StateInfo.INITIAL_STATE.get();
+        return "To jest początek rundy " + currentRound ;
     }
 
     @Override
     public void consumeInput(String query) {
         setNextStateBasedOnInputQuery(query);
+    }
+
+    @Override
+    public String showQuestion() {
+        return "Wpisz ustawienia gry w postaci x y k, gdzie x to ilość rzędów planszy, y - ilość kolumn planszy, k - długość linii niezbędna do wygranej (nie może być większa niż x lub y) \n" +
+                " Przykładowy wypis: 4 5 3 \n" +
+                "lub naciśnij enter, aby wybrać ustawienia standardowe - plansza 3x3 z linią 3";
     }
 
     private void setNextStateBasedOnInputQuery(String query) {
@@ -68,18 +75,4 @@ public class InitialState implements GameState {
         return query.trim().replaceAll(" +", " ");
     }
 
-    @Override
-    public String showQuestion() {
-        return StateQuestions.INITIAL_STATE.get();
-    }
-
-    @Override
-    public Player showCurrentPlayer() {
-        return null;
-    }
-
-    @Override
-    public OxRound showGame() {
-        return game;
-    }
 }

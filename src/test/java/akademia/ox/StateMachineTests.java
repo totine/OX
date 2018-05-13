@@ -85,19 +85,6 @@ public class StateMachineTests {
         Assert.assertEquals(nextState.getClass(), TerminateState.class);
     }
 
-    @Test
-    public void DrawState_afterCallingMoveToNextStateIfCurrentRoundIs1_moveFinalState() {
-        //given
-        setPlayers();
-        DrawState drawState = new DrawState(players, 1);
-        //when
-        drawState.consumeInput("");
-        GameState nextState = drawState.moveToNextState();
-        //then
-        Assert.assertEquals(nextState.getClass(), InitialState.class);
-    }
-
-
 
     @Test
     public void TerminateState_afterConsumeInput_informsThatGameIsOver() {
@@ -112,7 +99,7 @@ public class StateMachineTests {
     public void StatesWithoutTerminateState_informsThatGameIsNotOver() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        GameState[] states = {new DrawState(players, 1), new InProgressState(players, game, 1), new InitialState(players, 1), new VictoryState(players, game, 1, GameResult.VICTORY)};
+        GameState[] states = {new InProgressState(players, game, 1), new InitialState(players, 1), new VictoryState(players, game, 1, GameResult.VICTORY)};
         //when // then
         for (GameState state : states) {
             Assert.assertFalse(state.isGameOver());
@@ -127,7 +114,7 @@ public class StateMachineTests {
         GameState stateToTest = new InitialState(players, 1);
         //when
         String stateInfo = stateToTest.showStateInfo();
-        String expectedStateInfo = StateInfo.INITIAL_STATE.get();
+        String expectedStateInfo = "";
         //then
         Assert.assertEquals(stateInfo, expectedStateInfo);
 
