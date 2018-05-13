@@ -5,9 +5,10 @@ import akademia.ox.exceptions.TooManyPlayersException;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class Players {
+public class Players implements Iterable<Player> {
     private Player[] players;
     private int numberOfAddedPlayers;
     private int currentIndex;
@@ -71,25 +72,24 @@ public class Players {
         currentIndex = (++currentIndex)%players.length;
     }
 
-    public String showPlayersWithNumbers() {
-        StringBuilder sb = new StringBuilder();
-        for (int i=0; i<players.length; i++) {
-            sb.append(String.format("[%d]. Imię: %s, Znak: %s, Punkty: %d\n", i + 1, players[i].showName(), players[i].whichCharacter(), players[i].showPoints()));
-        }
-        return sb.toString().trim();
-    }
 
     public void setCurrentPlayer(int choose) {
         currentIndex = choose - 1;
     }
 
-    public void addPointsForAllPlayers(int points) {
-        Arrays.stream(players).forEach(player -> player.incrementPoints(points));
-
-    }
 
     public void incrementsPoint(GameResult result) {
         currentPlayer().incrementPoints(result.getPointsForActualPlayer());
         otherPlayers().forEach(player -> player.incrementPoints(result.getPointsForOtherPlayer()));
+    }
+
+    @Override
+    public Iterator<Player> iterator() {
+        return Arrays.asList(players).iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super Player> action) {
+
     }
 }

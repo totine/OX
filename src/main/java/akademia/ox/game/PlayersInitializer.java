@@ -64,7 +64,7 @@ class PlayersInitializer {
 
     void askForFirstPlayer() {
         out.accept(messages.getString("who-starts"));
-        out.accept(players.showPlayersWithNumbers());
+        out.accept(showPlayersWithNumbers());
         String choose = in.get();
             while (!choose.matches("[12]")) {
                 out.accept(String.format(messages.getString("wrong-option"), 2));
@@ -73,4 +73,15 @@ class PlayersInitializer {
         players.setCurrentPlayer(Integer.parseInt(choose));
 
     }
-}
+
+    private String showPlayersWithNumbers() {
+        StringBuilder sb = new StringBuilder();
+        int i = 1;
+        for (Player pl : players) {
+            sb.append(String.format(messages.getString("player-list"), i + 1, pl.showName(), pl.whichCharacter(), pl.showPoints()));
+            i++;
+        }
+            return sb.toString().trim();
+        }
+    }
+
