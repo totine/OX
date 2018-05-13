@@ -4,11 +4,19 @@ import akademia.ox.exceptions.IncorrectPlayerException;
 import akademia.ox.exceptions.TooManyPlayersException;
 
 import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 class PlayersInitializer {
+    private final Consumer<String> out;
+    private final Supplier<String> in;
     private Players players = new Players();
     private Player player;
-    private Scanner in = new Scanner(System.in);
+
+    PlayersInitializer(Consumer<String> out, Supplier<String> in) {
+        this.out = out;
+        this.in = in;
+    }
 
 
     Players generatePlayers() {
@@ -26,41 +34,40 @@ class PlayersInitializer {
     private String askForCharacter(int playerNumber) {
         String character;
         if (playerNumber == 1) {
-            System.out.println("Wybierz znak: X lub O");
-            character = in.nextLine();
-            while (!character.endsWith("X") && !character.endsWith("O")) {
-                System.out.println("Nieprawidłowy znak");
-                System.out.println("Wybierz znak: X lub O");
-                character = in.nextLine();
+            out.accept("Wybierz znak: X lub O");
+            character = in.get();
+            while (!character.equalsIgnoreCase("X") && !character.equalsIgnoreCase("O")) {
+                out.accept("Nieprawidłowy znak");
+                out.accept("Wybierz znak: X lub O");
+                character = in.get();
             }
         } else {
             character = player.oppositeCharacter().name();
         }
 
-        return character;
+        return character.toUpperCase();
     }
 
     private String askForName(int playerNumber) {
-        System.out.println("Graczu " + playerNumber + ". Podaj swoje imię:");
-        return in.nextLine();
+        out.accept("Graczu " + playerNumber + ". Podaj swoje imię:");
+        String name = in.get();
+        while (name.equals("")) {
+            out.accept("Imię nie może być puste. Podaj swoje imię:");
+            name = in.get();
+        }
+        return name;
     }
 
 
-    public void askForFirstPlayer() {
-        System.out.println("Kto zaczyna (wpisz 1 lub 2)");
-        System.out.println(players.showPlayersWithNumbers());
-        int choose = 0;
-        while (choose != 1 && choose != 2) {
-            while (!in.hasNextInt()) {
-                System.out.println("Wpisz 1 lub 2");
-                in.next();
-
+    void askForFirstPlayer() {
+        out.accept("Kto zaczyna (wpisz 1 lub 2)");
+        out.accept(players.showPlayersWithNumbers());
+        String choose = in.get();
+            while (!choose.matches("[12]")) {
+                out.accept("Wpisz 1 lub 2");
+                choose = in.get();
             }
-            choose = in.nextInt();
-            System.out.println("Wpisz 1 lub 2");
-        }
-
-        players.setCurrentPlayer(choose);
+        players.setCurrentPlayer(Integer.parseInt(choose));
 
     }
 }

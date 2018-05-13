@@ -28,7 +28,7 @@ public class OxGame {
     void init() {
         out.accept(messages.getString("welcome"));
         out.accept(messages.getString("instruction"));
-        PlayersInitializer pi = new PlayersInitializer();
+        PlayersInitializer pi = new PlayersInitializer(out, in);
         try {
             pi.initializePlayer(1);
             pi.initializePlayer(2);
