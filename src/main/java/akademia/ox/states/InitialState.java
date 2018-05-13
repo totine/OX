@@ -6,14 +6,12 @@ import akademia.ox.exceptions.TooBigWinConditionException;
 import akademia.ox.exceptions.TooSmallBoardException;
 import akademia.ox.game.*;
 
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class InitialState implements GameState {
 
     private final ResourceBundle messages;
     private int currentRound;
-    private OxRound game;
     private final Players players;
     private GameState nextState;
 
@@ -22,7 +20,6 @@ public class InitialState implements GameState {
         this.players = players;
         this.currentRound = currentRound;
     }
-
 
 
     @Override
@@ -41,15 +38,13 @@ public class InitialState implements GameState {
     }
 
     @Override
-    public void consumeInput(String query) {
-        setNextStateBasedOnInputQuery(query);
+    public String showQuestion() {
+        return messages.getString("initial-state-question");
     }
 
     @Override
-    public String showQuestion() {
-        return "Wpisz ustawienia gry w postaci x y k, gdzie x to ilość rzędów planszy, y - ilość kolumn planszy, k - długość linii niezbędna do wygranej (nie może być większa niż x lub y) \n" +
-                " Przykładowy wypis: 4 5 3 \n" +
-                "lub naciśnij enter, aby wybrać ustawienia standardowe - plansza 3x3 z linią 3";
+    public void consumeInput(String query) {
+        setNextStateBasedOnInputQuery(query);
     }
 
     private void setNextStateBasedOnInputQuery(String query) {
@@ -58,17 +53,16 @@ public class InitialState implements GameState {
         query = cleanUpQuery(query);
         if (query.equals("")) query = "3 3 3";
         try {
-            game = OxRound.createGameFromQuery(query, bv, vc);
+            OxRound game = OxRound.createGameFromQuery(query, bv, vc);
             nextState = new InProgressState(players, game, currentRound, messages);
-        }
-            catch (TooSmallBoardException e) {
-                nextState = new StateWithErrorMessage(this, "Minimalny wymiar planszy to 3");
-            } catch (NoNumberQueryException e) {
-                nextState = new StateWithErrorMessage(this, "Nieprawidłowy format");
+        } catch (NoNumberQueryException e) {
+            nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-incorrect-format"));
+        } catch (TooSmallBoardException e) {
+            nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-minimal-size"));
         } catch (TooBigBoardException e) {
-            nextState = new StateWithErrorMessage(this, "Maksymalny wymiar planszy to 100");
+            nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-maximal-size"));
         } catch (TooBigWinConditionException e) {
-            nextState = new StateWithErrorMessage(this, "Warunek zwycięstwa musi być mniejszy lub równy mniejszemu rozmiarowi planszy");
+            nextState = new StateWithErrorMessage(this, messages.getString("board-error-too-big-wining-condition"));
         }
 
 

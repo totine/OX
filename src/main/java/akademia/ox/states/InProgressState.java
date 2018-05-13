@@ -18,7 +18,6 @@ public class InProgressState implements GameState {
     private OxRound game;
 
 
-
     public InProgressState(Players players, OxRound game, int currentRound, ResourceBundle messages) {
 
         this.players = players;
@@ -38,15 +37,13 @@ public class InProgressState implements GameState {
     }
 
     @Override
-    public String showQuestion() {
-        return "Podaj numer pola, na którym chcesz postawić swój znak (numer pomiedzy 1 a " + game.boardSize() + ")" + "\n Pole musi być puste";
+    public String showStateInfo() {
+        return game.showBoard() + "\n" + "Teraz ruch gracza " + players.currentPlayer().showName() + " (" + players.currentPlayer().showName() + ")";
     }
 
     @Override
-    public String showStateInfo() {
-
-        return game.showBoard() + "\n" + "Teraz ruch gracza " + players.currentPlayer().showName() + " (" + players.currentPlayer().showName() + ")";
-
+    public String showQuestion() {
+        return "Podaj numer pola, na którym chcesz postawić swój znak (numer pomiedzy 1 a " + game.boardSize() + ")" + "\n Pole musi być puste";
     }
 
     @Override
@@ -61,13 +58,12 @@ public class InProgressState implements GameState {
                 if (result.equals(GameResult.IN_PROGRESS)) {
                     players.swapPlayers();
                     nextState = this;
-                }
-                else {
+                } else {
                     nextState = new VictoryState(players, game, currentRound, result, messages);
                 }
             } catch (NotEmptyFieldException e) {
                 nextState = new StateWithErrorMessage(this, "Pole " + query + " jest zajęte. Spróbuj jeszcze raz");
-            } catch (IllegalMoveFormat|NumberFormatException illegalMoveFormat) {
+            } catch (IllegalMoveFormat | NumberFormatException illegalMoveFormat) {
                 nextState = new StateWithErrorMessage(this, "Ruch " + query + " jest nieprawidłowy. podaj liczbę od 1 do " + this.game.boardSize());
             } catch (BoardOutOfBondException e) {
                 nextState = new StateWithErrorMessage(this, "Pole " + query + " jest poza tablicą. podaj liczbę od 1 do " + this.game.boardSize());
@@ -77,7 +73,6 @@ public class InProgressState implements GameState {
 
 
     }
-
 
 
 }

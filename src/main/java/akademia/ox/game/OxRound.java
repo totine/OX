@@ -27,7 +27,7 @@ public class OxRound {
             throw new NoNumberQueryException();
         }
         int[] numbers = Arrays.stream(query.split(" ")).mapToInt(Integer::parseInt).toArray();
-        if (Math.min(numbers[0], numbers[1]) >= numbers[2]) {
+        if (Math.min(numbers[0], numbers[1]) < numbers[2]) {
             throw new TooBigWinConditionException();
         }
         return new OxRound(numbers[0], numbers[1], numbers[2], bv, vc);
