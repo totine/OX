@@ -17,7 +17,7 @@ public class OxRound {
 
     }
 
-    public OxRound(Board newBoard, int toWin) {
+    private OxRound(Board newBoard, int toWin) {
 
         this.board = newBoard;
         this.toWin = toWin;
@@ -64,11 +64,6 @@ public class OxRound {
 
     public GameResult checkMoveResult(Integer move, GameCharacter character) {
         return board.checkVictory(move, character, toWin);
-    }
-
-
-    public boolean isCorrectMove(Integer move) {
-        return move <= board.boardSize() && ! board.contains(move);
     }
 
     public int boardSize() {

@@ -3,19 +3,21 @@ package akademia.ox.game;
 import akademia.ox.exceptions.IncorrectPlayerException;
 import akademia.ox.exceptions.TooManyPlayersException;
 
-import java.util.Scanner;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 class PlayersInitializer {
     private final Consumer<String> out;
     private final Supplier<String> in;
+    private final ResourceBundle messages;
     private Players players = new Players();
     private Player player;
 
-    PlayersInitializer(Consumer<String> out, Supplier<String> in) {
+    PlayersInitializer(Consumer<String> out, Supplier<String> in, ResourceBundle messages) {
         this.out = out;
         this.in = in;
+        this.messages = messages;
     }
 
 
@@ -34,11 +36,11 @@ class PlayersInitializer {
     private String askForCharacter(int playerNumber) {
         String character;
         if (playerNumber == 1) {
-            out.accept("Wybierz znak: X lub O");
+            out.accept(messages.getString("choose-char"));
             character = in.get();
-            while (!character.equalsIgnoreCase("X") && !character.equalsIgnoreCase("O")) {
-                out.accept("Nieprawidłowy znak");
-                out.accept("Wybierz znak: X lub O");
+            while (!character.matches("[XxOo]")) {
+                out.accept(messages.getString("incorrect-sign"));
+                out.accept(messages.getString("choose-char"));
                 character = in.get();
             }
         } else {
@@ -49,10 +51,11 @@ class PlayersInitializer {
     }
 
     private String askForName(int playerNumber) {
-        out.accept("Graczu " + playerNumber + ". Podaj swoje imię:");
+        out.accept(String.format(messages.getString("ask-for-name"), playerNumber));
         String name = in.get();
         while (name.equals("")) {
-            out.accept("Imię nie może być puste. Podaj swoje imię:");
+            out.accept(messages.getString("empty-name-info"));
+            out.accept(String.format(messages.getString("ask-for-name"), playerNumber));
             name = in.get();
         }
         return name;
@@ -60,11 +63,11 @@ class PlayersInitializer {
 
 
     void askForFirstPlayer() {
-        out.accept("Kto zaczyna (wpisz 1 lub 2)");
+        out.accept(messages.getString("who-starts"));
         out.accept(players.showPlayersWithNumbers());
         String choose = in.get();
             while (!choose.matches("[12]")) {
-                out.accept("Wpisz 1 lub 2");
+                out.accept(String.format(messages.getString("wrong-option"), 2));
                 choose = in.get();
             }
         players.setCurrentPlayer(Integer.parseInt(choose));
