@@ -1,5 +1,9 @@
 package akademia.ox.states;
 
+import akademia.ox.exceptions.NoNumberQueryException;
+import akademia.ox.exceptions.TooBigBoardException;
+import akademia.ox.exceptions.TooBigWinConditionException;
+import akademia.ox.exceptions.TooSmallBoardException;
 import akademia.ox.game.*;
 
 import java.util.Arrays;
@@ -51,24 +55,23 @@ public class InitialState implements GameState {
     private void setNextStateBasedOnInputQuery(String query) {
         BoardVisualizer bv = new BoardVisualizer();
         VictoryChecker vc = new VictoryChecker();
-        if (query.equals("")) {
-            game = OxRound.createStandardGame(bv, vc);
-            nextState = new StateWithErrorMessage(new InProgressState(players, game, currentRound, messages), "wybrano standardową grę 3x3");
-        } else if (isCorrectQuery(query)) {
+        query = cleanUpQuery(query);
+        if (query.equals("")) query = "3 3 3";
+        try {
             game = OxRound.createGameFromQuery(query, bv, vc);
             nextState = new InProgressState(players, game, currentRound, messages);
-
-        } else {
-            nextState = new StateWithErrorMessage(this, "Nieprawidłowy format");
         }
-    }
+            catch (TooSmallBoardException e) {
+                nextState = new StateWithErrorMessage(this, "Minimalny wymiar planszy to 3");
+            } catch (NoNumberQueryException e) {
+                nextState = new StateWithErrorMessage(this, "Nieprawidłowy format");
+        } catch (TooBigBoardException e) {
+            nextState = new StateWithErrorMessage(this, "Maksymalny wymiar planszy to 100");
+        } catch (TooBigWinConditionException e) {
+            nextState = new StateWithErrorMessage(this, "Warunek zwycięstwa musi być mniejszy lub równy mniejszemu rozmiarowi planszy");
+        }
 
-    private boolean isCorrectQuery(String query) {
-        query = cleanUpQuery(query);
-        if (!query.matches("\\d+ \\d+ \\d+"))
-            return false;
-        int[] numbers = Arrays.stream(query.split(" ")).mapToInt(Integer::parseInt).toArray();
-        return Math.min(numbers[0], numbers[1]) >= numbers[2];
+
     }
 
 

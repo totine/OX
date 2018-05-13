@@ -4,11 +4,13 @@ import akademia.ox.exceptions.IncorrectPlayerException;
 import akademia.ox.exceptions.TooManyPlayersException;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class Players implements Iterable<Player> {
+public class Players {
     private Player[] players;
     private int numberOfAddedPlayers;
     private int currentIndex;
@@ -31,8 +33,7 @@ public class Players implements Iterable<Player> {
     public void addNewPlayer(Player player) throws TooManyPlayersException, IncorrectPlayerException {
         if (isFull()) {
             throw new TooManyPlayersException();
-        }
-        else if (!isCorrectPlayer(player)) {
+        } else if (!isCorrectPlayer(player)) {
             throw new IncorrectPlayerException();
         }
         players[numberOfAddedPlayers] = player;
@@ -40,7 +41,7 @@ public class Players implements Iterable<Player> {
     }
 
     private boolean isCorrectPlayer(Player playerToCheck) {
-        return ! playerToCheck.hasUnassignedCharacter() && isUniquePlayer(playerToCheck) && isUniqueCharacter(playerToCheck);
+        return !playerToCheck.hasUnassignedCharacter() && isUniquePlayer(playerToCheck) && isUniqueCharacter(playerToCheck);
     }
 
     private boolean isUniqueCharacter(Player playerToCheck) {
@@ -59,6 +60,7 @@ public class Players implements Iterable<Player> {
     public Player currentPlayer() {
         return players[currentIndex];
     }
+
     public Stream<Player> otherPlayers() {
         return Arrays.stream(players).filter(player -> !player.equals(currentPlayer()));
     }
@@ -69,7 +71,7 @@ public class Players implements Iterable<Player> {
     }
 
     public void swapPlayers() {
-        currentIndex = (++currentIndex)%players.length;
+        currentIndex = (++currentIndex) % players.length;
     }
 
 
@@ -83,13 +85,15 @@ public class Players implements Iterable<Player> {
         otherPlayers().forEach(player -> player.incrementPoints(result.getPointsForOtherPlayer()));
     }
 
-    @Override
-    public Iterator<Player> iterator() {
-        return Arrays.asList(players).iterator();
-    }
 
-    @Override
-    public void forEach(Consumer<? super Player> action) {
-
+    public String showPlayersWithNumbers(String listFormat) {
+        StringBuilder sb = new StringBuilder();
+        int i = 1;
+        for (Player pl : players) {
+            sb.append(String.format(listFormat, i, pl.showName(), pl.whichCharacter(), pl.showPoints()));
+            sb.append("\n");
+            i++;
+        }
+        return sb.toString().trim();
     }
 }

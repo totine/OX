@@ -1,4 +1,4 @@
 package akademia.ox.exceptions;
 
-public class IllegalMoveFormat extends Throwable {
+public class IllegalMoveFormat extends RuntimeException {
 }

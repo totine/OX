@@ -53,7 +53,7 @@ public class InProgressState implements GameState {
     public void consumeInput(String query) {
 
         if (query.equals("koniec")) {
-            nextState = new TerminateState(players);
+            nextState = new TerminateState(players, messages);
         } else {
             try {
                 game.put(query, players.currentPlayerCharacter());

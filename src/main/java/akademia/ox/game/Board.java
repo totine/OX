@@ -1,5 +1,8 @@
 package akademia.ox.game;
 
+import akademia.ox.exceptions.TooBigBoardException;
+import akademia.ox.exceptions.TooSmallBoardException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,9 +15,12 @@ public class Board {
     private BoardVisualizer visualizer;
     private VictoryChecker victoryChecker;
 
-    Board(int rows, int columns, BoardVisualizer visualizer, VictoryChecker victoryChecker) {
+    Board(int rows, int columns, BoardVisualizer visualizer, VictoryChecker victoryChecker) throws TooSmallBoardException, TooBigBoardException {
         if (rows < 3 || columns < 3) {
-            throw new IllegalArgumentException("");
+            throw new TooSmallBoardException();
+        }
+        if (rows > 100 || columns > 100) {
+            throw new TooBigBoardException();
         }
         this.rows = rows;
         this.columns = columns;
@@ -80,7 +86,7 @@ public class Board {
         return victoryChecker.checkVictory(move, character, this, toWin);
     }
 
-    public Board reset() {
+    public Board reset() throws TooBigBoardException, TooSmallBoardException {
         return new Board(rows, columns, visualizer, victoryChecker);
     }
 }

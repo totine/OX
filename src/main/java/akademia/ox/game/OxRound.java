@@ -1,8 +1,6 @@
 package akademia.ox.game;
 
-import akademia.ox.exceptions.BoardOutOfBondException;
-import akademia.ox.exceptions.IllegalMoveFormat;
-import akademia.ox.exceptions.NotEmptyFieldException;
+import akademia.ox.exceptions.*;
 
 import java.util.Arrays;
 
@@ -11,7 +9,7 @@ public class OxRound {
     private final Board board;
     private final int toWin;
 
-    private OxRound(int rows, int columns, int toWin, BoardVisualizer bv, VictoryChecker vc) {
+    private OxRound(int rows, int columns, int toWin, BoardVisualizer bv, VictoryChecker vc) throws TooBigBoardException, TooSmallBoardException {
         this.board = new Board(rows, columns, bv, vc);
         this.toWin = toWin;
 
@@ -23,12 +21,15 @@ public class OxRound {
         this.toWin = toWin;
     }
 
-    public static OxRound createStandardGame(BoardVisualizer bv, VictoryChecker vc) {
-        return new OxRound(3, 3, 3, bv, vc);
-    }
 
-    public static OxRound createGameFromQuery(String query, BoardVisualizer bv, VictoryChecker vc) {
+    public static OxRound createGameFromQuery(String query, BoardVisualizer bv, VictoryChecker vc) throws NoNumberQueryException, TooBigBoardException, TooSmallBoardException, TooBigWinConditionException {
+        if (!query.matches("\\d+ \\d+ \\d+")) {
+            throw new NoNumberQueryException();
+        }
         int[] numbers = Arrays.stream(query.split(" ")).mapToInt(Integer::parseInt).toArray();
+        if (Math.min(numbers[0], numbers[1]) >= numbers[2]) {
+            throw new TooBigWinConditionException();
+        }
         return new OxRound(numbers[0], numbers[1], numbers[2], bv, vc);
     }
 
@@ -74,4 +75,6 @@ public class OxRound {
         Board newBoard = board.reset();
         return new OxRound(newBoard, toWin);
     }
+
+
 }

@@ -1,16 +1,17 @@
 package akademia.ox.states;
 
-import akademia.ox.*;
-import akademia.ox.game.OxRound;
-import akademia.ox.game.Player;
 import akademia.ox.game.Players;
 
-public class TerminateState implements GameState {
-    Players players;
-    boolean isOver;
+import java.util.ResourceBundle;
 
-    public TerminateState(Players players) {
+public class TerminateState implements GameState {
+    private Players players;
+    private final ResourceBundle messages;
+    private boolean isOver;
+
+    public TerminateState(Players players, ResourceBundle messages) {
         this.players = players;
+        this.messages = messages;
         isOver = false;
     }
 
@@ -32,7 +33,7 @@ public class TerminateState implements GameState {
     private String gameSummary() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(winnerInfo()).append("\n");
-        stringBuilder.append(players.showPlayersWithNumbers());
+        stringBuilder.append(players.showPlayersWithNumbers(messages.getString("player-list")));
         return stringBuilder.toString();
     }
 

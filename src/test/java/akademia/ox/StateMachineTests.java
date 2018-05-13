@@ -28,7 +28,7 @@ public class StateMachineTests {
     }
 
     private void setGame() {
-        game =  OxRound.createStandardGame(bv, vc);
+        game =  OxRound.createGameFromQuery("3 3 3", bv, vc);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class StateMachineTests {
     @Test
     public void TerminateState_afterConsumeInput_informsThatGameIsOver() {
         //given
-        TerminateState finalState = new TerminateState(players);
+        TerminateState finalState = new TerminateState(players, messages);
         finalState.consumeInput("");
         //then
         Assert.assertTrue(finalState.isGameOver());

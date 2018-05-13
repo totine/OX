@@ -1,5 +1,7 @@
 package akademia.ox.states;
 
+import akademia.ox.exceptions.TooBigBoardException;
+import akademia.ox.exceptions.TooSmallBoardException;
 import akademia.ox.game.GameResult;
 import akademia.ox.game.OxRound;
 import akademia.ox.game.Players;
@@ -41,7 +43,7 @@ public class VictoryState implements GameState {
     @Override
     public String showStateInfo() {
         players.incrementsPoint(result);
-        return "Runda "+currentRound + " jest zakończona\n" + questions.get(result) + " aktualny stan gry: " + players.showPlayersWithNumbers();
+        return "Runda "+currentRound + " jest zakończona\n" + questions.get(result) + " aktualny stan gry: " + players.showPlayersWithNumbers(messages.getString("player-list"));
     }
 
     @Override
@@ -51,10 +53,10 @@ public class VictoryState implements GameState {
     }
 
     @Override
-    public void consumeInput(String query) {
+    public void consumeInput(String query) throws TooBigBoardException, TooSmallBoardException {
 
         if (query.equals("3") || currentRound == 3) {
-            nextState = new TerminateState(players);
+            nextState = new TerminateState(players, messages);
         }
         if (query.equals("2")) {
             players.swapPlayers();

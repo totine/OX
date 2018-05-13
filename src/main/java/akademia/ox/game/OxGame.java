@@ -1,5 +1,7 @@
 package akademia.ox.game;
 
+import akademia.ox.exceptions.TooBigBoardException;
+import akademia.ox.exceptions.TooSmallBoardException;
 import akademia.ox.states.GameState;
 import akademia.ox.states.InitialState;
 
@@ -29,20 +31,20 @@ public class OxGame {
         out.accept(messages.getString("welcome"));
         out.accept(messages.getString("instruction"));
         PlayersInitializer pi = new PlayersInitializer(out, in, messages);
-        try {
+//        try {
             pi.initializePlayer(1);
             pi.initializePlayer(2);
             pi.askForFirstPlayer();
             players = pi.generatePlayers();
 
-        }
-        catch (Exception e) {
-            System.out.println(e.getClass());
-        }
+//        }
+//        catch (Exception e) {
+//            System.out.println(e.getClass());
+//        }
         currentState = new InitialState(players, 1, messages);
     }
 
-    private void loop() {
+    private void loop() throws TooBigBoardException, TooSmallBoardException {
         while (!currentState.isGameOver()) {
             out.accept(currentState.showStateInfo());
             out.accept(currentState.showQuestion());
@@ -52,13 +54,10 @@ public class OxGame {
         }
     }
 
-    private void end() {
-
-    }
 
     public void start() {
         init();
         loop();
-        end();
+
     }
 }
