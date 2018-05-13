@@ -51,25 +51,21 @@ public class InProgressState implements GameState {
             try {
                 game.put(query, players.currentPlayerCharacter());
                 GameResult result = game.checkMoveResult(Integer.valueOf(query), players.currentPlayerCharacter());
-                switch (result) {
-                    case DRAW:
-                        nextState = new DrawState(players, currentRound);
-                        break;
-                    case VICTORY:
-                        nextState = new VictoryState(players, currentRound);
-                        break;
-                    case IN_PROGRESS:
-                        players.swapPlayers();
-                        nextState = this;
-                        break;
+                if (result.equals(GameResult.IN_PROGRESS)) {
+                    players.swapPlayers();
+                    nextState = this;
+                }
+                else {
+                    nextState = new VictoryState(players, game, currentRound, result);
                 }
             } catch (NotEmptyFieldException e) {
                 nextState = new StateWithErrorMessage(this, "Pole " + query + " jest zajęte. Spróbuj jeszcze raz");
-            } catch (IllegalMoveFormat illegalMoveFormat) {
+            } catch (IllegalMoveFormat|NumberFormatException illegalMoveFormat) {
                 nextState = new StateWithErrorMessage(this, "Ruch " + query + " jest nieprawidłowy. podaj liczbę od 1 do " + this.game.boardSize());
             } catch (BoardOutOfBondException e) {
                 nextState = new StateWithErrorMessage(this, "Pole " + query + " jest poza tablicą. podaj liczbę od 1 do " + this.game.boardSize());
             }
+
         }
 
 

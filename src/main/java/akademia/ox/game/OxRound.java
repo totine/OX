@@ -17,6 +17,12 @@ public class OxRound {
 
     }
 
+    public OxRound(Board newBoard, int toWin) {
+
+        this.board = newBoard;
+        this.toWin = toWin;
+    }
+
     public static OxRound createStandardGame(BoardVisualizer bv, VictoryChecker vc) {
         return new OxRound(3, 3, 3, bv, vc);
     }
@@ -67,5 +73,10 @@ public class OxRound {
 
     public int boardSize() {
         return board.boardSize();
+    }
+
+    public OxRound reset() {
+        Board newBoard = board.reset();
+        return new OxRound(newBoard, toWin);
     }
 }

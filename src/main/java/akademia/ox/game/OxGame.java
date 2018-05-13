@@ -1,7 +1,5 @@
 package akademia.ox.game;
 
-import akademia.ox.game.Players;
-import akademia.ox.game.PlayersInitializer;
 import akademia.ox.states.GameState;
 import akademia.ox.states.InitialState;
 
@@ -41,7 +39,7 @@ public class OxGame {
         catch (Exception e) {
             System.out.println(e.getClass());
         }
-        currentState = new InitialState(players,1 );
+        currentState = new InitialState(players, 1);
     }
 
     private void loop() {

@@ -5,6 +5,7 @@ import akademia.ox.exceptions.TooManyPlayersException;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Players {
     private Player[] players;
@@ -57,6 +58,11 @@ public class Players {
     public Player currentPlayer() {
         return players[currentIndex];
     }
+    public Stream<Player> otherPlayers() {
+        return Arrays.stream(players).filter(player -> !player.equals(currentPlayer()));
+    }
+
+
     public GameCharacter currentPlayerCharacter() {
         return players[currentIndex].whichCharacter();
     }
@@ -80,5 +86,10 @@ public class Players {
     public void addPointsForAllPlayers(int points) {
         Arrays.stream(players).forEach(player -> player.incrementPoints(points));
 
+    }
+
+    public void incrementsPoint(GameResult result) {
+        currentPlayer().incrementPoints(result.getPointsForActualPlayer());
+        otherPlayers().forEach(player -> player.incrementPoints(result.getPointsForOtherPlayer()));
     }
 }

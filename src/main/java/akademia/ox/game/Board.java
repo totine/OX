@@ -79,4 +79,8 @@ public class Board {
     public GameResult checkVictory(Integer move, GameCharacter character, int toWin) {
         return victoryChecker.checkVictory(move, character, this, toWin);
     }
+
+    public Board reset() {
+        return new Board(rows, columns, visualizer, victoryChecker);
+    }
 }

@@ -19,6 +19,8 @@ public class Player {
     }
 
     public Player(String name, GameCharacter character)  {
+        if(name.equals(""))
+            throw new IllegalArgumentException();
         this.name = name;
         this.points = 0;
         this.character = character;

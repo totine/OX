@@ -77,7 +77,7 @@ public class StateMachineTests {
     public void VictoryState_afterCallingMoveToNextState_moveFinalState() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        VictoryState victoryState = new VictoryState(players, 3);
+        VictoryState victoryState = new VictoryState(players, game, 3, GameResult.VICTORY);
         //when
         victoryState.consumeInput("");
         GameState nextState = victoryState.moveToNextState();
@@ -112,7 +112,7 @@ public class StateMachineTests {
     public void StatesWithoutTerminateState_informsThatGameIsNotOver() throws TooManyPlayersException, IncorrectPlayerException {
         //given
         setPlayers();
-        GameState[] states = {new DrawState(players, 1), new InProgressState(players, game, 1), new InitialState(players, 1), new VictoryState(players, 1)};
+        GameState[] states = {new DrawState(players, 1), new InProgressState(players, game, 1), new InitialState(players, 1), new VictoryState(players, game, 1, GameResult.VICTORY)};
         //when // then
         for (GameState state : states) {
             Assert.assertFalse(state.isGameOver());
