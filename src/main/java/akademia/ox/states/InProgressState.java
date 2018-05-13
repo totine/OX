@@ -1,28 +1,30 @@
 package akademia.ox.states;
 
-import akademia.ox.*;
 import akademia.ox.exceptions.BoardOutOfBondException;
 import akademia.ox.exceptions.IllegalMoveFormat;
 import akademia.ox.exceptions.NotEmptyFieldException;
 import akademia.ox.game.GameResult;
 import akademia.ox.game.OxRound;
-import akademia.ox.game.Player;
 import akademia.ox.game.Players;
+
+import java.util.ResourceBundle;
 
 public class InProgressState implements GameState {
 
     private int currentRound;
+    private final ResourceBundle messages;
     private Players players;
     private GameState nextState;
     private OxRound game;
 
 
 
-    public InProgressState(Players players, OxRound game, int currentRound) {
+    public InProgressState(Players players, OxRound game, int currentRound, ResourceBundle messages) {
 
         this.players = players;
         this.game = game;
         this.currentRound = currentRound;
+        this.messages = messages;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class InProgressState implements GameState {
                     nextState = this;
                 }
                 else {
-                    nextState = new VictoryState(players, game, currentRound, result);
+                    nextState = new VictoryState(players, game, currentRound, result, messages);
                 }
             } catch (NotEmptyFieldException e) {
                 nextState = new StateWithErrorMessage(this, "Pole " + query + " jest zajęte. Spróbuj jeszcze raz");

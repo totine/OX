@@ -1,19 +1,20 @@
 package akademia.ox.states;
 
-import akademia.ox.*;
 import akademia.ox.game.*;
 
 import java.util.Arrays;
+import java.util.ResourceBundle;
 
 public class InitialState implements GameState {
 
+    private final ResourceBundle messages;
     private int currentRound;
     private OxRound game;
-    private Players players;
+    private final Players players;
     private GameState nextState;
 
-    public InitialState(Players players, int currentRound) {
-
+    public InitialState(Players players, int currentRound, ResourceBundle messages) {
+        this.messages = messages;
         this.players = players;
         this.currentRound = currentRound;
     }
@@ -32,7 +33,7 @@ public class InitialState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return "To jest początek rundy " + currentRound ;
+        return String.format(messages.getString("initial-state-info"), currentRound);
     }
 
     @Override
@@ -52,10 +53,10 @@ public class InitialState implements GameState {
         VictoryChecker vc = new VictoryChecker();
         if (query.equals("")) {
             game = OxRound.createStandardGame(bv, vc);
-            nextState = new StateWithErrorMessage(new InProgressState(players, game, currentRound), "wybrano standardową grę 3x3");
+            nextState = new StateWithErrorMessage(new InProgressState(players, game, currentRound, messages), "wybrano standardową grę 3x3");
         } else if (isCorrectQuery(query)) {
             game = OxRound.createGameFromQuery(query, bv, vc);
-            nextState = new InProgressState(players, game, currentRound);
+            nextState = new InProgressState(players, game, currentRound, messages);
 
         } else {
             nextState = new StateWithErrorMessage(this, "Nieprawidłowy format");

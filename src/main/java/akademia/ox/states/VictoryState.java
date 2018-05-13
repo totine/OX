@@ -1,13 +1,12 @@
 package akademia.ox.states;
 
-import akademia.ox.*;
 import akademia.ox.game.GameResult;
 import akademia.ox.game.OxRound;
-import akademia.ox.game.Player;
 import akademia.ox.game.Players;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class VictoryState implements GameState {
     private Players players;
@@ -16,12 +15,14 @@ public class VictoryState implements GameState {
     private GameState nextState;
     private Map<GameResult, String> questions;
     private OxRound round;
+    private final ResourceBundle messages;
 
-    public VictoryState(Players players, OxRound round, int currentRound, GameResult result) {
+    public VictoryState(Players players, OxRound round, int currentRound, GameResult result, ResourceBundle messages) {
         this.players = players;
         this.currentRound = currentRound;
         this.result = result;
         this.round = round;
+        this.messages = messages;
         questions = new HashMap<>();
         questions.put(GameResult.VICTORY, "Rundę " + currentRound + " wygrał " + players.currentPlayer().showName() + " aktualny stan gry: ");
         questions.put(GameResult.DRAW, "Runda " + currentRound + " zakończyła się remisem ");
@@ -57,12 +58,12 @@ public class VictoryState implements GameState {
         }
         if (query.equals("2")) {
             players.swapPlayers();
-            nextState = new InitialState(players, ++currentRound);
+            nextState = new InitialState(players, ++currentRound, messages);
         }
         if (query.equals("1")) {
             players.swapPlayers();
             OxRound nextRound = round.reset();
-            nextState = new InProgressState(players, nextRound, ++currentRound);
+            nextState = new InProgressState(players, nextRound, ++currentRound, messages);
         }
     }
 

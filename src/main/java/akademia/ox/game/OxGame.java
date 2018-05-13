@@ -39,7 +39,7 @@ public class OxGame {
         catch (Exception e) {
             System.out.println(e.getClass());
         }
-        currentState = new InitialState(players, 1);
+        currentState = new InitialState(players, 1, messages);
     }
 
     private void loop() {
