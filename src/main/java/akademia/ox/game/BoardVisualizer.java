@@ -12,10 +12,10 @@ public class BoardVisualizer {
     String drawBoard(Board board) {
         setBoard(board);
         StringBuilder visualisation = new StringBuilder();
-        visualisation.append(drawLineWithColumnIndexes()).append(drawLine())
+        visualisation.append("\n").append(drawLineWithColumnIndexes()).append(drawLine())
                 .append(drawBoardBody())
                 .append(drawLine()).append(drawLineWithColumnIndexes());
-        return visualisation.delete(visualisation.length()-1, visualisation.length()).toString();
+        return visualisation.toString();
     }
 
     private String drawBoardBody() {
@@ -23,6 +23,7 @@ public class BoardVisualizer {
 
         int row = 1;
         while (row <= rows) {
+
             sb.append(center(row, maxIndexesWidth)).append("||");
             int column = 1;
             while (column <= columns){

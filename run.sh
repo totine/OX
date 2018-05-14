@@ -1,1 +1,1 @@
-java -jar target/xoGame-1.0.jar
+java -jar target/ox-1.0.jar
