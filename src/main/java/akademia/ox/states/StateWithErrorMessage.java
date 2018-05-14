@@ -7,10 +7,9 @@ public class StateWithErrorMessage implements GameState {
     private GameState beforeState;
     private String message;
 
-    public StateWithErrorMessage(GameState inProgressState, String message) {
+    StateWithErrorMessage(GameState inProgressState, String message) {
         beforeState = inProgressState;
         this.message = message;
-
     }
 
     @Override

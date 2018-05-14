@@ -96,4 +96,12 @@ public class Players {
         }
         return sb.toString().trim();
     }
+
+    public GameCharacter getCurrentPlayerCharacter() {
+        return currentPlayer().whichCharacter();
+    }
+
+    public String getCurrentPlayerName() {
+        return currentPlayer().showName();
+    }
 }

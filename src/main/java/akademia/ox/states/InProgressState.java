@@ -38,18 +38,19 @@ public class InProgressState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return game.showBoard() + "\n" + "Teraz ruch gracza " + players.currentPlayer().showName() + " (" + players.currentPlayer().showName() + ")";
+        return game.showBoard() + "\n" +
+                String.format(messages.getString("inprogress-state-info"), players.getCurrentPlayerCharacter(), players.getCurrentPlayerName());
     }
 
     @Override
     public String showQuestion() {
-        return "Podaj numer pola, na którym chcesz postawić swój znak (numer pomiedzy 1 a " + game.boardSize() + ")" + "\n Pole musi być puste";
+        return String.format(messages.getString("inprogress-state-question"),  game.boardSize());
     }
 
     @Override
     public void consumeInput(String query) {
 
-        if (query.equals("koniec")) {
+        if (query.equals(messages.getString("end"))) {
             nextState = new TerminateState(players, messages);
         } else {
             try {
@@ -62,11 +63,11 @@ public class InProgressState implements GameState {
                     nextState = new VictoryState(players, game, currentRound, result, messages);
                 }
             } catch (NotEmptyFieldException e) {
-                nextState = new StateWithErrorMessage(this, "Pole " + query + " jest zajęte. Spróbuj jeszcze raz");
+                nextState = new StateWithErrorMessage(this, String.format(messages.getString("move-error-non-empty-field"), query));
             } catch (IllegalMoveFormat | NumberFormatException illegalMoveFormat) {
-                nextState = new StateWithErrorMessage(this, "Ruch " + query + " jest nieprawidłowy. podaj liczbę od 1 do " + this.game.boardSize());
+                nextState = new StateWithErrorMessage(this, String.format(messages.getString("move-error-incorrect-format"), query, this.game.boardSize()));
             } catch (BoardOutOfBondException e) {
-                nextState = new StateWithErrorMessage(this, "Pole " + query + " jest poza tablicą. podaj liczbę od 1 do " + this.game.boardSize());
+                nextState = new StateWithErrorMessage(this, String.format(messages.getString("move-error-out-of-bond-field"), query, this.game.boardSize()));
             }
 
         }
