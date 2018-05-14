@@ -42,13 +42,13 @@ public class TerminateState implements GameState {
     }
 
     @Override
-    public void consumeInput(String query) {
-        isOver = true;
+    public String showQuestion() {
+        return "Wciśnij ENTER, aby zakończyć grę";
     }
 
     @Override
-    public String showQuestion() {
-        return "Wciśnij ENTER, aby zakończyć grę";
+    public void consumeInput(String query) {
+        isOver = true;
     }
 
 }

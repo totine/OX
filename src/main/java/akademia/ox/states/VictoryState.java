@@ -15,7 +15,7 @@ public class VictoryState implements GameState {
     private int currentRound;
     private GameResult result;
     private GameState nextState;
-    private Map<GameResult, String> questions;
+    private Map<GameResult, String> stateInfo;
     private OxRound round;
     private final ResourceBundle messages;
 
@@ -25,9 +25,9 @@ public class VictoryState implements GameState {
         this.result = result;
         this.round = round;
         this.messages = messages;
-        questions = new HashMap<>();
-        questions.put(GameResult.VICTORY, "Rundę " + currentRound + " wygrał " + players.currentPlayer().showName() + " aktualny stan gry: ");
-        questions.put(GameResult.DRAW, "Runda " + currentRound + " zakończyła się remisem ");
+        stateInfo = new HashMap<>();
+        stateInfo.put(GameResult.VICTORY, String.format(messages.getString("victory-state-victory-info"), players.getCurrentPlayerName()));
+        stateInfo.put(GameResult.DRAW, messages.getString("victory-state-draw-info"));
     }
 
     @Override
@@ -43,17 +43,18 @@ public class VictoryState implements GameState {
     @Override
     public String showStateInfo() {
         players.incrementsPoint(result);
-        return "Runda "+currentRound + " jest zakończona\n" + questions.get(result) + " aktualny stan gry: " + players.showPlayersWithNumbers(messages.getString("player-list"));
+        return String.format("%s\n%s\n%s)", messages.getString("victory-state-info"), stateInfo.get(result), players.showPlayersWithNumbers(messages.getString("player-list")));
     }
 
     @Override
     public String showQuestion() {
-        return currentRound < 3 ? "Co dalej \n1. Kontynuuj na takiej samej planszy\n[2] Wybierz nową planszę\n[3]Zakończ grę" :
-                "Naciśnij ENTER, aby przejść do podsumowania";
+        return currentRound < 3 ?
+                messages.getString("victory-state-question-game-not-over") :
+                messages.getString("victory-state-question-game-over");
     }
 
     @Override
-    public void consumeInput(String query) throws TooBigBoardException, TooSmallBoardException {
+    public void consumeInput(String query) {
 
         if (query.equals("3") || currentRound == 3) {
             nextState = new TerminateState(players, messages);
