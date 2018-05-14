@@ -1,17 +1,26 @@
 package akademia.ox.states;
 
-import akademia.ox.*;
+import akademia.ox.exceptions.NoNumberQueryException;
+import akademia.ox.exceptions.TooBigBoardException;
+import akademia.ox.exceptions.TooBigWinConditionException;
+import akademia.ox.exceptions.TooSmallBoardException;
+import akademia.ox.game.*;
 
-import java.util.Arrays;
+import java.util.ResourceBundle;
 
 public class InitialState implements GameState {
-    private OxGame game;
-    private Players players;
+
+    private final ResourceBundle messages;
+    private int currentRound;
+    private final Players players;
     private GameState nextState;
 
-    public InitialState(Players players) {
+    public InitialState(Players players, int currentRound, ResourceBundle messages) {
+        this.messages = messages;
         this.players = players;
+        this.currentRound = currentRound;
     }
+
 
     @Override
     public GameState moveToNextState() {
@@ -25,7 +34,12 @@ public class InitialState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return StateInfo.INITIAL_STATE.get();
+        return String.format(messages.getString("initial-state-info"), currentRound);
+    }
+
+    @Override
+    public String showQuestion() {
+        return messages.getString("initial-state-question");
     }
 
     @Override
@@ -36,23 +50,22 @@ public class InitialState implements GameState {
     private void setNextStateBasedOnInputQuery(String query) {
         BoardVisualizer bv = new BoardVisualizer();
         VictoryChecker vc = new VictoryChecker();
-        if (query.equals("")) {
-            game = OxGame.createStandardGame(bv, vc);
-            nextState = new InProgressState(players, game);
-        } else if (isCorrectQuery(query)) {
-            game = OxGame.createGameFromQuery(query, bv, vc);
-            nextState = new InProgressState(players, game);
-        } else {
-            nextState = this;
-        }
-    }
-
-    private boolean isCorrectQuery(String query) {
         query = cleanUpQuery(query);
-        if (!query.matches("\\d+ \\d+ \\d+"))
-            return false;
-        int[] numbers = Arrays.stream(query.split(" ")).mapToInt(Integer::parseInt).toArray();
-        return Math.min(numbers[0], numbers[1]) >= numbers[2];
+        if (query.equals("")) query = "3 3 3";
+        try {
+            OxRound game = OxRound.createRoundFromQuery(query, bv, vc);
+            nextState = new InProgressState(players, game, currentRound, messages);
+        } catch (NoNumberQueryException e) {
+            nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-incorrect-format"));
+        } catch (TooSmallBoardException e) {
+            nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-minimal-size"));
+        } catch (TooBigBoardException|NumberFormatException e) {
+            nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-maximal-size"));
+        } catch (TooBigWinConditionException e) {
+            nextState = new StateWithErrorMessage(this, messages.getString("board-error-too-big-wining-condition"));
+        }
+
+
     }
 
 
@@ -60,18 +73,4 @@ public class InitialState implements GameState {
         return query.trim().replaceAll(" +", " ");
     }
 
-    @Override
-    public String showQuestion() {
-        return StateQuestions.INITIAL_STATE.get();
-    }
-
-    @Override
-    public Player showCurrentPlayer() {
-        return null;
-    }
-
-    @Override
-    public OxGame showGame() {
-        return game;
-    }
 }

@@ -1,40 +1,56 @@
 package akademia.ox.states;
 
-import akademia.ox.*;
+import akademia.ox.game.Players;
+
+import java.util.ResourceBundle;
 
 public class TerminateState implements GameState {
+    private Players players;
+    private final ResourceBundle messages;
+    private boolean isOver;
+
+    public TerminateState(Players players, ResourceBundle messages) {
+        this.players = players;
+        this.messages = messages;
+        isOver = false;
+    }
+
     @Override
     public GameState moveToNextState() {
-        return null;
+        return this;
     }
 
     @Override
     public boolean isGameOver() {
-        return true;
+        return isOver;
     }
 
     @Override
     public String showStateInfo() {
-        return StateInfo.TERMINATE_STATE.get();
+        return gameSummary();
     }
 
-    @Override
-    public void consumeInput(String query) {
+    private String gameSummary() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(winnerInfo()).append("\n");
+        stringBuilder.append(players.showPlayersWithNumbers(messages.getString("player-list")));
+        return stringBuilder.toString();
+    }
 
+    private String winnerInfo() {
+        return players.isDraw() ?
+                messages.getString("terminate-state-info-draw") :
+                String.format(messages.getString("terminate-state-info-victory"), players.showWinnerName(), players.showWinnerCharacter());
     }
 
     @Override
     public String showQuestion() {
-        return StateQuestions.TERMINATE_STATE.get();
+        return messages.getString("terminate-state-question");
     }
 
     @Override
-    public Player showCurrentPlayer() {
-        return null;
+    public void consumeInput(String query) {
+        isOver = true;
     }
 
-    @Override
-    public OxGame showGame() {
-        return null;
-    }
 }

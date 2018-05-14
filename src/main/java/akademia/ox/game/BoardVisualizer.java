@@ -1,4 +1,4 @@
-package akademia.ox;
+package akademia.ox.game;
 
 public class BoardVisualizer {
     private Board board;
@@ -12,10 +12,10 @@ public class BoardVisualizer {
     String drawBoard(Board board) {
         setBoard(board);
         StringBuilder visualisation = new StringBuilder();
-        visualisation.append(drawLineWithColumnIndexes()).append(drawLine())
+        visualisation.append("\n").append(drawLineWithColumnIndexes()).append(drawLine())
                 .append(drawBoardBody())
                 .append(drawLine()).append(drawLineWithColumnIndexes());
-        return visualisation.delete(visualisation.length()-1, visualisation.length()).toString();
+        return visualisation.toString();
     }
 
     private String drawBoardBody() {
@@ -23,6 +23,7 @@ public class BoardVisualizer {
 
         int row = 1;
         while (row <= rows) {
+
             sb.append(center(row, maxIndexesWidth)).append("||");
             int column = 1;
             while (column <= columns){
@@ -105,7 +106,7 @@ public class BoardVisualizer {
         this.board = board;
         rows = board.rows();
         columns = board.columns();
-        int maxColumnTemp = countNumberLength(board.boardSize());
+        int maxColumnTemp = countNumberLength(board.size());
         maxColumnWidth = maxColumnTemp + (maxColumnTemp%2 == 0 ? 1 : 0);
         maxIndexesWidth = countNumberLength(board.rows());
     }

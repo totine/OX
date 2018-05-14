@@ -1,4 +1,4 @@
-package akademia.ox;
+package akademia.ox.game;
 
 public class Player {
     private int points;
@@ -19,6 +19,8 @@ public class Player {
     }
 
     public Player(String name, GameCharacter character)  {
+        if(name.equals(""))
+            throw new IllegalArgumentException();
         this.name = name;
         this.points = 0;
         this.character = character;
@@ -29,7 +31,7 @@ public class Player {
         return name;
     }
 
-    public int showPoints() {
+    public int getPoints() {
         return points;
     }
 

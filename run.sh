@@ -1,0 +1,1 @@
+java -jar target/ox-1.0.jar

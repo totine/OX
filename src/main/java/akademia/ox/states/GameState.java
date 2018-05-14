@@ -1,7 +1,8 @@
 package akademia.ox.states;
 
-import akademia.ox.*;
 
+import akademia.ox.exceptions.TooBigBoardException;
+import akademia.ox.exceptions.TooSmallBoardException;
 
 public interface GameState {
     GameState moveToNextState();
@@ -10,11 +11,8 @@ public interface GameState {
 
     String showStateInfo();
 
-    void consumeInput(String query);
-
     String showQuestion();
 
-    Player showCurrentPlayer();
+    void consumeInput(String query) throws TooBigBoardException, TooSmallBoardException;
 
-    OxGame showGame();
 }

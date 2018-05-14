@@ -1,4 +1,4 @@
-package akademia.ox;
+package akademia.ox.game;
 
 public enum GameCharacter {
     O {
