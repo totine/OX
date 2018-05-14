@@ -4,7 +4,6 @@ import akademia.ox.exceptions.IncorrectPlayerException;
 import akademia.ox.exceptions.TooManyPlayersException;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class Players {
@@ -87,7 +86,7 @@ public class Players {
         StringBuilder sb = new StringBuilder();
         int i = 1;
         for (Player pl : players) {
-            sb.append(String.format(listFormat, i, pl.showName(), pl.whichCharacter(), pl.showPoints()));
+            sb.append(String.format(listFormat, i, pl.showName(), pl.whichCharacter(), pl.getPoints()));
             sb.append("\n");
             i++;
         }
@@ -103,10 +102,10 @@ public class Players {
     }
 
     public boolean isDraw() {
-        return Arrays.stream(players).allMatch(player -> player.showPoints() == players[0].showPoints());
+        return Arrays.stream(players).allMatch(player -> player.getPoints() == players[0].getPoints());
     }
     private Player getWinner() {
-        return Arrays.stream(players).max(Comparator.comparingInt(Player::showPoints)).get();
+        return Arrays.stream(players).max(Comparator.comparingInt(Player::getPoints)).get();
     }
 
     public String showWinnerName() {
@@ -115,5 +114,15 @@ public class Players {
 
     public GameCharacter showWinnerCharacter() {
         return getWinner().whichCharacter();
+    }
+
+    public String getSimplePlayersWithPoints() {
+        StringBuilder sb = new StringBuilder();
+        for (Player player : players) {
+            sb.append(player.whichCharacter()).append(": ");
+            sb.append(player.getPoints());
+            sb.append(" ");
+        }
+        return sb.toString().trim();
     }
 }

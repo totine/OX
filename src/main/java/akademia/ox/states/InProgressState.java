@@ -38,7 +38,7 @@ public class InProgressState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return game.showBoard() + "\n" +
+        return game.getVisualizedBoard() + "\n" +
                 String.format(messages.getString("inprogress-state-info"), players.getCurrentPlayerCharacter(), players.getCurrentPlayerName());
     }
 

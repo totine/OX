@@ -32,7 +32,7 @@ public class Board {
     }
 
 
-    int boardSize() {
+    int size() {
         return rows * columns;
     }
 
@@ -78,7 +78,7 @@ public class Board {
         return board.containsKey(move);
     }
 
-    String drawBoard() {
+    String getVisualization() {
         return visualizer.drawBoard(this);
     }
 

@@ -26,7 +26,7 @@ public class VictoryState implements GameState {
         this.round = round;
         this.messages = messages;
         stateInfo = new HashMap<>();
-        stateInfo.put(GameResult.VICTORY, String.format(messages.getString("victory-state-victory-info"), players.getCurrentPlayerName()));
+        stateInfo.put(GameResult.VICTORY, String.format(messages.getString("victory-state-victory-info"), players.getCurrentPlayerCharacter()));
         stateInfo.put(GameResult.DRAW, messages.getString("victory-state-draw-info"));
     }
 
@@ -43,7 +43,9 @@ public class VictoryState implements GameState {
     @Override
     public String showStateInfo() {
         players.incrementsPoint(result);
-        return String.format("%s\n%s\n%s)", messages.getString("victory-state-info"), stateInfo.get(result), players.showPlayersWithNumbers(messages.getString("player-list")));
+        return String.format("%s\n%s %s",
+                String.format(messages.getString("victory-state-info"), currentRound),
+                stateInfo.get(result), players.getSimplePlayersWithPoints());
     }
 
     @Override

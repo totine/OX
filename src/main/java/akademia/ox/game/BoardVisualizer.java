@@ -106,7 +106,7 @@ public class BoardVisualizer {
         this.board = board;
         rows = board.rows();
         columns = board.columns();
-        int maxColumnTemp = countNumberLength(board.boardSize());
+        int maxColumnTemp = countNumberLength(board.size());
         maxColumnWidth = maxColumnTemp + (maxColumnTemp%2 == 0 ? 1 : 0);
         maxIndexesWidth = countNumberLength(board.rows());
     }

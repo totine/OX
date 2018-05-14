@@ -28,7 +28,7 @@ public class StateMachineTests {
     }
 
     private void setGame() {
-        game =  OxRound.createGameFromQuery("3 3 3", bv, vc);
+        game =  OxRound.createRoundFromQuery("3 3 3", bv, vc);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class StateMachineTests {
         //given
         setPlayers();
         InProgressState gameInProgress = new InProgressState(players, game, 1, messages);
-        gameInProgress.consumeInput("koniec");
+        gameInProgress.consumeInput("end");
         //when
         GameState nextState = gameInProgress.moveToNextState();
         //then

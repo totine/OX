@@ -22,34 +22,23 @@ public class OxRound {
     }
 
 
-    public static OxRound createGameFromQuery(String query, BoardVisualizer bv, VictoryChecker vc) throws NoNumberQueryException, TooBigBoardException, TooSmallBoardException, TooBigWinConditionException {
-        if (!query.matches("\\d+ \\d+ \\d+")) {
+    public static OxRound createRoundFromQuery(String query, BoardVisualizer bv, VictoryChecker vc) throws NumberFormatException, NoNumberQueryException, TooBigBoardException, TooSmallBoardException, TooBigWinConditionException {
+        if (!query.matches("\\d+\\s+\\d+\\s+\\d+")) {
             throw new NoNumberQueryException();
         }
-        int[] numbers = Arrays.stream(query.split(" ")).mapToInt(Integer::parseInt).toArray();
+
+        int[] numbers = Arrays.stream(query.split("\\s+")).mapToInt(Integer::parseInt).toArray();
         if (Math.min(numbers[0], numbers[1]) < numbers[2]) {
             throw new TooBigWinConditionException();
         }
         return new OxRound(numbers[0], numbers[1], numbers[2], bv, vc);
     }
 
-    public String showBoard() {
-        return board.drawBoard();
+    public String getVisualizedBoard() {
+        return board.getVisualization();
     }
 
-    public int columns() {
-        return board.columns();
-    }
-
-    public int rows() {
-        return board.rows();
-    }
-
-    public int toWin() {
-        return toWin;
-    }
-
-    public void put(String queryMove, GameCharacter character) throws IllegalMoveFormat, NotEmptyFieldException, BoardOutOfBondException {
+    public void put(String queryMove, GameCharacter character) throws NumberFormatException, IllegalMoveFormat, NotEmptyFieldException, BoardOutOfBondException {
         if (! queryMove.matches("\\d+"))
             throw new IllegalMoveFormat();
 
@@ -57,7 +46,7 @@ public class OxRound {
 
         if (board.contains(move))
             throw new NotEmptyFieldException();
-        if (move > board.boardSize())
+        if (move > board.size())
             throw new BoardOutOfBondException();
         board.put(move, character);
     }
@@ -68,7 +57,7 @@ public class OxRound {
     }
 
     public int boardSize() {
-        return board.boardSize();
+        return board.size();
     }
 
     public OxRound reset() {

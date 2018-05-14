@@ -53,13 +53,13 @@ public class InitialState implements GameState {
         query = cleanUpQuery(query);
         if (query.equals("")) query = "3 3 3";
         try {
-            OxRound game = OxRound.createGameFromQuery(query, bv, vc);
+            OxRound game = OxRound.createRoundFromQuery(query, bv, vc);
             nextState = new InProgressState(players, game, currentRound, messages);
         } catch (NoNumberQueryException e) {
             nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-incorrect-format"));
         } catch (TooSmallBoardException e) {
             nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-minimal-size"));
-        } catch (TooBigBoardException e) {
+        } catch (TooBigBoardException|NumberFormatException e) {
             nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-maximal-size"));
         } catch (TooBigWinConditionException e) {
             nextState = new StateWithErrorMessage(this, messages.getString("board-error-too-big-wining-condition"));

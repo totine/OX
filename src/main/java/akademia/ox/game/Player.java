@@ -31,7 +31,7 @@ public class Player {
         return name;
     }
 
-    public int showPoints() {
+    public int getPoints() {
         return points;
     }
 

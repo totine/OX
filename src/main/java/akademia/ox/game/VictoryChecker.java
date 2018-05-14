@@ -19,7 +19,7 @@ public class VictoryChecker {
         int inUpDiag = countInUpDiag(lastMove, character);
         if (inRow >= this.toWin || inCol >= this.toWin || inDownDiag >= this.toWin || inUpDiag >= this.toWin)
             return GameResult.VICTORY;
-        if (board.coverage() == board.boardSize()) {
+        if (board.coverage() == board.size()) {
             return GameResult.DRAW;
         }
         return GameResult.IN_PROGRESS;
@@ -38,7 +38,7 @@ public class VictoryChecker {
 
     private int countInCol(int lastMove, GameCharacter character) {
         int leftLimit = 0;
-        int rightLimit = board.boardSize();
+        int rightLimit = board.size();
 
         IntFunction<Integer> nextRightIndexCounter = index -> index + board.columns();
         IntFunction<Integer> nextLeftIndexCounter = index -> index - board.columns();
@@ -47,7 +47,7 @@ public class VictoryChecker {
 
     private int countInUpDiag(int lastMove, GameCharacter character) {
         int i = lastMove;
-        while (i % board.columns() != 1 && i < board.boardSize() - board.columns()) {
+        while (i % board.columns() != 1 && i < board.size() - board.columns()) {
             i += (board.columns() - 1);
         }
         int leftLimit = i;
@@ -65,7 +65,7 @@ public class VictoryChecker {
 
     private int countInDownDiag(int lastMove, GameCharacter character) {
         int i = lastMove;
-        while (i % board.columns() != 0 && i < board.boardSize() - board.columns()) {
+        while (i % board.columns() != 0 && i < board.size() - board.columns()) {
             i += (board.columns() + 1);
         }
         int rightLimit = i;

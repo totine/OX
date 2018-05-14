@@ -1,6 +1,5 @@
 package akademia.ox.game;
 
-import akademia.ox.game.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -85,7 +84,7 @@ public class VictoryCheckerTests {
         board.put(5, GameCharacter.X);
         board.put(9, GameCharacter.X);
         GameResult gameResult = board.checkVictory(1, GameCharacter.X,3);
-        System.out.println(board.drawBoard());
+        System.out.println(board.getVisualization());
         Assert.assertEquals(gameResult, GameResult.VICTORY);
     }
 
@@ -126,7 +125,7 @@ public class VictoryCheckerTests {
         board.put(13, GameCharacter.X);
         board.put(15, GameCharacter.X);
         GameResult gameResult = board.checkVictory(13, GameCharacter.X,4);
-        System.out.println(board.drawBoard());
+        System.out.println(board.getVisualization());
         Assert.assertEquals(gameResult, GameResult.IN_PROGRESS);
     }
 
@@ -138,7 +137,7 @@ public class VictoryCheckerTests {
         board.put(13, GameCharacter.X);
         board.put(19, GameCharacter.X);
         GameResult gameResult = board.checkVictory(19, GameCharacter.X,4);
-        System.out.println(board.drawBoard());
+        System.out.println(board.getVisualization());
         Assert.assertEquals(gameResult, GameResult.VICTORY);
     }
 

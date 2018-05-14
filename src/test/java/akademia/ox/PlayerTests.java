@@ -53,7 +53,7 @@ public class PlayerTests {
         //given
         Player player = new Player(name);
         //when
-        int points = player.showPoints();
+        int points = player.getPoints();
         //then
         Assert.assertEquals(points, 0);
 
@@ -65,10 +65,10 @@ public class PlayerTests {
         Player player = new Player(name);
         //when
         int newPoints = 3;
-        int actualPoints = player.showPoints();
+        int actualPoints = player.getPoints();
         player.incrementPoints(newPoints);
         //then
-        Assert.assertEquals(player.showPoints(), actualPoints+newPoints);
+        Assert.assertEquals(player.getPoints(), actualPoints+newPoints);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

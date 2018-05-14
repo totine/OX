@@ -1,10 +1,6 @@
 package akademia.ox.game;
 
 import akademia.ox.exceptions.TooSmallBoardException;
-import akademia.ox.game.Board;
-import akademia.ox.game.BoardVisualizer;
-import akademia.ox.game.GameCharacter;
-import akademia.ox.game.VictoryChecker;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -20,7 +16,7 @@ public class BoardTests {
         int x = Math.abs(random.nextInt(100))+1;
         int y = Math.abs(random.nextInt(100))+1;
         Board board = new Board(x,y,bv, vc);
-        int boardSize = board.boardSize();
+        int boardSize = board.size();
         Assert.assertEquals(boardSize, x*y);
     }
 
