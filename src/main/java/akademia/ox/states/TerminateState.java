@@ -38,12 +38,14 @@ public class TerminateState implements GameState {
     }
 
     private String winnerInfo() {
-        return "Zwyciężył " + players.currentPlayer().showName();
+        return players.isDraw() ?
+                messages.getString("terminate-state-info-draw") :
+                String.format(messages.getString("terminate-state-info-victory"), players.showWinnerName(), players.showWinnerCharacter());
     }
 
     @Override
     public String showQuestion() {
-        return "Wciśnij ENTER, aby zakończyć grę";
+        return messages.getString("terminate-state-question");
     }
 
     @Override

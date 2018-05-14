@@ -3,10 +3,7 @@ package akademia.ox.game;
 import akademia.ox.exceptions.IncorrectPlayerException;
 import akademia.ox.exceptions.TooManyPlayersException;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -103,5 +100,20 @@ public class Players {
 
     public String getCurrentPlayerName() {
         return currentPlayer().showName();
+    }
+
+    public boolean isDraw() {
+        return Arrays.stream(players).allMatch(player -> player.showPoints() == players[0].showPoints());
+    }
+    private Player getWinner() {
+        return Arrays.stream(players).max(Comparator.comparingInt(Player::showPoints)).get();
+    }
+
+    public String showWinnerName() {
+        return getWinner().showName();
+    }
+
+    public GameCharacter showWinnerCharacter() {
+        return getWinner().whichCharacter();
     }
 }

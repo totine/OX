@@ -109,18 +109,7 @@ public class StateMachineTests {
 
     }
 
-    @Test
-    public void InitialState_afterCallingShowState_returnsInformationAboutItsState() throws TooManyPlayersException, IncorrectPlayerException {
-        //given
-        setPlayers();
-        GameState stateToTest = new InitialState(players, 1, messages);
-        //when
-        String stateInfo = stateToTest.showStateInfo();
-        String expectedStateInfo = "";
-        //then
-        Assert.assertEquals(stateInfo, expectedStateInfo);
 
-    }
 
 }
 
