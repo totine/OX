@@ -18,7 +18,7 @@
 //        Consumer<String> out = System.out::println;
 //        Supplier<String> in = new Scanner(System.in)::nextLine;
 //        PlayersInitializer pi = new PlayersInitializer(out, in, messages);
-//        Players players = pi.generatePlayers();
+//        Players players = pi.getPlayers();
 //        Assert.assertEquals(players.numberOfAllPlayers(), 2);
 //    }
 //}

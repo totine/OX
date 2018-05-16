@@ -53,10 +53,6 @@ public class Player {
     }
 
 
-    public void swapCharacter() {
-        character = character.getOpposite();
-    }
-
     public boolean hasUnassignedCharacter() {
         return character == null;
     }

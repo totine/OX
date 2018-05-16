@@ -13,13 +13,21 @@ public enum GameCharacter {
 
 
 
-    public static List<GameCharacter> getAllCharacters() {
-         ArrayList<GameCharacter> asdf = new ArrayList<>();
-         for (GameCharacter character : GameCharacter.class.getEnumConstants()) {
-             if (!character.equals(EMPTY)) {
-                 asdf.add(character);
-             }
-         }
-         return asdf;
+    public static List<GameCharacter> getAllCharacters(int numberOfCharacters) {
+        ArrayList<GameCharacter> characters = new ArrayList<>();
+        if (numberOfCharacters > 2) {
+
+            for (GameCharacter character : GameCharacter.class.getEnumConstants()) {
+                if (!character.equals(EMPTY)) {
+                    characters.add(character);
+                }
+            }
+        }
+        else {
+            characters.add(X);
+            characters.add(O);
+        }
+
+         return characters;
     }
 }

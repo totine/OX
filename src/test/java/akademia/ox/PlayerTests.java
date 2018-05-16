@@ -93,16 +93,16 @@ public class PlayerTests {
         Assert.assertEquals(player.whichCharacter(), characterToAssign);
     }
 
-    @Test
-    public void player_afterSwapingCharacter_hasOppositeCharacterAssigned() {
-        //given
-        Player player = new Player(name);
-        GameCharacter characterToAssign = GameCharacter.O;
-        player.assignCharacter(characterToAssign);
-        //when
-        player.swapCharacter();
-        GameCharacter oppositeCharacter = GameCharacter.X;
-        //then
-        Assert.assertEquals(player.whichCharacter(), oppositeCharacter);
-    }
+//    @Test
+//    public void player_afterSwapingCharacter_hasOppositeCharacterAssigned() {
+//        //given
+//        Player player = new Player(name);
+//        GameCharacter characterToAssign = GameCharacter.O;
+//        player.assignCharacter(characterToAssign);
+//        //when
+//        player.swapCharacter();
+//        GameCharacter oppositeCharacter = GameCharacter.X;
+//        //then
+//        Assert.assertEquals(player.whichCharacter(), oppositeCharacter);
+//    }
 }

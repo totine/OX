@@ -21,13 +21,13 @@ class PlayersInitializer {
         this.out = out;
         this.in = in;
         this.messages = messages;
-        this.characters = GameCharacter.getAllCharacters();
+        this.characters = GameCharacter.getAllCharacters(numberOfPlayers);
         this.players = new Players(numberOfPlayers);
 
     }
 
 
-    Players generatePlayers() {
+    Players getPlayers() {
         return players;
     }
 
@@ -47,11 +47,6 @@ class PlayersInitializer {
                 out.accept(i + " " + characters.get(i-1));
             }
             int num = Integer.parseInt(in.get());
-//            while (!character.matches("[XxOo]")) {
-//                out.accept(messages.getString("incorrect-sign"));
-//                out.accept(messages.getString("choose-char"));
-//                character = in.get();
-//            }
 
 
         character = characters.remove(num-1).name();
