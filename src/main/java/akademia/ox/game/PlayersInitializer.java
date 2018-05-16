@@ -53,7 +53,7 @@ class PlayersInitializer {
     private String askForName(int playerNumber) {
         out.accept(String.format(messages.getString("ask-for-name"), playerNumber));
         String name = in.get();
-        while (name.equals("")) {
+        while (name.matches("\\s*")) {
             out.accept(messages.getString("empty-name-info"));
             out.accept(String.format(messages.getString("ask-for-name"), playerNumber));
             name = in.get();

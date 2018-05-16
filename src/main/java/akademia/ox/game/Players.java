@@ -71,7 +71,7 @@ public class Players {
     }
 
 
-    public void setCurrentPlayer(int choose) {
+    void setCurrentPlayer(int choose) {
         currentIndex = choose - 1;
     }
 
