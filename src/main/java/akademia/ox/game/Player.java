@@ -61,7 +61,4 @@ public class Player {
         return character == null;
     }
 
-    public GameCharacter oppositeCharacter() {
-        return character.getOpposite();
-    }
 }

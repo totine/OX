@@ -11,8 +11,8 @@ public class Players {
     private int numberOfAddedPlayers;
     private int currentIndex;
 
-    public Players() {
-        players = new Player[2];
+    public Players(int numberOfPlayers) {
+        players = new Player[numberOfPlayers];
         numberOfAddedPlayers = 0;
         currentIndex = 0;
     }

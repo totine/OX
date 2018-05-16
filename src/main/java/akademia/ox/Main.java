@@ -30,6 +30,7 @@ public class Main {
         gameEnvProperties.setProperty("default-rows", "3");
         gameEnvProperties.setProperty("default-columns", "3");
         gameEnvProperties.setProperty("default-to-wins", "3");
+        gameEnvProperties.setProperty("numbers-of-player", "3");
         return gameEnvProperties;
 
     }
