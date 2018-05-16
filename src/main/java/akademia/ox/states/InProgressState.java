@@ -17,8 +17,7 @@ public class InProgressState implements GameState {
     private OxRound round;
 
 
-    public InProgressState(Players players, OxRound game, ResourceBundle messages) {
-
+    InProgressState(Players players, OxRound game, ResourceBundle messages) {
         this.players = players;
         this.round = game;
         this.messages = messages;
@@ -67,7 +66,6 @@ public class InProgressState implements GameState {
             } catch (BoardOutOfBondException e) {
                 nextState = new StateWithErrorMessage(this, String.format(messages.getString("move-error-out-of-bond-field"), query, round.boardSize()));
             }
-
         }
 
 

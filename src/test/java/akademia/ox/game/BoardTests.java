@@ -15,7 +15,7 @@ public class BoardTests {
     public void Board_afterCreateBoardWithXandYRows_boardSizeIsEqualMultiplicationXandY() {
         int x = Math.abs(random.nextInt(100))+1;
         int y = Math.abs(random.nextInt(100))+1;
-        Board board = new Board(x,y,bv, vc);
+        Board board = new Board(x,y);
         int boardSize = board.size();
         Assert.assertEquals(boardSize, x*y);
     }
@@ -24,14 +24,14 @@ public class BoardTests {
     public void Board_afterCreateBoardWithNegativeInput_illegalArgumentExceptionIsThrown() {
         int x = -1*Math.abs(random.nextInt());
         int y = -1*Math.abs(random.nextInt());
-        Board board = new Board(x,y,bv, vc);
+        Board board = new Board(x,y);
     }
 
     @Test(expectedExceptions = TooSmallBoardException.class)
     public void Board_afterCreateBoardWithZeroInput_illegalArgumentExceptionIsThrown() {
         int x = 0;
         int y = 0;
-        Board board = new Board(x,y,bv, vc);
+        Board board = new Board(x,y);
     }
 
 
@@ -40,7 +40,7 @@ public class BoardTests {
     public void emptyBoard_afterGetByRowAndCol_emptyIsReturned() {
         int x = Math.abs(random.nextInt(90)+3);
         int y = Math.abs(random.nextInt(90) + 3);
-        Board board = new Board(x,y,bv, vc);
+        Board board = new Board(x,y);
 
         int row = random.nextInt(x)+1;
         int col = random.nextInt(y)+1;
@@ -53,7 +53,7 @@ public class BoardTests {
     public void emptyBoard_afterGetByFieldNumber_emptyIsReturned() {
         int x = Math.abs(random.nextInt(90) + 3);
         int y = Math.abs(random.nextInt(90) + 3);
-        Board board = new Board(x,y,bv, vc);
+        Board board = new Board(x,y);
         int fieldNumber = random.nextInt(x*y)+1;
 
 
@@ -65,7 +65,7 @@ public class BoardTests {
     public void emptyBoard_afterPutFirstCharacterByIndexes_currentCoverageIsEqualToOne() {
         int x = Math.abs(random.nextInt(90)+3);
         int y = Math.abs(random.nextInt(90) + 3);
-        Board board = new Board(x,y,bv, vc);
+        Board board = new Board(x,y);
 
         int row = random.nextInt(x)+1;
         int col = random.nextInt(y)+1;
@@ -81,7 +81,7 @@ public class BoardTests {
     public void emptyBoard_afterPutFirstCharacterByNumber_currentCoverageIsEqualToOne() {
         int x = Math.abs(random.nextInt(90))+3;
         int y = Math.abs(random.nextInt(90))+3;
-        Board board = new Board(x,y,bv, vc);
+        Board board = new Board(x,y);
         int fieldNumber = random.nextInt(x*y)+1;
         board.put(fieldNumber, GameCharacter.X);
 
@@ -93,7 +93,7 @@ public class BoardTests {
     public void Board_afterPutSecondCharacterInCorrectPlace_currentCoverageIsEqualToTwo() {
         int x = Math.abs(random.nextInt(90)+3);
         int y = Math.abs(random.nextInt(90) + 3);
-        Board board = new Board(x,y,bv, vc);
+        Board board = new Board(x,y);
 
         int row = random.nextInt(x)+1;
         int col = random.nextInt(y)+1;

@@ -16,7 +16,7 @@ public class VictoryState implements GameState {
     private OxRound round;
     private final ResourceBundle messages;
 
-    public VictoryState(Players players, OxRound round, GameResult result, ResourceBundle messages) {
+    VictoryState(Players players, OxRound round, GameResult result, ResourceBundle messages) {
         this.players = players;
         this.result = result;
         this.round = round;
@@ -39,7 +39,8 @@ public class VictoryState implements GameState {
     @Override
     public String showStateInfo() {
         players.incrementsPoint(result);
-        return String.format("%s\n%s %s",
+        return round.getVisualizedBoard() +
+                String.format("\n%s\n%s %s",
                 String.format(messages.getString("victory-state-info"), round.getNumber()),
                 stateInfo.get(result), players.getSimplePlayersWithPoints());
     }
@@ -53,7 +54,6 @@ public class VictoryState implements GameState {
 
     @Override
     public void consumeInput(String query) {
-
         if (query.equals("1")) {
             players.swapPlayers();
             OxRound nextRound = round.reset();
@@ -65,6 +65,9 @@ public class VictoryState implements GameState {
         }
         if (query.equals("3") || round.getNumber() == 3) {
             nextState = new TerminateState(players, messages);
+        }
+        else {
+            nextState = new StateWithErrorMessage(this, String.format(messages.getString("wrong-option"), 3));
         }
     }
 

@@ -68,6 +68,7 @@ public class RoundParameters {
         if (!query.matches("-?\\d+\\s+-?\\d+\\s+-?\\d+")) {
             throw new NoNumberQueryException();
         }
+
         String[] sizes = query.split("\\s+");
         rows = Integer.valueOf(sizes[0]);
         columns = Integer.valueOf(sizes[0]);

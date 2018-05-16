@@ -6,7 +6,6 @@ import akademia.ox.exceptions.TooBigWinConditionException;
 import akademia.ox.exceptions.TooSmallBoardException;
 import akademia.ox.game.*;
 
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class InitialState implements GameState {
@@ -17,18 +16,16 @@ public class InitialState implements GameState {
     private GameState nextState;
     private RoundParameters roundParameters;
 
-    public InitialState(Players players, int currentRound, ResourceBundle messages, RoundParameters roundParameters) {
+    InitialState(Players players, int currentRound, ResourceBundle messages, RoundParameters roundParameters) {
         this.messages = messages;
         this.players = players;
         this.currentRoundNumber = currentRound;
         this.roundParameters = roundParameters;
     }
 
-
     public static InitialState firstRound(Players players, ResourceBundle messages, RoundParameters roundParameters) {
         return new InitialState(players, 1, messages, roundParameters);
     }
-
 
     @Override
     public GameState moveToNextState() {
@@ -61,7 +58,9 @@ public class InitialState implements GameState {
         query = cleanUpQuery(query);
         OxRound round = null;
         try {
-            roundParameters.updateFromQuery(query);
+            if (!query.equals("")) {
+                roundParameters.updateFromQuery(query);
+            }
             round = OxRound.createRound(roundParameters, currentRoundNumber, bv, vc);
         } catch (NoNumberQueryException e) {
             nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-incorrect-format"));
@@ -71,14 +70,9 @@ public class InitialState implements GameState {
             nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-maximal-size"));
         } catch (TooBigWinConditionException e) {
             nextState = new StateWithErrorMessage(this, messages.getString("board-error-too-big-wining-condition"));
-        } catch (Exception e) {
-            nextState = new StateWithErrorMessage(new TerminateState(players, messages), "Nieznany błąd. Gra została zakończona");
         }
-
         nextState = new InProgressState(players, round, messages);
-
     }
-
 
     private String cleanUpQuery(String query) {
         return query.trim().replaceAll(" +", " ");

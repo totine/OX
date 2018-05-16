@@ -5,8 +5,8 @@ public class StateWithErrorMessage implements GameState {
     private GameState beforeState;
     private String message;
 
-    StateWithErrorMessage(GameState inProgressState, String message) {
-        beforeState = inProgressState;
+    StateWithErrorMessage(GameState state, String message) {
+        beforeState = state;
         this.message = message;
     }
 

@@ -9,7 +9,7 @@ public class TerminateState implements GameState {
     private final ResourceBundle messages;
     private boolean isOver;
 
-    public TerminateState(Players players, ResourceBundle messages) {
+    TerminateState(Players players, ResourceBundle messages) {
         this.players = players;
         this.messages = messages;
         isOver = false;
