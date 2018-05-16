@@ -6,30 +6,28 @@ import akademia.ox.exceptions.TooSmallBoardException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Board {
+class Board {
     private int rows;
     private int columns;
     private Map<Integer, GameCharacter> board;
-
     private int coverage;
-    private BoardVisualizer visualizer;
-    private VictoryChecker victoryChecker;
 
-    Board(int rows, int columns, BoardVisualizer visualizer, VictoryChecker victoryChecker) throws TooSmallBoardException, TooBigBoardException {
-        if (rows < 3 || columns < 3) {
-            throw new TooSmallBoardException();
-        }
-        if (rows > 100 || columns > 100) {
-            throw new TooBigBoardException();
-        }
+
+    Board(int rows, int columns) throws TooSmallBoardException, TooBigBoardException {
+
         this.rows = rows;
         this.columns = columns;
         this.board = new HashMap<>();
         this.coverage = 0;
-        this.visualizer = visualizer;
-        this.victoryChecker = victoryChecker;
 
     }
+
+    static Board createBoard(RoundParameters roundParameters) {
+
+        return new Board(roundParameters.rows(), roundParameters.columns());
+    }
+
+
 
 
     int size() {
@@ -78,15 +76,8 @@ public class Board {
         return board.containsKey(move);
     }
 
-    String getVisualization() {
-        return visualizer.drawBoard(this);
-    }
-
-    public GameResult checkVictory(Integer move, GameCharacter character, int toWin) {
-        return victoryChecker.checkVictory(move, character, this, toWin);
-    }
 
     public Board reset() throws TooBigBoardException, TooSmallBoardException {
-        return new Board(rows, columns, visualizer, victoryChecker);
+        return new Board(rows, columns);
     }
 }

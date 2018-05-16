@@ -11,18 +11,16 @@ import java.util.ResourceBundle;
 
 public class InProgressState implements GameState {
 
-    private int currentRound;
     private final ResourceBundle messages;
     private Players players;
     private GameState nextState;
-    private OxRound game;
+    private OxRound round;
 
 
-    public InProgressState(Players players, OxRound game, int currentRound, ResourceBundle messages) {
+    public InProgressState(Players players, OxRound game, ResourceBundle messages) {
 
         this.players = players;
-        this.game = game;
-        this.currentRound = currentRound;
+        this.round = game;
         this.messages = messages;
     }
 
@@ -38,13 +36,13 @@ public class InProgressState implements GameState {
 
     @Override
     public String showStateInfo() {
-        return game.getVisualizedBoard() + "\n" +
+        return round.getVisualizedBoard() + "\n" +
                 String.format(messages.getString("inprogress-state-info"), players.getCurrentPlayerCharacter(), players.getCurrentPlayerName());
     }
 
     @Override
     public String showQuestion() {
-        return String.format(messages.getString("inprogress-state-question"),  game.boardSize());
+        return String.format(messages.getString("inprogress-state-question"),  round.boardSize());
     }
 
     @Override
@@ -54,20 +52,20 @@ public class InProgressState implements GameState {
             nextState = new TerminateState(players, messages);
         } else {
             try {
-                game.put(query, players.currentPlayerCharacter());
-                GameResult result = game.checkMoveResult(Integer.valueOf(query), players.currentPlayerCharacter());
+                round.put(query, players.currentPlayerCharacter());
+                GameResult result = round.checkMoveResult(Integer.valueOf(query), players.currentPlayerCharacter());
                 if (result.equals(GameResult.IN_PROGRESS)) {
                     players.swapPlayers();
                     nextState = this;
                 } else {
-                    nextState = new VictoryState(players, game, currentRound, result, messages);
+                    nextState = new VictoryState(players, round, result, messages);
                 }
             } catch (NotEmptyFieldException e) {
                 nextState = new StateWithErrorMessage(this, String.format(messages.getString("move-error-non-empty-field"), query));
             } catch (IllegalMoveFormat | NumberFormatException illegalMoveFormat) {
-                nextState = new StateWithErrorMessage(this, String.format(messages.getString("move-error-incorrect-format"), query, this.game.boardSize()));
+                nextState = new StateWithErrorMessage(this, String.format(messages.getString("move-error-incorrect-format"), query, round.boardSize()));
             } catch (BoardOutOfBondException e) {
-                nextState = new StateWithErrorMessage(this, String.format(messages.getString("move-error-out-of-bond-field"), query, this.game.boardSize()));
+                nextState = new StateWithErrorMessage(this, String.format(messages.getString("move-error-out-of-bond-field"), query, round.boardSize()));
             }
 
         }

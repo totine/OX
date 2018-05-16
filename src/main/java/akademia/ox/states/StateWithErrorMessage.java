@@ -1,7 +1,5 @@
 package akademia.ox.states;
 
-import akademia.ox.game.OxRound;
-import akademia.ox.game.Player;
 
 public class StateWithErrorMessage implements GameState {
     private GameState beforeState;
