@@ -2,7 +2,7 @@ package akademia.ox.states;
 
 import akademia.ox.exceptions.NoNumberQueryException;
 import akademia.ox.exceptions.TooBigBoardException;
-import akademia.ox.exceptions.TooBigWinConditionException;
+import akademia.ox.exceptions.IncorrectWinConditionException;
 import akademia.ox.exceptions.TooSmallBoardException;
 import akademia.ox.game.*;
 
@@ -66,7 +66,7 @@ public class InitialState implements GameState {
                 nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-minimal-size"));
             } catch (TooBigBoardException | NumberFormatException e) {
                 nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-maximal-size"));
-            } catch (TooBigWinConditionException e) {
+            } catch (IncorrectWinConditionException e) {
                 nextState = new StateWithErrorMessage(this, messages.getString("board-error-too-big-wining-condition"));
             }
 

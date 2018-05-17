@@ -2,7 +2,7 @@ package akademia.ox.game;
 
 import akademia.ox.exceptions.NoNumberQueryException;
 import akademia.ox.exceptions.TooBigBoardException;
-import akademia.ox.exceptions.TooBigWinConditionException;
+import akademia.ox.exceptions.IncorrectWinConditionException;
 import akademia.ox.exceptions.TooSmallBoardException;
 
 import java.util.Properties;
@@ -86,9 +86,10 @@ public class RoundParameters {
         if (areBoardSizesTooBig()) {
             throw new TooBigBoardException();
         }
-        if (isTooWinConditionTooBig()) {
-            throw new TooBigWinConditionException();
+        if (isTooWinConditionTooBig() || toWin <= 0) {
+            throw new IncorrectWinConditionException();
         }
+
     }
 
     private boolean isTooWinConditionTooBig() {
