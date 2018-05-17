@@ -59,11 +59,11 @@ public class VictoryState implements GameState {
             OxRound nextRound = round.reset();
             nextState = new InProgressState(players, nextRound, messages);
         }
-        if (query.equals("2")) {
+        else if (query.equals("2")) {
             players.swapPlayers();
             nextState = new InitialState(players, round.getNumber()+1, messages, round.getParametersWithDefaultValues());
         }
-        if (query.equals("3") || round.getNumber() == 3) {
+        else if (query.equals("3") || round.getNumber() == 3) {
             nextState = new TerminateState(players, messages);
         }
         else {

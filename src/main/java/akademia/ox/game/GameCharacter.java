@@ -1,7 +1,6 @@
 package akademia.ox.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public enum GameCharacter {
@@ -10,7 +9,6 @@ public enum GameCharacter {
     A,
     B,
     EMPTY;
-
 
 
     public static List<GameCharacter> getAllCharacters(int numberOfCharacters) {
@@ -22,12 +20,11 @@ public enum GameCharacter {
                     characters.add(character);
                 }
             }
-        }
-        else {
+        } else {
             characters.add(X);
             characters.add(O);
         }
 
-         return characters;
+        return characters;
     }
 }

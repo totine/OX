@@ -36,13 +36,15 @@ public class OxGame {
     private void init() {
         out.accept(messages.getString("welcome"));
         out.accept(messages.getString("instruction"));
-        int numberOfplayers = Integer.parseInt(gameEnvProperties.getProperty("numbers-of-player", "2"));
-        PlayersInitializer pi = new PlayersInitializer(out, in, messages, numberOfplayers);
+        int numberOfPlayers = Integer.parseInt(gameEnvProperties.getProperty("numbers-of-player", "2"));
+        PlayersInitializer pi = new PlayersInitializer(out, in, messages, numberOfPlayers);
 
-        for (int i=1; i<=numberOfplayers; i++) {
+        for (int i=1; i<=numberOfPlayers; i++) {
             pi.initializePlayer(i);
         }
-        pi.askForFirstPlayer();
+        while (!pi.isFirstPlayerChosen()) {
+            pi.askForFirstPlayer();
+        }
         Players players = pi.getPlayers();
         RoundParameters standardParameters = RoundParameters.fromProperties(gameEnvProperties);
         currentState = InitialState.firstRound(players, messages, standardParameters);

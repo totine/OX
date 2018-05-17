@@ -1,6 +1,7 @@
 package akademia.ox.game;
 
 import akademia.ox.exceptions.IncorrectPlayerException;
+import akademia.ox.exceptions.IncorrectPlayerNumberException;
 import akademia.ox.exceptions.TooManyPlayersException;
 
 import java.util.*;
@@ -72,6 +73,8 @@ public class Players {
 
 
     void setCurrentPlayer(int choose) {
+        if (choose < 1 || choose > numberOfAllPlayers())
+            throw new IncorrectPlayerNumberException();
         currentIndex = choose - 1;
     }
 
@@ -104,6 +107,7 @@ public class Players {
     public boolean isDraw() {
         return Arrays.stream(players).allMatch(player -> player.getPoints() == players[0].getPoints());
     }
+
     private Player getWinner() {
         return Arrays.stream(players).max(Comparator.comparingInt(Player::getPoints)).get();
     }

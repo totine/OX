@@ -23,11 +23,8 @@ class Board {
     }
 
     static Board createBoard(RoundParameters roundParameters) {
-
         return new Board(roundParameters.rows(), roundParameters.columns());
     }
-
-
 
 
     int size() {
@@ -37,7 +34,6 @@ class Board {
     int rows() {
         return rows;
     }
-
 
     int columns() {
         return columns;
@@ -50,7 +46,7 @@ class Board {
     }
 
     private Integer getFieldNumberFromRowAndCol(int row, int col) {
-        return columns*(row-1) + col;
+        return columns * (row - 1) + col;
     }
 
     GameCharacter getCharacter(int fieldNumber) {
@@ -60,7 +56,6 @@ class Board {
     void put(int row, int col, GameCharacter character) {
         Integer fieldNumber = getFieldNumberFromRowAndCol(row, col);
         put(fieldNumber, character);
-
     }
 
     int coverage() {

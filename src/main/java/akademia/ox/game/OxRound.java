@@ -59,7 +59,7 @@ public class OxRound {
 
     public OxRound reset() {
         Board newBoard = board.reset();
-        return new OxRound(roundNumber, newBoard, toWin, bv, vc, parameters);
+        return new OxRound(roundNumber+1, newBoard, toWin, bv, vc, parameters);
     }
 
 

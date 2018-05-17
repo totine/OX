@@ -56,26 +56,24 @@ public class InitialState implements GameState {
         BoardVisualizer bv = new BoardVisualizer();
         VictoryChecker vc = new VictoryChecker();
         query = cleanUpQuery(query);
-        OxRound round = null;
-        try {
-            if (!query.equals("")) {
+            try {
                 roundParameters.updateFromQuery(query);
+                OxRound round = OxRound.createRound(roundParameters, currentRoundNumber, bv, vc);
+                nextState = new InProgressState(players, round, messages);
+            } catch (NoNumberQueryException e) {
+                nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-incorrect-format"));
+            } catch (TooSmallBoardException e) {
+                nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-minimal-size"));
+            } catch (TooBigBoardException | NumberFormatException e) {
+                nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-maximal-size"));
+            } catch (TooBigWinConditionException e) {
+                nextState = new StateWithErrorMessage(this, messages.getString("board-error-too-big-wining-condition"));
             }
-            round = OxRound.createRound(roundParameters, currentRoundNumber, bv, vc);
-        } catch (NoNumberQueryException e) {
-            nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-incorrect-format"));
-        } catch (TooSmallBoardException e) {
-            nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-minimal-size"));
-        } catch (TooBigBoardException | NumberFormatException e) {
-            nextState = new StateWithErrorMessage(this, messages.getString("board-init-error-maximal-size"));
-        } catch (TooBigWinConditionException e) {
-            nextState = new StateWithErrorMessage(this, messages.getString("board-error-too-big-wining-condition"));
+
         }
-        nextState = new InProgressState(players, round, messages);
-    }
 
     private String cleanUpQuery(String query) {
-        return query.trim().replaceAll(" +", " ");
+        return query.trim().replaceAll("\\s+", " ");
     }
 
 }
