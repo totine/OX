@@ -13,12 +13,14 @@ public class Players {
     private int currentIndex;
 
     public Players(int numberOfPlayers) {
+        if (numberOfPlayers <= 0)
+            throw new IncorrectPlayerNumberException();
         players = new Player[numberOfPlayers];
         numberOfAddedPlayers = 0;
         currentIndex = 0;
     }
 
-    public int numberOfAllPlayers() {
+    int numberOfAllPlayers() {
         return players.length;
     }
 
@@ -27,7 +29,7 @@ public class Players {
     }
 
 
-    public void addNewPlayer(Player player) throws TooManyPlayersException, IncorrectPlayerException {
+    void addNewPlayer(Player player) throws TooManyPlayersException, IncorrectPlayerException {
         if (isFull()) {
             throw new TooManyPlayersException();
         } else if (!isCorrectPlayer(player)) {

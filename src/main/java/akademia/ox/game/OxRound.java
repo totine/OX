@@ -24,7 +24,6 @@ public class OxRound {
 
 
     public static OxRound createRound(RoundParameters roundParameters, int currentRoundNumber, BoardVisualizer bv, VictoryChecker vc) {
-
         Board board = Board.createBoard(roundParameters);
         return new OxRound(currentRoundNumber, board, roundParameters.toWin(), bv, vc, roundParameters);
     }
