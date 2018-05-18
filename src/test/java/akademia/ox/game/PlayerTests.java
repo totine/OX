@@ -1,4 +1,4 @@
-package akademia.ox;
+package akademia.ox.game;
 
 import akademia.ox.game.GameCharacter;
 import akademia.ox.game.Player;
@@ -93,16 +93,4 @@ public class PlayerTests {
         Assert.assertEquals(player.whichCharacter(), characterToAssign);
     }
 
-//    @Test
-//    public void player_afterSwapingCharacter_hasOppositeCharacterAssigned() {
-//        //given
-//        Player player = new Player(name);
-//        GameCharacter characterToAssign = GameCharacter.O;
-//        player.assignCharacter(characterToAssign);
-//        //when
-//        player.swapCharacter();
-//        GameCharacter oppositeCharacter = GameCharacter.X;
-//        //then
-//        Assert.assertEquals(player.whichCharacter(), oppositeCharacter);
-//    }
 }

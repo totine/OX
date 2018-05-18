@@ -14,7 +14,6 @@ class Board {
 
 
     Board(int rows, int columns) throws TooSmallBoardException, TooBigBoardException {
-
         this.rows = rows;
         this.columns = columns;
         this.board = new HashMap<>();
