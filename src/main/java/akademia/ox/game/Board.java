@@ -13,7 +13,8 @@ class Board {
     private int coverage;
 
 
-    Board(int rows, int columns) throws TooSmallBoardException, TooBigBoardException {
+    Board(int rows, int columns) {
+        if (rows<=0 || columns <= 0) throw new IllegalArgumentException();
         this.rows = rows;
         this.columns = columns;
         this.board = new HashMap<>();
@@ -21,8 +22,8 @@ class Board {
 
     }
 
-    static Board createBoard(RoundParameters roundParameters) {
-        return new Board(roundParameters.rows(), roundParameters.columns());
+    static Board createBoard(int rows, int columns) {
+        return new Board(rows, columns);
     }
 
 
@@ -71,7 +72,7 @@ class Board {
     }
 
 
-    public Board reset() throws TooBigBoardException, TooSmallBoardException {
+    Board reset() {
         return new Board(rows, columns);
     }
 }

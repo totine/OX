@@ -7,9 +7,7 @@ import org.testng.annotations.Test;
 import java.util.Random;
 
 public class BoardTests {
-    Random random = new Random();
-    VictoryChecker vc = new VictoryChecker();
-    BoardVisualizer bv = new BoardVisualizer();
+    private Random random = new Random();
 
     @Test
     public void Board_afterCreateBoardWithXandYRows_boardSizeIsEqualMultiplicationXandY() {
@@ -20,14 +18,14 @@ public class BoardTests {
         Assert.assertEquals(boardSize, x*y);
     }
 
-    @Test(expectedExceptions = TooSmallBoardException.class, invocationCount = 10)
+    @Test(expectedExceptions = IllegalArgumentException.class, invocationCount = 10)
     public void Board_afterCreateBoardWithNegativeInput_illegalArgumentExceptionIsThrown() {
         int x = -1*Math.abs(random.nextInt());
         int y = -1*Math.abs(random.nextInt());
         Board board = new Board(x,y);
     }
 
-    @Test(expectedExceptions = TooSmallBoardException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void Board_afterCreateBoardWithZeroInput_illegalArgumentExceptionIsThrown() {
         int x = 0;
         int y = 0;
@@ -101,9 +99,22 @@ public class BoardTests {
         board.put(row, col, GameCharacter.X);
         board.put(row+1, col+1, GameCharacter.O);
 
-        int currentCoverate = board.coverage();
-        Assert.assertEquals(currentCoverate, 2);
+        int currentCoverage = board.coverage();
+        Assert.assertEquals(currentCoverage, 2);
     }
+
+    @Test
+    public void Board_reset_createsNewBoardWithTheSameParameters() {
+        int rows = 10;
+        int columns = 20;
+        Board board = new Board(rows, columns);
+        Board resetBoard = board.reset();
+        Assert.assertNotSame(resetBoard, board);
+        Assert.assertEquals(resetBoard.rows(), rows);
+        Assert.assertEquals(resetBoard.columns(), columns);
+    }
+
+
 
 
 }
