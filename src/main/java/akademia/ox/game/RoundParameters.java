@@ -7,7 +7,7 @@ import akademia.ox.exceptions.TooSmallBoardException;
 
 import java.util.Properties;
 
-public class RoundParameters {
+public class RoundParameters  {
     private int rows;
     private int columns;
     private int toWin;
@@ -22,7 +22,6 @@ public class RoundParameters {
     private int defaultToWin;
 
     private RoundParameters(int defaultRows, int defaultCols, int defaultToWin, int minRows, int maxRows, int minColumns, int maxColumns) {
-
         this.defaultRows = defaultRows;
         this.defaultCols = defaultCols;
         this.defaultToWin = defaultToWin;
@@ -34,26 +33,20 @@ public class RoundParameters {
         validate();
     }
 
-    public RoundParameters(RoundParameters roundParameters) {
+    private RoundParameters(RoundParameters roundParameters) {
         this(roundParameters.defaultRows, roundParameters.defaultCols, roundParameters.defaultToWin, roundParameters.minRows, roundParameters.maxRows, roundParameters.minColumns, roundParameters.maxColumns);
     }
 
 
     static RoundParameters fromProperties(Properties gameEnvProperties) {
         int defaultRows = Integer.parseInt(gameEnvProperties.getProperty("default-rows", "3"));
-        int standardCols = Integer.parseInt(gameEnvProperties.getProperty("default-columns", "3"));
-        int standardToWin = Integer.parseInt(gameEnvProperties.getProperty("default-to-win", "3"));
+        int defaultCols = Integer.parseInt(gameEnvProperties.getProperty("default-columns", "3"));
+        int defaultToWin = Integer.parseInt(gameEnvProperties.getProperty("default-to-win", "3"));
         int minRows = Integer.parseInt(gameEnvProperties.getProperty("min-rows", "3"));
         int maxRows = Integer.parseInt(gameEnvProperties.getProperty("max-rows", "100"));
         int minColumns = Integer.parseInt(gameEnvProperties.getProperty("min-columns", "3"));
         int maxColumns = Integer.parseInt(gameEnvProperties.getProperty("max-columns", "100"));
-        return new RoundParameters(defaultRows, standardCols, standardToWin, minRows, maxRows, minColumns, maxColumns);
-    }
-
-    private void setToDefault() {
-        rows = defaultRows;
-        columns = defaultCols;
-        toWin = defaultToWin;
+        return new RoundParameters(defaultRows, defaultCols, defaultToWin, minRows, maxRows, minColumns, maxColumns);
     }
 
     int rows() {
@@ -62,6 +55,10 @@ public class RoundParameters {
 
     int columns() {
         return columns;
+    }
+
+    int toWin() {
+        return toWin;
     }
 
     public void updateFromQuery(String query) {
@@ -76,7 +73,12 @@ public class RoundParameters {
         columns = Integer.valueOf(sizes[1]);
         toWin = Integer.valueOf(sizes[2]);
         validate();
+    }
 
+    private void setToDefault() {
+        rows = defaultRows;
+        columns = defaultCols;
+        toWin = defaultToWin;
     }
 
     private void validate() {
@@ -89,17 +91,12 @@ public class RoundParameters {
         if (isTooWinConditionTooBig() || toWin <= 0) {
             throw new IncorrectWinConditionException();
         }
-
     }
 
     private boolean isTooWinConditionTooBig() {
         return toWin > Math.min(rows,columns);
     }
 
-
-    int toWin() {
-        return toWin;
-    }
 
     private boolean areBoardSizesTooSmall() {
         return rows<minRows || columns<minColumns;
