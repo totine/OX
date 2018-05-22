@@ -2,40 +2,36 @@ package akademia.ox.game;
 
 import akademia.ox.exceptions.*;
 
-import java.util.Arrays;
-
 public class OxRound {
-
+    private final int roundNumber;
     private final Board board;
     private final int toWin;
+    private final BoardVisualizer bv;
+    private final VictoryChecker vc;
+    private final RoundParameters parameters;
 
-    private OxRound(int rows, int columns, int toWin, BoardVisualizer bv, VictoryChecker vc) throws TooBigBoardException, TooSmallBoardException {
-        this.board = new Board(rows, columns, bv, vc);
-        this.toWin = toWin;
 
-    }
 
-    private OxRound(Board newBoard, int toWin) {
-
+    private OxRound(int roundNumber, Board newBoard, int toWin, BoardVisualizer bv, VictoryChecker vc, RoundParameters parameters) {
+        this.roundNumber = roundNumber;
         this.board = newBoard;
         this.toWin = toWin;
+        this.bv = bv;
+        this.vc = vc;
+        this.parameters = parameters;
     }
 
 
-    public static OxRound createRoundFromQuery(String query, BoardVisualizer bv, VictoryChecker vc) throws NumberFormatException, NoNumberQueryException, TooBigBoardException, TooSmallBoardException, TooBigWinConditionException {
-        if (!query.matches("\\d+\\s+\\d+\\s+\\d+")) {
-            throw new NoNumberQueryException();
-        }
 
-        int[] numbers = Arrays.stream(query.split("\\s+")).mapToInt(Integer::parseInt).toArray();
-        if (Math.min(numbers[0], numbers[1]) < numbers[2]) {
-            throw new TooBigWinConditionException();
-        }
-        return new OxRound(numbers[0], numbers[1], numbers[2], bv, vc);
+    public static OxRound createRound(RoundParameters roundParameters, int currentRoundNumber, BoardVisualizer bv, VictoryChecker vc) {
+        Board board = Board.createBoard(roundParameters.rows(), roundParameters.columns());
+        return new OxRound(currentRoundNumber, board, roundParameters.toWin(), bv, vc, roundParameters);
     }
+
+
 
     public String getVisualizedBoard() {
-        return board.getVisualization();
+        return bv.drawBoard(board);
     }
 
     public void put(String queryMove, GameCharacter character) throws NumberFormatException, IllegalMoveFormat, NotEmptyFieldException, BoardOutOfBondException {
@@ -53,7 +49,7 @@ public class OxRound {
 
 
     public GameResult checkMoveResult(Integer move, GameCharacter character) {
-        return board.checkVictory(move, character, toWin);
+        return vc.checkVictory(move, character, board, toWin);
     }
 
     public int boardSize() {
@@ -62,8 +58,15 @@ public class OxRound {
 
     public OxRound reset() {
         Board newBoard = board.reset();
-        return new OxRound(newBoard, toWin);
+        return new OxRound(roundNumber+1, newBoard, toWin, bv, vc, parameters);
     }
 
 
+    public int getNumber() {
+        return roundNumber;
+    }
+
+    public RoundParameters getParametersWithDefaultValues() {
+        return parameters.getDefaultCopy();
+    }
 }

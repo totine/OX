@@ -1,23 +1,30 @@
 package akademia.ox.game;
 
-public enum GameCharacter {
-    O {
-        @Override
-        public GameCharacter getOpposite() {
-            return X;
-        }
-    },
-    X {
-        @Override
-        public GameCharacter getOpposite() {
-            return O;
-        }
-    }, EMPTY {
-        @Override
-        public GameCharacter getOpposite() {
-            return EMPTY;
-        }
-    };
+import java.util.ArrayList;
+import java.util.List;
 
-    public abstract GameCharacter getOpposite();
+public enum GameCharacter {
+    O,
+    X,
+    A,
+    B,
+    EMPTY;
+
+
+    public static List<GameCharacter> getAllCharacters(int numberOfCharacters) {
+        ArrayList<GameCharacter> characters = new ArrayList<>();
+        if (numberOfCharacters > 2) {
+
+            for (GameCharacter character : GameCharacter.class.getEnumConstants()) {
+                if (!character.equals(EMPTY)) {
+                    characters.add(character);
+                }
+            }
+        } else {
+            characters.add(X);
+            characters.add(O);
+        }
+
+        return characters;
+    }
 }
